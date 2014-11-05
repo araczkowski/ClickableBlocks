@@ -1,0 +1,92 @@
+<!doctype html>
+<html class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <title>DragAndDropBlocks</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <!-- build:css styles/vendor.css -->
+    <link rel="stylesheet" href="bower_components/jquery-ui/themes/base/jquery-ui.css">
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+</head>
+
+<body>
+    <div id="root_parent" class="content">
+        <div class="code">
+            dadb1 = new Dadb('dadb1', '{"min":360,"max":1170,"step":30,"toolbarId":"tolbar1", "openBlocks":[[390,90],[720,120],[960,180]]}');
+            <br>dadb1.addBlocks('[[990, 60,"rgb(232, 249, 8)"]]');
+        </div>
+        <div id="dadb1"></div>
+        <div class="code">
+            dadb2 = new Dadb('dadb2', '{"blocksToolbar":[],"min":360,"max":1170,"step":30,"toolbarId":"tolbar2", "openBlocks":[[390,90],[720,420]]}');
+            <br>dadb2.addBlocks('[[990, 60, "rgb(255, 137, 0)"]]');
+        </div>
+        <div id="dadb2"></div>
+        <div class="code">
+            dadb3 = new Dadb('dadb3', '{"blocksToolbar":[{"value":30,"color": "rgb(250, 161, 106)","droppedColor":"rgb(255, 137, 0)"},{"value":60,"color": "rgb(250, 161, 106)","droppedColor":"rgb(255, 137, 0)"},{"value":120,"color": "rgb(250, 161, 106)","droppedColor":"rgb(255, 137, 0)"}],"min":360,"max":1170,"step":30,"toolbarId":"tolbar2", "openBlocks":[[390,750]]}');
+        </div>
+        <div id="dadb3"></div>
+
+        <br>
+        <br>
+
+        <fieldset style="width: 32%; float: left;">
+            <legend>tolbar1:</legend>
+            <div id="tolbar1"></div>
+        </fieldset>
+        <fieldset style="width: 32%; float: left;">
+            <legend>tolbar2:</legend>
+            <div id="tolbar2"></div>
+            <div class="step_switch">
+                <input type="checkbox" name="step" id="step_checkbox" value="30">15 minutes</div>
+        </fieldset>
+    </div>
+
+
+
+    <!-- build:js({app,.tmp}) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/jquery.js"></script>
+    <script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:js({app,.tmp}) scripts/main.js -->
+    <script src="scripts/main.js"></script>
+    <!-- endbuild -->
+    <script>
+        var dadb1;
+        var dadb2;
+        var dadb3;
+        $(function () {
+            // inicialization - test from APEX (string insted of objects)
+            dadb1 = new Dadb('dadb1', '{"min":360,"max":1170,"step":30,"toolbarId":"tolbar1", "openBlocks":[[390,90],[720,120],[960,180]]}');
+            dadb1.addBlocks('[[990, 60,"rgb(232, 249, 8)"]]');
+            dadb2 = new Dadb('dadb2', '{"blocksToolbar":[],"min":360,"max":1170,"step":30,"toolbarId":"tolbar2", "openBlocks":[[390,90],[720,420]]}');
+            dadb2.addBlocks('[[990, 60, "rgb(255, 137, 0)"]]');
+
+            dadb3 = new Dadb('dadb3', '{"blocksToolbar":[{"value":30,"color": "rgb(250, 161, 106)","droppedColor":"rgb(255, 137, 0)"},{"value":60,"color": "rgb(250, 161, 106)","droppedColor":"rgb(255, 137, 0)"},{"value":120,"color": "rgb(250, 161, 106)","droppedColor":"rgb(255, 137, 0)"}],"min":360,"max":1170,"step":30,"toolbarId":"tolbar2", "openBlocks":[[390,750]]}');
+
+            $('#step_checkbox').change(function () {
+                if ($(this).is(":checked")) {
+                    dadb1.changeStep(15);
+                    dadb2.changeStep(15);
+                    dadb3.changeStep(15);
+                    return;
+                }
+                dadb1.changeStep(30);
+                dadb2.changeStep(30);
+                dadb3.changeStep(30);
+            });
+        });
+    </script>
+</body>
+
+</html>
+

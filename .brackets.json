@@ -1,0 +1,5 @@
+{
+    "jscodehints.detectedExclusions": [
+        "/home/andrzej/Projects/SIGI/DragAndDropBlocks/test/bower_components/mocha/mocha.js"
+    ]
+}
