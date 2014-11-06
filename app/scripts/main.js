@@ -11,9 +11,6 @@
      *      @property {Number} userOptions.max Slider maximum value
      *      @property {Number} userOptions.step Slider sliding step
      *      @property {Object} userOptions.stepLabelDispFormat mrs step Label format default hh24
-     *      @property {Object} userOptions.toolbarId element ID when the toolbar shoud by created
-     *      @property {Object} userOptions.blocksToolbar array of objects with blocks description
-     *      @property {Object} userOptions.openBlocks array of array with open blocks data
      * }
      */
     w.ClickB = function (parentId, userOptions) {
@@ -37,29 +34,9 @@
                 throw 'Blocks length should be multiple to step';
             }
             _build();
-            _openBlocks();
+            _blocks = $('#steps_' + parentId);
         }
 
-
-        function _build() {
-            $('#steps_' + parentId).remove();
-            $('#' + parentId).append('<div id="steps_' + parentId + '" class="steps"></div>');
-            var eSteps = $('#steps_' + parentId);
-            var nSteps = (_options.max - _options.min) / _options.step;
-            var stepWidth = 96 / nSteps;
-            for (var i = 0; nSteps > i; i++) {
-                var stepValue = _options.min + (i * _options.step);
-                $('<div/>', {
-                    'id': 'step_' + parentId + '_' + (Number(i) + 1),
-                    'class': 'step',
-                    'style': 'width:' + stepWidth + '%',
-                    'data-start': stepValue,
-                    'html': '<span class="tick">' + _options.stepLabelDispFormat(stepValue) + '</span><div class="step_content"></div></div>'
-                }).appendTo(eSteps);
-            }
-            //
-            $('#steps_' + parentId).width(nSteps * stepWidth + '%');
-        }
 
         function _mergeOptions() {
             if (!userOptions) {
@@ -104,36 +81,75 @@
             return _options;
         }
 
+        function _build() {
+            $('#steps_' + parentId).remove();
+            $('#' + parentId).append('<div id="steps_' + parentId + '" class="steps"></div>');
+            var eSteps = $('#steps_' + parentId);
+            var nSteps = (_options.max - _options.min) / _options.step;
+            var stepWidth = 96 / nSteps;
+            for (var i = 0; nSteps > i; i++) {
+                var stepValue = _options.min + (i * _options.step);
+                $('<div/>', {
+                    'id': 'step_' + parentId + '_' + (Number(i) + 1),
+                    'class': 'step',
+                    'style': 'width:' + stepWidth + '%',
+                    'data-start': stepValue,
+                    'html': '<span class="tick">' + _options.stepLabelDispFormat(stepValue) + '</span><div class="step_content"></div></div>'
+                }).appendTo(eSteps);
+            }
+            //
+            $('#steps_' + parentId).width(nSteps * stepWidth + '%');
+        }
 
-        function _addBlock(bSteps, value, color) {
+
+        function _addBlock(bSteps, value, planed, colorp, coloru) {
 
             for (var i = 0; i < bSteps.length; i++) {
-                bSteps[i].removeClass('empty');
                 bSteps[i].addClass('planned-block-body');
-                bSteps[i].addClass('planned-block-' + bSteps[0].attr('id'));
-                bSteps[i].attr('data-color', color);
-                bSteps[i].css('background', color);
+                bSteps[i].attr('data-colorp', colorp);
+                bSteps[i].attr('data-coloru', coloru);
+                bSteps[i].attr('data-planned', planed);
+                bSteps[i].attr('data-block', bSteps[0].attr('id'));
+                if (planed == 1) {
+                    bSteps[i].css('background', colorp);
+                } else {
+                    bSteps[i].css('background', coloru);
+                }
 
                 if (i === 0) {
                     bSteps[i].addClass('planned-block-start');
-                    bSteps[i].find('div').prepend('<span class="closer" onclick="' + parentId + '.removeBlock(\'' + bSteps[0].attr('id') + '\')"><i class="fa">x</i></span>');
                     bSteps[i].attr('data-value', value);
                 }
 
                 if (i === bSteps.length - 1) {
                     bSteps[i].addClass('planned-block-end');
                 }
+
+                //initEvent
+                bSteps[i].on("click", function () {
+                    _togglePlan(this);
+                });
             }
 
+
         }
 
-        // to remove the blocks from slider
-        function _removeBlock(step) {
-            var selector = '.planned-block-' + step;
-            $(selector).removeClass('planned-block-body').removeClass('planned-block-start').removeClass('planned-block-end').addClass('empty');
-            $(selector).find($('.closer')).remove();
-            $(selector).attr('data-value', '');
+        function _togglePlan(e) {
+            var clicked_block = $(e);
+            var blocks_selector = $('[data-block=' + clicked_block.attr('data-block') + ']');
+
+            if (clicked_block.attr('data-planned') == 1) {
+                // unplan
+                blocks_selector.attr('data-planned', 0);
+                blocks_selector.css('background', blocks_selector.attr('data-coloru'));
+
+            } else {
+                //plan again
+                blocks_selector.attr('data-planned', 1);
+                blocks_selector.css('background', blocks_selector.attr('data-colorp'));
+            }
         }
+
 
         function _getBlocksInRange(start, value) {
             var blocks = [];
@@ -147,19 +163,6 @@
             return blocks;
         }
 
-        function _openBlocks() {
-            _options.openBlocks.forEach(function (block) {
-                var b = (_getBlocksInRange(block[0], block[1]));
-                for (var i = 0; i < b.length; i++) {
-
-                    b[i].addClass('empty');
-                    // IE8 problem
-                    $(b[i].selector).addClass('empty');
-                }
-            });
-
-
-        }
 
         /**
          * Adds multiple block to the slider scale
@@ -173,7 +176,7 @@
             var blocksToAdd = [];
             for (var i = 0; i < blocksArray.length; i++) {
                 blocksToAdd = _getBlocksInRange(blocksArray[i][0], blocksArray[i][1]);
-                _addBlock(blocksToAdd, blocksArray[i][1], blocksArray[i][2]);
+                _addBlock(blocksToAdd, blocksArray[i][1], blocksArray[i][2], blocksArray[i][3], blocksArray[i][4]);
             }
             return this;
         };

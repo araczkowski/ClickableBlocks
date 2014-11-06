@@ -2,7 +2,7 @@ ClickableBlocks (ClickB)
 ===================
 
 Oracle APEX plugin/widget with clickable blocks interaction.
-Live example at jsFiddle http://jsfiddle.net/araczkowski/t3vj8wjr/embedded/result/
+Live example at jsFiddle http://jsfiddle.net/araczkowski/bc5jt9ch/embedded/result/
 
 
 ![alt tag](https://raw.githubusercontent.com/araczkowski/DragAndDropBlocks/master/app/images/dadb.png)

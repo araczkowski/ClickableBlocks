@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>DragAndDropBlocks</title>
+    <title>ClickableBlocks</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <link rel="shortcut icon" href="/favicon.ico">
@@ -19,8 +19,8 @@
 <body>
     <div id="root_parent" class="content">
         <div class="code">
-            clickB1 = new ClickB('clickB1', '{"min":360,"max":1170,"step":30,"openBlocks":[[390,90],[720,120],[960,180]]}');
-            <br>clickB1.addBlocks('[[990, 60,"rgb(232, 249, 8)"]]');
+            clickB1 = new ClickB('clickB1', '{"min":360,"max":1170,"step":30}');
+            <br>clickB1.addBlocks('[[990, 60, 0, "#dff0d8", "#FFFFFF"]]');
         </div>
         <div id="clickB1"></div>
     </div>
@@ -39,8 +39,8 @@
         var clickB1;
         $(function () {
             // inicialization - test from APEX (string insted of objects)
-            clickB1 = new ClickB('clickB1', '{"min":360,"max":1170,"step":30,"toolbarId":"tolbar1", "openBlocks":[[390,90],[720,120],[960,180]]}');
-            clickB1.addBlocks('[[990, 60,"rgb(232, 249, 8)"]]');
+            clickB1 = new ClickB('clickB1', '{"min":360,"max":1170,"step":30, "openBlocks":[[390,90],[720,120],[960,180]]}');
+            clickB1.addBlocks('[[990, 60, 0, "#dff0d8", "#FFFFFF"]]');
         });
     </script>
 </body>
