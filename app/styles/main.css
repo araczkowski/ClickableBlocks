@@ -5,13 +5,13 @@
 }
 .steps {
     position: relative;
-    height: 60px;
+    height: 40px;
     margin-bottom: 5px;
 }
 .step {
     float: left;
     background-color: #e9f4f8;
-    height: 60px;
+    height: 30px;
     border: 1px solid #43838c;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -27,6 +27,7 @@
     margin-top: -20px;
     text-align: center;
     color: #43838c;
+    font-size: small;
 }
 div.planned-block-body {
     border-top: 2px solid green;

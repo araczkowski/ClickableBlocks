@@ -1,14 +1,5 @@
 create or replace package body drag_and_drop_blocks_plugin is
 
-  /*
-   * DEMO DATA
-   *
-   create table multi_range_slider_data(mrs_id varchar2(4000), mrs_data varchar2(4000))
-   1  mrs1  [[390,480],[720,840],[960,1140]]
-   2  mrs2  [[390,480],[720,1140]]
-   3  mrs3  [[390,1140]]
-   *
-  */
 
   function render(p_region              in apex_plugin.t_region,
                   p_plugin              in apex_plugin.t_plugin,
@@ -65,7 +56,7 @@ create or replace package body drag_and_drop_blocks_plugin is
     end if;
 
     -- html part
-    sys.htp.p('<script>var ' || l_elementId || '</script>');
+    sys.htp.p('<script type="text/javascript">var ' || l_elementId || ';</script>');
     sys.htp.p('<div id="content-' || l_elementId ||
               '" class="content"><div id="' || l_elementId ||
               '"></div></div>');
@@ -96,6 +87,8 @@ create or replace package body drag_and_drop_blocks_plugin is
                                               l_elementId || '",' ||
                                               l_options.to_char || ');');
 
+
+
     -- test data
     open c_data(l_elementId);
     fetch c_data
@@ -104,9 +97,12 @@ create or replace package body drag_and_drop_blocks_plugin is
       apex_javascript.add_onload_code(p_code => r_data.dadb_id ||
                                                 '.addBlocks(' ||
                                                 r_data.dadb_data || ');');
+
     end if;
 
     close c_data;
+
+
 
     return retval;
   end render;
@@ -132,4 +128,5 @@ create or replace package body drag_and_drop_blocks_plugin is
     end if;
   end;
 end drag_and_drop_blocks_plugin;
+
 /

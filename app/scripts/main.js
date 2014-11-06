@@ -4,16 +4,16 @@
      * @class ClickB
      *
      * @constructor
-     * @param {String} parentId, this id will be used to create jQuery selector and apped a module code to this id
+     * @param {String} elementID, this id will be used to create jQuery selector and apped a module code to this id
      * @param {Object} userOptions (optional) Custom options object that overrides default
      * {
      *      @property {Number} userOptions.min Slider minimum value
      *      @property {Number} userOptions.max Slider maximum value
      *      @property {Number} userOptions.step Slider sliding step
-     *      @property {Object} userOptions.stepLabelDispFormat mrs step Label format default hh24
+     *      @property {Object} userOptions.stepLabelDispFormat step Label format default hh24
      * }
      */
-    w.ClickB = function (parentId, userOptions) {
+    w.ClickB = function (elementID, userOptions) {
         var _stepLabelDispFormat = function (steps) {
             var hours = Math.floor(Math.abs(steps) / 60);
             return Math.abs(steps) % 60 === 0 ? ((hours < 10 && hours >= 0) ? '0' : '') + hours : '';
@@ -24,7 +24,6 @@
             max: 1440,
             step: 30,
             stepLabelDispFormat: _stepLabelDispFormat,
-            openBlocks: [[30, 60], [600, 90]]
         };
 
 
@@ -34,7 +33,6 @@
                 throw 'Blocks length should be multiple to step';
             }
             _build();
-            _blocks = $('#steps_' + parentId);
         }
 
 
@@ -82,15 +80,15 @@
         }
 
         function _build() {
-            $('#steps_' + parentId).remove();
-            $('#' + parentId).append('<div id="steps_' + parentId + '" class="steps"></div>');
-            var eSteps = $('#steps_' + parentId);
+            $('#steps_' + elementID).remove();
+            $('#root_parent').append('<div id="steps_' + elementID + '" class="steps"></div>');
+            var eSteps = $('#steps_' + elementID);
             var nSteps = (_options.max - _options.min) / _options.step;
             var stepWidth = 96 / nSteps;
             for (var i = 0; nSteps > i; i++) {
                 var stepValue = _options.min + (i * _options.step);
                 $('<div/>', {
-                    'id': 'step_' + parentId + '_' + (Number(i) + 1),
+                    'id': 'step_' + elementID + '_' + (Number(i) + 1),
                     'class': 'step',
                     'style': 'width:' + stepWidth + '%',
                     'data-start': stepValue,
@@ -98,7 +96,7 @@
                 }).appendTo(eSteps);
             }
             //
-            $('#steps_' + parentId).width(nSteps * stepWidth + '%');
+            $('#steps_' + elementID).width(nSteps * stepWidth + '%');
         }
 
 
@@ -110,7 +108,7 @@
                 bSteps[i].attr('data-coloru', coloru);
                 bSteps[i].attr('data-planned', planed);
                 bSteps[i].attr('data-block', bSteps[0].attr('id'));
-                if (planed == 1) {
+                if (planed === '1') {
                     bSteps[i].css('background', colorp);
                 } else {
                     bSteps[i].css('background', coloru);
@@ -126,7 +124,7 @@
                 }
 
                 //initEvent
-                bSteps[i].on("click", function () {
+                bSteps[i].on('click', function () {
                     _togglePlan(this);
                 });
             }
@@ -135,18 +133,18 @@
         }
 
         function _togglePlan(e) {
-            var clicked_block = $(e);
-            var blocks_selector = $('[data-block=' + clicked_block.attr('data-block') + ']');
+            var clickedBlock = $(e);
+            var blocksSelector = $('[data-block=' + clickedBlock.attr('data-block') + ']');
 
-            if (clicked_block.attr('data-planned') == 1) {
+            if (clickedBlock.attr('data-planned') === '1') {
                 // unplan
-                blocks_selector.attr('data-planned', 0);
-                blocks_selector.css('background', blocks_selector.attr('data-coloru'));
+                blocksSelector.attr('data-planned', '0');
+                blocksSelector.css('background', blocksSelector.attr('data-coloru'));
 
             } else {
                 //plan again
-                blocks_selector.attr('data-planned', 1);
-                blocks_selector.css('background', blocks_selector.attr('data-colorp'));
+                blocksSelector.attr('data-planned', '1');
+                blocksSelector.css('background', blocksSelector.attr('data-colorp'));
             }
         }
 
@@ -158,7 +156,7 @@
 
             for (var n = 0; n < blocksNo; n++) {
                 var step = (Number(startId) + n);
-                blocks.push($('#step_' + parentId + '_' + step));
+                blocks.push($('#step_' + elementID + '_' + step));
             }
             return blocks;
         }
@@ -181,9 +179,6 @@
             return this;
         };
 
-        this.removeBlock = function (step) {
-            _removeBlock(step);
-        };
 
 
         /**
@@ -192,7 +187,7 @@
          */
         this.getBlocks = function () {
             var blocks = [];
-            var _blocks = $('div#' + parentId + ' .planned-block-start');
+            var _blocks = $('div#' + elementID + ' .planned-block-start');
             if (_blocks.length > 0) {
                 _blocks.each(function (i, e) {
                     var block = {};

@@ -17,12 +17,7 @@
 </head>
 
 <body>
-    <div id="root_parent" class="content">
-        <div class="code">
-            clickB1 = new ClickB('clickB1', '{"min":360,"max":1170,"step":30}');
-            <br>clickB1.addBlocks('[[990, 60, 0, "#dff0d8", "#FFFFFF"]]');
-        </div>
-        <div id="clickB1"></div>
+    <div id="root_parent" class="content" style="width:500px">
     </div>
 
 
@@ -36,11 +31,16 @@
     <script src="scripts/main.js"></script>
     <!-- endbuild -->
     <script>
-        var clickB1;
         $(function () {
-            // inicialization - test from APEX (string insted of objects)
-            clickB1 = new ClickB('clickB1', '{"min":360,"max":1170,"step":30, "openBlocks":[[390,90],[720,120],[960,180]]}');
-            clickB1.addBlocks('[[990, 60, 0, "#dff0d8", "#FFFFFF"]]');
+            var cb = new ClickB('cb', '{"min":360,"max":1170,"step":30, "openBlocks":[[390,90],[720,120],[960,180]]}');
+            cb.addBlocks('[[990, 60, 0, "#dff0d8", "#FFFFFF"]]');
+
+            for (var i = 0; i < 10; i++) {
+                // inicialization - test from APEX (string insted of objects)
+                var name = 'clickB' + i;
+                var name = new ClickB(name, '{"min":360,"max":1170,"step":30, "openBlocks":[[390,90],[720,120],[960,180]], "stepLabelDispFormat":"function (steps) {return \'\';}"}');
+                name.addBlocks('[[990, 60, 0, "#dff0d8", "#FFFFFF"]]');
+            }
         });
     </script>
 </body>
