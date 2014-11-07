@@ -1,3 +1,15 @@
+/* apply a natural box layout model to all elements, but allowing components to change */
+
+html {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
 .ClickableBlocksContent {
     margin-top: 30px;
     margin-right: 30px;
@@ -5,20 +17,19 @@
 }
 .ClickableBlocksSteps {
     position: relative;
-    height: 40px;
-    margin-bottom: 5px;
+    height: 2em;
+    margin-bottom: 1em;
 }
 .ClickableBlocksStep {
     float: left;
     background-color: #e9f4f8;
-    height: 30px;
+}
+.ClickableBlocksStepContent {
     border: 1px solid #43838c;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+    height: 2em;
 }
 .ClickableBlocksTick {
-    border: 1px solid transparent;
+    /*border:1px solid transparent;*/
     position: absolute;
     margin-left: -.6em;
     margin-top: -20px;
@@ -26,15 +37,15 @@
     color: #43838c;
     font-size: small;
 }
-div.ClickableBlocksPlannedBlockBody {
+div.ClickableBlocksPlannedBlockBody .ClickableBlocksStepContent {
     border-top: 2px solid #43838c;
     border-bottom: 2px solid #43838c;
     border-left: 0px;
     border-right: 0px;
 }
-div.ClickableBlocksPlannedBlockStart {
+div.ClickableBlocksPlannedBlockStart .ClickableBlocksStepContent {
     border-left: 2px solid #43838c;
 }
-div.ClickableBlocksPlannedBlockEnd {
+div.ClickableBlocksPlannedBlockEnd .ClickableBlocksStepContent {
     border-right: 2px solid #43838c;
 }

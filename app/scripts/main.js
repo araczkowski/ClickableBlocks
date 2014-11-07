@@ -94,7 +94,7 @@
                     'class': 'ClickableBlocksStep',
                     'style': 'width:' + stepWidth + '%',
                     'data-start': stepValue,
-                    'html': '<span class="ClickableBlocksTick">' + _options.stepLabelDispFormat(stepValue) + '</span></div>'
+                    'html': '<span class="ClickableBlocksTick">' + _options.stepLabelDispFormat(stepValue) + '</span><div class="ClickableBlocksStepContent"></div></div>'
                 }).appendTo(eSteps);
             }
             //
