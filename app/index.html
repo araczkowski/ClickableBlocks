@@ -31,15 +31,44 @@
     <script src="scripts/main.js"></script>
     <!-- endbuild -->
     <script>
+        var cb;
         $(function () {
-            var cb = new ClickB('cb', '{"min":360,"max":1170,"step":30, "openBlocks":[[390,90],[720,120],[960,180]]}');
-            cb.addBlocks('[[990, 60, 0, "#dff0d8", "#FFFFFF"]]');
+            var block1 = {
+                "start": "480",
+                "value": "30",
+                "planned": "1",
+                "colorp": "#dff0d8",
+                "coloru": "#FFFFFF"
+            };
+            var block2 = {
+                "start": "510",
+                "value": "60",
+                "planned": "1",
+                "colorp": "#dff0d8",
+                "coloru": "#FFFFFF"
+            };
+            var block3 = {
+                "start": "720",
+                "value": "120",
+                "planned": "1",
+                "colorp": "#dff0d8",
+                "coloru": "#FFFFFF"
+            };
+            var block4 = {
+                "start": "960",
+                "value": "120",
+                "planned": "1",
+                "colorp": "#dff0d8",
+                "coloru": "#FFFFFF"
+            };
+            cb = new ClickB('cb', '{"min":360,"max":1170,"step":30}');
+            cb.addBlocks('[{"start": 990, "value": 60, "planned": 0, "colorp": "#dff0d8", "coloru": "#FFFFFF"},{ "start": "840","value": "120","planned": "1","colorp":"#dff0d8","coloru": "#FFFFFF"},{ "start": "600","value": "120","planned": "1","colorp":"#dff0d8","coloru": "#FFFFFF"}]');
 
             for (var i = 0; i < 10; i++) {
                 // inicialization - test from APEX (string insted of objects)
                 var name = 'clickB' + i;
-                var name = new ClickB(name, '{"min":360,"max":1170,"step":30, "openBlocks":[[390,90],[720,120],[960,180]], "stepLabelDispFormat":"function (steps) {return \'\';}"}');
-                name.addBlocks('[[990, 60, 0, "#dff0d8", "#FFFFFF"]]');
+                var name = new ClickB(name, '{"min":360,"max":1170,"step":30, "stepLabelDispFormat":"function (steps) {return \'\';}"}');
+                name.addBlocks([block1, block2, block3, block4]);
             }
         });
     </script>

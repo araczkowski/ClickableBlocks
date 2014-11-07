@@ -23,8 +23,10 @@
             min: 0,
             max: 1440,
             step: 30,
-            stepLabelDispFormat: _stepLabelDispFormat,
+            stepLabelDispFormat: _stepLabelDispFormat
         };
+
+        var _onChange = null;
 
 
         function _init() {
@@ -92,7 +94,7 @@
                     'class': 'step',
                     'style': 'width:' + stepWidth + '%',
                     'data-start': stepValue,
-                    'html': '<span class="tick">' + _options.stepLabelDispFormat(stepValue) + '</span><div class="step_content"></div></div>'
+                    'html': '<span class="tick">' + _options.stepLabelDispFormat(stepValue) + '</span></div>'
                 }).appendTo(eSteps);
             }
             //
@@ -100,7 +102,7 @@
         }
 
 
-        function _addBlock(bSteps, value, planed, colorp, coloru) {
+        function _addSteps(bSteps, value, planed, colorp, coloru) {
 
             for (var i = 0; i < bSteps.length; i++) {
                 bSteps[i].addClass('planned-block-body');
@@ -129,6 +131,10 @@
                 });
             }
 
+            if (typeof (_onChange) === 'function') {
+                _onChange();
+            }
+
 
         }
 
@@ -146,39 +152,42 @@
                 blocksSelector.attr('data-planned', '1');
                 blocksSelector.css('background', blocksSelector.attr('data-colorp'));
             }
+
+            if (typeof (_onChange) === 'function') {
+                _onChange();
+            }
         }
 
 
-        function _getBlocksInRange(start, value) {
-            var blocks = [];
+        function _getStepssInRange(start, value) {
+            var steps = [];
             var startId = Number(start / _options.step) - Number(_options.min / _options.step) + 1;
-            var blocksNo = value / _options.step;
+            var stepsNo = value / _options.step;
 
-            for (var n = 0; n < blocksNo; n++) {
+            for (var n = 0; n < stepsNo; n++) {
                 var step = (Number(startId) + n);
-                blocks.push($('#step_' + elementID + '_' + step));
+                steps.push($('#step_' + elementID + '_' + step));
             }
-            return blocks;
+            return steps;
         }
 
 
         /**
          * Adds multiple block to the slider scale
-         * @param {Array} blocksArray example: Array([[0,20],[40,60]...])
-         * @return {Object} self instance of MrDad class
+         * @param {Object} ArrayOfBlocksObjects example: Array([[0,20],[40,60]...])
+         * @return {Object} self instance of ClickB class
          */
-        this.addBlocks = function (blocksArray) {
-            if (typeof (blocksArray) === 'string') {
-                blocksArray = JSON.parse(blocksArray);
+        this.addBlocks = function (ArrayOfBlocksObjects) {
+            if (typeof (ArrayOfBlocksObjects) === 'string') {
+                ArrayOfBlocksObjects = JSON.parse(ArrayOfBlocksObjects);
             }
             var blocksToAdd = [];
-            for (var i = 0; i < blocksArray.length; i++) {
-                blocksToAdd = _getBlocksInRange(blocksArray[i][0], blocksArray[i][1]);
-                _addBlock(blocksToAdd, blocksArray[i][1], blocksArray[i][2], blocksArray[i][3], blocksArray[i][4]);
+            for (var i = 0; i < ArrayOfBlocksObjects.length; i++) {
+                stepsToAdd = _getStepssInRange(ArrayOfBlocksObjects[i].start, ArrayOfBlocksObjects[i].value);
+                _addSteps(stepsToAdd, ArrayOfBlocksObjects[i].value, ArrayOfBlocksObjects[i].planned, ArrayOfBlocksObjects[i].colorp, ArrayOfBlocksObjects[i].coloru);
             }
             return this;
         };
-
 
 
         /**
@@ -187,18 +196,37 @@
          */
         this.getBlocks = function () {
             var blocks = [];
-            var _blocks = $('div#' + elementID + ' .planned-block-start');
+            var _blocks = $('div#steps_' + elementID + ' .planned-block-start');
             if (_blocks.length > 0) {
                 _blocks.each(function (i, e) {
                     var block = {};
                     block.id = e.getAttribute('id');
                     block.start = e.getAttribute('data-start');
                     block.value = e.getAttribute('data-value');
-                    block.color = e.getAttribute('data-color');
+                    block.planned = e.getAttribute('data-planned');
+                    block.colorp = e.getAttribute('data-colorp');
+                    block.coloru = e.getAttribute('data-coloru');
                     blocks.push(block);
                 });
             }
             return blocks;
+        };
+
+        /**
+         * Sets callback function that can be used for item change
+         *
+         * @param {Function} callbackFunction
+         *      stores a callback function
+         *
+         * @example
+         *      clickb.setChangeCallback(function(callback));
+         * @return {Object} self instance of ClickB class
+         */
+        this.setChangeCallback = function (callbackFunction) {
+            if (typeof (callbackFunction) === 'function') {
+                _onChange = callbackFunction;
+            }
+            return this;
         };
 
         _init();
