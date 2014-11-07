@@ -1,14 +1,14 @@
-.content {
+.ClickableBlocksContent {
     margin-top: 30px;
     margin-right: 30px;
     margin-left: 30px;
 }
-.steps {
+.ClickableBlocksSteps {
     position: relative;
     height: 40px;
     margin-bottom: 5px;
 }
-.step {
+.ClickableBlocksStep {
     float: left;
     background-color: #e9f4f8;
     height: 30px;
@@ -17,7 +17,7 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
-.tick {
+.ClickableBlocksTick {
     border: 1px solid transparent;
     position: absolute;
     margin-left: -.6em;
@@ -26,15 +26,15 @@
     color: #43838c;
     font-size: small;
 }
-div.planned-block-body {
+div.ClickableBlocksPlannedBlockBody {
     border-top: 2px solid #43838c;
     border-bottom: 2px solid #43838c;
     border-left: 0px;
     border-right: 0px;
 }
-div.planned-block-start {
+div.ClickableBlocksPlannedBlockStart {
     border-left: 2px solid #43838c;
 }
-div.planned-block-end {
+div.ClickableBlocksPlannedBlockEnd {
     border-right: 2px solid #43838c;
 }

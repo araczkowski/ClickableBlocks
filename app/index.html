@@ -17,7 +17,29 @@
 </head>
 
 <body>
-    <div id="root_parent" class="content" style="width:500px">
+    <div class="ClickableBlocksContent">
+        <div id="P6_CB_1_parent" style="width:500px">
+        </div>
+        <div id="clickB0_parent" style="width:500px">
+        </div>
+        <div id="clickB1_parent" style="width:500px">
+        </div>
+        <div id="clickB2_parent" style="width:500px">
+        </div>
+        <div id="clickB3_parent" style="width:500px">
+        </div>
+        <div id="clickB4_parent" style="width:500px">
+        </div>
+        <div id="clickB5_parent" style="width:500px">
+        </div>
+        <div id="clickB6_parent" style="width:500px">
+        </div>
+        <div id="clickB7_parent" style="width:500px">
+        </div>
+        <div id="clickB8_parent" style="width:500px">
+        </div>
+        <div id="clickB9_parent" style="width:500px">
+        </div>
     </div>
 
 
@@ -61,8 +83,11 @@
                 "colorp": "#dff0d8",
                 "coloru": "#FFFFFF"
             };
-            cb = new ClickB('cb', '{"min":360,"max":1170,"step":30}');
-            cb.addBlocks('[{"start": 990, "value": 60, "planned": 0, "colorp": "#dff0d8", "coloru": "#FFFFFF"},{ "start": "840","value": "120","planned": "1","colorp":"#dff0d8","coloru": "#FFFFFF"},{ "start": "600","value": "120","planned": "1","colorp":"#dff0d8","coloru": "#FFFFFF"}]');
+            P6_CB_1 = new ClickB('P6_CB_1', '{"min":360,"max":1170,"step":30}');
+            P6_CB_1.addBlocks('[{"start": 990, "value": 60, "planned": 0, "colorp": "#dff0d8", "coloru": "#FFFFFF"},{ "start": "840","value": "120","planned": "1","colorp":"#dff0d8","coloru": "#FFFFFF"},{ "start": "600","value": "120","planned": "1","colorp":"#dff0d8","coloru": "#FFFFFF"}]');
+
+            var callbackF = 'function () {console.log(123);}';
+            P6_CB_1.setChangeCallback(callbackF );
 
             for (var i = 0; i < 10; i++) {
                 // inicialization - test from APEX (string insted of objects)

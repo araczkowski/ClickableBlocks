@@ -7,10 +7,10 @@
      * @param {String} elementID, this id will be used to create jQuery selector and apped a module code to this id
      * @param {Object} userOptions (optional) Custom options object that overrides default
      * {
-     *      @property {Number} userOptions.min Slider minimum value
-     *      @property {Number} userOptions.max Slider maximum value
-     *      @property {Number} userOptions.step Slider sliding step
-     *      @property {Object} userOptions.stepLabelDispFormat step Label format default hh24
+     *      @property {Number} userOptions.min Block's scale minimum value
+     *      @property {Number} userOptions.max Block's scale maximum value
+     *      @property {Number} userOptions.step Block's scale step
+     *      @property {Object} userOptions.stepLabelDispFormat Block's scale step Label format default hh24
      * }
      */
     w.ClickB = function (elementID, userOptions) {
@@ -83,7 +83,7 @@
 
         function _build() {
             $('#steps_' + elementID).remove();
-            $('#root_parent').append('<div id="steps_' + elementID + '" class="steps"></div>');
+            $('#' + elementID + '_parent').append('<div id="steps_' + elementID + '" class="ClickableBlocksSteps"></div>');
             var eSteps = $('#steps_' + elementID);
             var nSteps = (_options.max - _options.min) / _options.step;
             var stepWidth = 96 / nSteps;
@@ -91,10 +91,10 @@
                 var stepValue = _options.min + (i * _options.step);
                 $('<div/>', {
                     'id': 'step_' + elementID + '_' + (Number(i) + 1),
-                    'class': 'step',
+                    'class': 'ClickableBlocksStep',
                     'style': 'width:' + stepWidth + '%',
                     'data-start': stepValue,
-                    'html': '<span class="tick">' + _options.stepLabelDispFormat(stepValue) + '</span></div>'
+                    'html': '<span class="ClickableBlocksTick">' + _options.stepLabelDispFormat(stepValue) + '</span></div>'
                 }).appendTo(eSteps);
             }
             //
@@ -105,7 +105,7 @@
         function _addSteps(bSteps, value, planed, colorp, coloru) {
 
             for (var i = 0; i < bSteps.length; i++) {
-                bSteps[i].addClass('planned-block-body');
+                bSteps[i].addClass('ClickableBlocksPlannedBlockBody');
                 bSteps[i].attr('data-colorp', colorp);
                 bSteps[i].attr('data-coloru', coloru);
                 bSteps[i].attr('data-planned', planed);
@@ -117,12 +117,12 @@
                 }
 
                 if (i === 0) {
-                    bSteps[i].addClass('planned-block-start');
+                    bSteps[i].addClass('ClickableBlocksPlannedBlockStart');
                     bSteps[i].attr('data-value', value);
                 }
 
                 if (i === bSteps.length - 1) {
-                    bSteps[i].addClass('planned-block-end');
+                    bSteps[i].addClass('ClickableBlocksPlannedBlockEnd');
                 }
 
                 //initEvent
@@ -173,8 +173,8 @@
 
 
         /**
-         * Adds multiple block to the slider scale
-         * @param {Object} ArrayOfBlocksObjects example: Array([[0,20],[40,60]...])
+         * Adds multiple blocks to the block's scale
+         * @param {Object} ArrayOfBlocksObjects example: Array([{"start": 990, "value": 60, "planned": 0, "colorp": "#dff0d8", "coloru": "#FFFFFF"},...])
          * @return {Object} self instance of ClickB class
          */
         this.addBlocks = function (ArrayOfBlocksObjects) {
@@ -192,11 +192,11 @@
 
         /**
          * Gets all blocks for this ClickB instance
-         * @return {Array} of blocks
+         * @return {ArrayOfBlocksObjects} of blocks
          */
         this.getBlocks = function () {
             var blocks = [];
-            var _blocks = $('div#steps_' + elementID + ' .planned-block-start');
+            var _blocks = $('div#steps_' + elementID + ' .ClickableBlocksPlannedBlockStart');
             if (_blocks.length > 0) {
                 _blocks.each(function (i, e) {
                     var block = {};
@@ -213,7 +213,7 @@
         };
 
         /**
-         * Sets callback function that can be used for item change
+         * Sets callback function that can be used when item change
          *
          * @param {Function} callbackFunction
          *      stores a callback function
@@ -223,9 +223,19 @@
          * @return {Object} self instance of ClickB class
          */
         this.setChangeCallback = function (callbackFunction) {
+            if (typeof (callbackFunction) === 'string') {
+                /* jshint ignore:start */
+                var fn;
+                eval('fn = ' + callbackFunction);
+                callbackFunction = fn;
+                /* jshint ignore:end */
+            }
+
             if (typeof (callbackFunction) === 'function') {
                 _onChange = callbackFunction;
             }
+
+
             return this;
         };
 
