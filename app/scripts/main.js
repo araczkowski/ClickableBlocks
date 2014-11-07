@@ -181,7 +181,7 @@
             if (typeof (ArrayOfBlocksObjects) === 'string') {
                 ArrayOfBlocksObjects = JSON.parse(ArrayOfBlocksObjects);
             }
-            var blocksToAdd = [];
+            var stepsToAdd = [];
             for (var i = 0; i < ArrayOfBlocksObjects.length; i++) {
                 stepsToAdd = _getStepssInRange(ArrayOfBlocksObjects[i].start, ArrayOfBlocksObjects[i].value);
                 _addSteps(stepsToAdd, ArrayOfBlocksObjects[i].value, ArrayOfBlocksObjects[i].planned, ArrayOfBlocksObjects[i].colorp, ArrayOfBlocksObjects[i].coloru);
