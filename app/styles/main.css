@@ -41,17 +41,3 @@ div.planned-block-start {
 div.planned-block-end {
     border-right: 2px solid green;
 }
-/* code */
-
-.code {
-    padding: 16px;
-    overflow: auto;
-    font-size: 85%;
-    line-height: 1.45;
-    background-color: #f7f7f7;
-    border-radius: 3px;
-    color: #998;
-    font-style: italic;
-    margin: 20px;
-    width: 90%;
-}
