@@ -1,4 +1,4 @@
-CREATE OR REPLACE PACKAGE body clickable_blocks_plugin
+create or replace PACKAGE body clickable_blocks_plugin
 IS
 FUNCTION render(
     p_item                IN apex_plugin.t_page_item ,
