@@ -84,9 +84,20 @@
         function _build() {
             $('#steps_' + elementID).remove();
             $('#' + elementID + '_parent').append('<div id="steps_' + elementID + '" class="ClickableBlocksSteps"></div>');
+
+            $('#steps_' + elementID).append('<div id="selector_steps_' + elementID + '" class="ClickableBlocksAllBlockSelector"><i class="fa  fa-lg fa-plus-square"></i><i class="fa  fa-lg fa-minus-square"></i></div>');
+
+            $('#steps_' + elementID + ' .ClickableBlocksAllBlockSelector i.fa-plus-square').on('click', function () {
+                _planAll(this);
+            });
+
+            $('#steps_' + elementID + ' .ClickableBlocksAllBlockSelector i.fa-minus-square').on('click', function () {
+                _unplanAll(this);
+            });
+
             var eSteps = $('#steps_' + elementID);
             var nSteps = (_options.max - _options.min) / _options.step;
-            var stepWidth = 96 / nSteps;
+            var stepWidth = 80 / nSteps;
             var clickStep = 0;
             var cClass = 'ClickableBlocksStepContent';
 
@@ -115,7 +126,10 @@
                 }).appendTo(eSteps);
             }
             //
-            //$('#steps_' + elementID).width(nSteps * stepWidth + '%');
+            $('#steps_' + elementID).append('<div id="selector_steps_' + elementID + '" class="ClickableBlocksMealSelector"><i class="fa fa-cutlery mealOff"></i></div>');
+            $('#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa-cutlery').on('click', function () {
+                _toggleMeal(this);
+            });
         }
 
 
@@ -128,9 +142,9 @@
                 bSteps[i].attr('data-planned', planed);
                 bSteps[i].attr('data-block', bSteps[0].attr('id'));
                 if (planed === '1') {
-                    bSteps[i].css('background', colorp);
+                    bSteps[i].find('div.ClickableBlocksStepContent').css('background', colorp);
                 } else {
-                    bSteps[i].css('background', coloru);
+                    bSteps[i].find('div.ClickableBlocksStepContent').css('background', coloru);
                 }
 
                 if (i === 0) {
@@ -148,6 +162,9 @@
                 });
             }
 
+            //TODO - should be possible in CSS
+            $('.ClickableBlocksPlannedBlockStart').has('div.ClickableBlocksStepContentFullHour').css('border-left', '2px solid #656565');
+
             if (typeof (_onChange) === 'function') {
                 _onChange();
             }
@@ -162,18 +179,48 @@
             if (clickedBlock.attr('data-planned') === '1') {
                 // unplan
                 blocksSelector.attr('data-planned', '0');
-                blocksSelector.css('background', blocksSelector.attr('data-coloru'));
+                blocksSelector.find('div.ClickableBlocksStepContent').css('background', blocksSelector.attr('data-coloru'));
 
             } else {
                 //plan again
                 blocksSelector.attr('data-planned', '1');
-                blocksSelector.css('background', blocksSelector.attr('data-colorp'));
+                blocksSelector.find('div.ClickableBlocksStepContent').css('background', blocksSelector.attr('data-colorp'));
             }
 
             if (typeof (_onChange) === 'function') {
                 _onChange();
             }
         }
+
+        function _toggleMeal(e) {
+            $(e).toggleClass('mealOff mealOn');
+
+            if (typeof (_onChange) === 'function') {
+                _onChange();
+            }
+        }
+
+
+        function _planAll() {
+            var bcolor = $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody:first').attr('data-colorp');
+            $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody').attr('data-planned', '1');
+            $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody div.ClickableBlocksStepContent').css('background', bcolor);
+
+            if (typeof (_onChange) === 'function') {
+                _onChange();
+            }
+        }
+
+        function _unplanAll() {
+            var bcolor = $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody:first').attr('data-coloru');
+            $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody').attr('data-planned', '0');
+            $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody div.ClickableBlocksStepContent').css('background', bcolor);
+
+            if (typeof (_onChange) === 'function') {
+                _onChange();
+            }
+        }
+
 
 
         function _getStepssInRange(start, value) {
@@ -201,7 +248,7 @@
             var stepsToAdd = [];
             for (var i = 0; i < ArrayOfBlocksObjects.length; i++) {
                 stepsToAdd = _getStepssInRange(ArrayOfBlocksObjects[i].start, ArrayOfBlocksObjects[i].value);
-                _addSteps(stepsToAdd, ArrayOfBlocksObjects[i].value, ArrayOfBlocksObjects[i].planned, ArrayOfBlocksObjects[i].colorp, ArrayOfBlocksObjects[i].coloru);
+                _addSteps(stepsToAdd, ArrayOfBlocksObjects[i].value, ArrayOfBlocksObjects[i].planned, ArrayOfBlocksObjects[i].colplanned, ArrayOfBlocksObjects[i].colunplanned);
             }
             return this;
         };
@@ -214,6 +261,7 @@
         this.getBlocks = function () {
             var blocks = [];
             var _blocks = $('div#steps_' + elementID + ' .ClickableBlocksPlannedBlockStart');
+            var meal = {};
             if (_blocks.length > 0) {
                 _blocks.each(function (i, e) {
                     var block = {};
@@ -226,7 +274,14 @@
                     blocks.push(block);
                 });
             }
-            return blocks;
+
+            if ($('div#steps_' + elementID + ' .ClickableBlocksMealSelector i').hasClass('mealOn')) {
+                meal.meal = 1;
+            } else {
+                meal.meal = 0;
+            }
+            blocks.push(meal);
+            return JSON.stringify(blocks);
         };
 
         /**
