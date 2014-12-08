@@ -98,23 +98,59 @@ div.ClickableBlocksAllBlockSelector i.fa-plus-square {
     color: #ff8229;
     cursor: pointer;
     cursor: hand;
+    font-size: 1.8em;
+    text-shadow: 2px 2px 2px #ccc;
+}
+div.ClickableBlocksAllBlockSelector i.fa-plus-square:hover {
+    color: #D55900;
 }
 div.ClickableBlocksAllBlockSelector i.fa-minus-square {
     padding-right: 0.2em;
     padding-right: 0.8em;
-    color: #ff8229;
+    color: #ffd6b8;
     cursor: pointer;
     cursor: hand;
+    font-size: 1.8em;
+    text-shadow: 2px 2px 2px #ccc;
+}
+div.ClickableBlocksAllBlockSelector i.fa-minus-square:hover {
+    color: #FFB27A;
+}
+i.fa.click {
+    -webkit-animation: pulse-click .4s 1;
+    animation: pulse-click .4s 1;
+}
+@keyframes pulse-click {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+    25% {
+        -webkit-transform: scale(.9);
+        transform: scale(.9);
+        color: #FFB27A;
+    }
+    75% {
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+    }
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
 }
 div.ClickableBlocksMealSelector i.mealOn {
-    padding-left: 0.2em;
+    padding-left: 0.6em;
     color: #ff8229;
     cursor: pointer;
     cursor: hand;
+    text-shadow: 2px 2px 2px #ccc;
+    font-size: 1.8em;
 }
 div.ClickableBlocksMealSelector i.mealOff {
     padding-left: 0.8em;
     color: #ffd6b8;
     cursor: pointer;
     cursor: hand;
+    font-size: 1.5em;
 }

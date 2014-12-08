@@ -198,6 +198,10 @@
         }
 
         function _toggleMeal(e) {
+            $(e).addClass('click');
+            $(e).one('animationend webkitAnimationEnd onAnimationEnd', function () {
+                $(e).removeClass('click');
+            });
             $(e).toggleClass('mealOff mealOn');
 
             if (typeof (_onChange) === 'function') {
@@ -206,21 +210,28 @@
         }
 
 
-        function _planAll() {
+        function _planAll(e) {
             var bcolor = $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody:first').attr('data-colorp');
             $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody').attr('data-planned', '1');
             $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody div.ClickableBlocksStepContent').css('background', bcolor);
 
+            $(e).addClass('click');
+            $(e).one('animationend webkitAnimationEnd onAnimationEnd', function () {
+                $(e).removeClass('click');
+            });
             if (typeof (_onChange) === 'function') {
                 _onChange();
             }
         }
 
-        function _unplanAll() {
+        function _unplanAll(e) {
             var bcolor = $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody:first').attr('data-coloru');
             $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody').attr('data-planned', '0');
             $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody div.ClickableBlocksStepContent').css('background', bcolor);
-
+            $(e).addClass('click');
+            $(e).one('animationend webkitAnimationEnd onAnimationEnd', function () {
+                $(e).removeClass('click');
+            });
             if (typeof (_onChange) === 'function') {
                 _onChange();
             }
