@@ -87,18 +87,35 @@
             var eSteps = $('#steps_' + elementID);
             var nSteps = (_options.max - _options.min) / _options.step;
             var stepWidth = 96 / nSteps;
+            var clickStep = 0;
+            var cClass = 'ClickableBlocksStepContent';
+
             for (var i = 0; nSteps > i; i++) {
+                clickStep = (i * _options.step) % 60;
+                if (clickStep === 0) {
+                    cClass = 'ClickableBlocksStepContent ClickableBlocksStepContentFullHour';
+                } else if (clickStep === 30) {
+                    cClass = 'ClickableBlocksStepContent ClickableBlocksStepContentHalfHour';
+                } else {
+                    cClass = 'ClickableBlocksStepContent ClickableBlocksStepContentQuarter';
+                }
+                if (i === 0) {
+                    cClass = cClass + ' ClickableBlocksStepContentStart';
+                }
+                if (i === nSteps - 1) {
+                    cClass = cClass + ' ClickableBlocksStepContentEnd';
+                }
                 var stepValue = _options.min + (i * _options.step);
                 $('<div/>', {
                     'id': 'step_' + elementID + '_' + (Number(i) + 1),
                     'class': 'ClickableBlocksStep',
                     'style': 'width:' + stepWidth + '%',
                     'data-start': stepValue,
-                    'html': '<span class="ClickableBlocksTick">' + _options.stepLabelDispFormat(stepValue) + '</span><div class="ClickableBlocksStepContent"></div></div>'
+                    'html': '<span class="ClickableBlocksTick">' + _options.stepLabelDispFormat(stepValue) + '</span><div class="' + cClass + '"></div></div>'
                 }).appendTo(eSteps);
             }
             //
-            $('#steps_' + elementID).width(nSteps * stepWidth + '%');
+            //$('#steps_' + elementID).width(nSteps * stepWidth + '%');
         }
 
 

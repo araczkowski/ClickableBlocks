@@ -18,14 +18,28 @@ html {
 .ClickableBlocksSteps {
     position: relative;
     height: 2em;
-    margin-bottom: 1em;
 }
 .ClickableBlocksStep {
     float: left;
-    background-color: #e9f4f8;
 }
-.ClickableBlocksStepContent {
-    border: 1px solid #43838c;
+.ClickableBlocksStepContentFullHour {
+    height: 100%;
+    border-left: 2px solid #656565;
+    height: 2em;
+}
+.ClickableBlocksStepContentHalfHour {
+    height: 100%;
+    border-left: 1px solid #ffd6b8;
+    height: 2em;
+}
+.ClickableBlocksStepContentQuarter {
+    height: 100%;
+    border-left: 1px solid #ffd6b8;
+    height: 2em;
+}
+.ClickableBlocksStepContentEnd {
+    height: 100%;
+    border-right: 2px solid #656565;
     height: 2em;
 }
 .ClickableBlocksTick {
@@ -45,7 +59,11 @@ div.ClickableBlocksPlannedBlockBody .ClickableBlocksStepContent {
 }
 div.ClickableBlocksPlannedBlockStart .ClickableBlocksStepContent {
     border-left: 2px solid #43838c;
+    border-top: 2px solid #43838c;
+    border-bottom: 2px solid #43838c;
 }
 div.ClickableBlocksPlannedBlockEnd .ClickableBlocksStepContent {
     border-right: 2px solid #43838c;
+    border-top: 2px solid #43838c;
+    border-bottom: 2px solid #43838c;
 }

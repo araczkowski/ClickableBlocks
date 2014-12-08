@@ -83,17 +83,17 @@
                 "colorp": "#dff0d8",
                 "coloru": "#FFFFFF"
             };
-            P6_CB_1 = new ClickB('P6_CB_1', '{"min":360,"max":1170,"step":30}');
+            P6_CB_1 = new ClickB('P6_CB_1', '{"min":360,"max":1140,"step":15}');
             P6_CB_1.addBlocks('[{"start": 990, "value": 60, "planned": 0, "colorp": "#dff0d8", "coloru": "#FFFFFF"},{ "start": "840","value": "120","planned": "1","colorp":"#dff0d8","coloru": "#FFFFFF"},{ "start": "600","value": "120","planned": "1","colorp":"#dff0d8","coloru": "#FFFFFF"}]');
 
             var callbackF = 'function () {console.log(123);}';
-            P6_CB_1.setChangeCallback(callbackF );
+            P6_CB_1.setChangeCallback(callbackF);
 
             for (var i = 0; i < 10; i++) {
                 // inicialization - test from APEX (string insted of objects)
                 var name = 'clickB' + i;
-                var name = new ClickB(name, '{"min":360,"max":1170,"step":30, "stepLabelDispFormat":"function (steps) {return \'\';}"}');
-                name.addBlocks([block1, block2, block3, block4]);
+                var name = new ClickB(name, '{"min":360,"max":1140,"step":15, "stepLabelDispFormat":"function (steps) {return \'\';}"}');
+                //name.addBlocks([block1, block2, block3, block4]);
             }
         });
     </script>
