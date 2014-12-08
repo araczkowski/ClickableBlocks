@@ -17,31 +17,43 @@ html {
 }
 .ClickableBlocksSteps {
     position: relative;
-    height: 2em;
+    height: 2.2em;
 }
 .ClickableBlocksStep,
 .ClickableBlocksAllBlockSelector,
 .ClickableBlocksMealSelector {
     float: left;
+    height: 2.2em;
 }
-.ClickableBlocksStepContentFullHour {
+.ClickableBlocksStep.ClickableBlocksStepFullHour {
     border-left: 2px solid #656565;
-    height: 2em;
+    height: 2.2em;
 }
-.ClickableBlocksStepContentHalfHour {
+.ClickableBlocksStep.ClickableBlocksStepHalfHour {
     border-left: 1px solid #ffd6b8;
-    height: 2em;
+    height: 2.2em;
 }
-.ClickableBlocksStepContentQuarter {
+.ClickableBlocksStep.ClickableBlocksStepQuarter {
     border-left: 1px solid #ffd6b8;
-    height: 2em;
+    height: 2.2em;
 }
-.ClickableBlocksStepContentEnd {
+.ClickableBlocksStep.ClickableBlocksStepEnd {
     border-right: 2px solid #656565;
-    height: 2em;
+    height: 2.2em;
+}
+.ClickableBlocksStep .ClickableBlocksStepContentFullHour {
+    height: 1.8em;
+}
+.ClickableBlocksStep .ClickableBlocksStepContentHalfHour {
+    height: 1.8em;
+}
+.ClickableBlocksStep .ClickableBlocksStepContentQuarter {
+    height: 1.8em;
+}
+.ClickableBlocksStep .ClickableBlocksStepContentEnd {
+    height: 1.8em;
 }
 .ClickableBlocksTick {
-    /*border:1px solid transparent;*/
     position: absolute;
     margin-left: -.6em;
     margin-top: -20px;
@@ -49,11 +61,13 @@ html {
     color: #656565;
     font-size: small;
 }
+div.ClickableBlocksStep.ClickableBlocksPlannedBlockBody {
+    border-left: 0px;
+    border-right: 0px;
+}
 div.ClickableBlocksPlannedBlockBody .ClickableBlocksStepContent {
     border-top: 2px solid white;
     border-bottom: 2px solid white;
-    border-left: 0px;
-    border-right: 0px;
     -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
@@ -99,7 +113,7 @@ div.ClickableBlocksMealSelector i.mealOn {
     cursor: hand;
 }
 div.ClickableBlocksMealSelector i.mealOff {
-    padding-left: 0.2em;
+    padding-left: 0.8em;
     color: #ffd6b8;
     cursor: pointer;
     cursor: hand;

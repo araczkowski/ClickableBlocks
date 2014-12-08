@@ -99,30 +99,36 @@
             var nSteps = (_options.max - _options.min) / _options.step;
             var stepWidth = 80 / nSteps;
             var clickStep = 0;
-            var cClass = 'ClickableBlocksStepContent';
+            var contentClass = '';
+            var stepClass = '';
 
             for (var i = 0; nSteps > i; i++) {
                 clickStep = (i * _options.step) % 60;
                 if (clickStep === 0) {
-                    cClass = 'ClickableBlocksStepContent ClickableBlocksStepContentFullHour';
+                    contentClass = 'ClickableBlocksStepContentFullHour';
+                    stepClass = 'ClickableBlocksStepFullHour';
                 } else if (clickStep === 30) {
-                    cClass = 'ClickableBlocksStepContent ClickableBlocksStepContentHalfHour';
+                    contentClass = 'ClickableBlocksStepContentHalfHour';
+                    stepClass = 'ClickableBlocksStepHalfHour';
                 } else {
-                    cClass = 'ClickableBlocksStepContent ClickableBlocksStepContentQuarter';
+                    contentClass = 'ClickableBlocksStepContentQuarter';
+                    stepClass = 'ClickableBlocksStepQuarter';
                 }
                 if (i === 0) {
-                    cClass = cClass + ' ClickableBlocksStepContentStart';
+                    contentClass = contentClass + ' ClickableBlocksStepContentStart';
+                    stepClass = stepClass + ' ClickableBlocksStepStart';
                 }
                 if (i === nSteps - 1) {
-                    cClass = cClass + ' ClickableBlocksStepContentEnd';
+                    contentClass = contentClass + ' ClickableBlocksStepContentEnd';
+                    stepClass = stepClass + ' ClickableBlocksStepEnd';
                 }
                 var stepValue = _options.min + (i * _options.step);
                 $('<div/>', {
                     'id': 'step_' + elementID + '_' + (Number(i) + 1),
-                    'class': 'ClickableBlocksStep',
+                    'class': 'ClickableBlocksStep ' + stepClass,
                     'style': 'width:' + stepWidth + '%',
                     'data-start': stepValue,
-                    'html': '<span class="ClickableBlocksTick">' + _options.stepLabelDispFormat(stepValue) + '</span><div class="' + cClass + '"></div></div>'
+                    'html': '<span class="ClickableBlocksTick">' + _options.stepLabelDispFormat(stepValue) + '</span><div class="ClickableBlocksStepContent ' + contentClass + '"></div></div>'
                 }).appendTo(eSteps);
             }
             $('#steps_' + elementID).append('<div id="selector_steps_' + elementID + '" class="ClickableBlocksMealSelector"><span class="ClickableBlocksTick">' + _options.stepLabelDispFormat(_options.min + (nSteps * _options.step)) + '</span><i class="fa fa-cutlery fa-2x mealOff"></i></div>');
