@@ -20,10 +20,15 @@ html {
     height: 2.2em;
 }
 .ClickableBlocksStep,
-.ClickableBlocksAllBlockSelector,
 .ClickableBlocksMealSelector {
     float: left;
     height: 2.2em;
+}
+.ClickableBlocksAllBlockSelector {
+    float: left;
+    height: 2.2em;
+    vertical-align: bottom;
+    line-height: 2.2em;
 }
 .ClickableBlocksStep.ClickableBlocksStepFullHour {
     border-left: 2px solid #656565;
@@ -60,6 +65,7 @@ html {
     text-align: center;
     color: #656565;
     font-size: small;
+    visibility: hidden;
 }
 div.ClickableBlocksStep.ClickableBlocksPlannedBlockBody {
     border-left: 0px;
@@ -94,7 +100,7 @@ div.ClickableBlocksPlannedBlockEnd div.ClickableBlocksStepContent {
 }
 div.ClickableBlocksAllBlockSelector i.fa-plus-square {
     padding-right: 0.2em;
-    padding-left: 0.8em;
+    padding-left: 0.2em;
     color: #ff8229;
     cursor: pointer;
     cursor: hand;

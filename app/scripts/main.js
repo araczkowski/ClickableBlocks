@@ -97,7 +97,7 @@
 
             var eSteps = $('#steps_' + elementID);
             var nSteps = (_options.max - _options.min) / _options.step;
-            var stepWidth = 80 / nSteps;
+            //var stepWidth = 80 / nSteps;
             var clickStep = 0;
             var contentClass = '';
             var stepClass = '';
@@ -126,7 +126,7 @@
                 $('<div/>', {
                     'id': 'step_' + elementID + '_' + (Number(i) + 1),
                     'class': 'ClickableBlocksStep ' + stepClass,
-                    'style': 'width:' + stepWidth + '%',
+                    'style': 'width: 1.2em;',
                     'data-start': stepValue,
                     'html': '<span class="ClickableBlocksTick">' + _options.stepLabelDispFormat(stepValue) + '</span><div class="ClickableBlocksStepContent ' + contentClass + '"></div></div>'
                 }).appendTo(eSteps);
@@ -135,6 +135,7 @@
             $('#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa-cutlery').on('click', function () {
                 _toggleMeal(this);
             });
+            $('#' + elementID + '_parent').css('width', (nSteps * 1.2) + 10 + 'em');
         }
 
 
@@ -162,7 +163,7 @@
                 }
 
                 //initEvent
-                bSteps[i].on('click', function () {
+                bSteps[i].unbind('click').on('click', function () {
                     _togglePlan(this);
                 });
             }
@@ -198,42 +199,70 @@
         }
 
         function _toggleMeal(e) {
-            $(e).addClass('click');
-            $(e).one('animationend webkitAnimationEnd onAnimationEnd', function () {
-                $(e).removeClass('click');
-            });
-            $(e).toggleClass('mealOff mealOn');
 
-            if (typeof (_onChange) === 'function') {
-                _onChange();
+            if ($('div#steps_' + elementID + ' .ClickableBlocksPlannedBlockStart').length > 0) {
+
+                $(e).addClass('click');
+                $(e).one('animationend webkitAnimationEnd onAnimationEnd', function () {
+                    $(e).removeClass('click');
+                });
+
+                if ($(e).hasClass('mealOff')) {
+                    $('#steps_' + elementID + ' i.fa-cutlery').removeClass('mealOff').addClass('mealOn');
+                    $('#steps_' + elementID + ' i.fa-cutlery').attr('style', 'color: #ff8229; font-size: 1.8em;'); //IE8 problems
+                } else {
+                    $('#steps_' + elementID + ' i.fa-cutlery').removeClass('mealOn').addClass('mealOff');
+                    $('#steps_' + elementID + ' i.fa-cutlery').attr('style', 'color: #ffd6b8; font-size: 1.5em;'); //IE8 problems
+                }
+
+                //$(e).toggleClass('mealOff mealOn');
+
+                if (typeof (_onChange) === 'function') {
+                    _onChange();
+                }
             }
         }
 
 
         function _planAll(e) {
-            var bcolor = $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody:first').attr('data-colorp');
-            $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody').attr('data-planned', '1');
-            $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody div.ClickableBlocksStepContent').css('background', bcolor);
+            if ($('div#steps_' + elementID + ' .ClickableBlocksPlannedBlockStart').length > 0) {
+                var bcolor = $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody:first').attr('data-colorp');
 
-            $(e).addClass('click');
-            $(e).one('animationend webkitAnimationEnd onAnimationEnd', function () {
-                $(e).removeClass('click');
-            });
-            if (typeof (_onChange) === 'function') {
-                _onChange();
+                $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody').attr('data-planned', '1');
+                $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody div.ClickableBlocksStepContent').css('background', bcolor);
+
+                $(e).addClass('click');
+                $(e).one('animationend webkitAnimationEnd onAnimationEnd', function () {
+                    $(e).removeClass('click');
+                });
+
+                if ($('#steps_' + elementID + ' i.fa-cutlery').hasClass('mealOff')) {
+                    $('#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa-cutlery').click();
+                } //IE8 problems
+
+                if (typeof (_onChange) === 'function') {
+                    _onChange();
+                }
             }
         }
 
         function _unplanAll(e) {
-            var bcolor = $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody:first').attr('data-coloru');
-            $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody').attr('data-planned', '0');
-            $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody div.ClickableBlocksStepContent').css('background', bcolor);
-            $(e).addClass('click');
-            $(e).one('animationend webkitAnimationEnd onAnimationEnd', function () {
-                $(e).removeClass('click');
-            });
-            if (typeof (_onChange) === 'function') {
-                _onChange();
+            if ($('div#steps_' + elementID + ' .ClickableBlocksPlannedBlockStart').length > 0) {
+                var bcolor = $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody:first').attr('data-coloru');
+                $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody').attr('data-planned', '0');
+                $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody div.ClickableBlocksStepContent').css('background', bcolor);
+
+                $(e).addClass('click');
+                $(e).one('animationend webkitAnimationEnd onAnimationEnd', function () {
+                    $(e).removeClass('click');
+                });
+                if ($('#steps_' + elementID + ' i.fa-cutlery').hasClass('mealOn')) {
+                    $('#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa-cutlery').click();
+                } //IE8 problems
+
+                if (typeof (_onChange) === 'function') {
+                    _onChange();
+                }
             }
         }
 

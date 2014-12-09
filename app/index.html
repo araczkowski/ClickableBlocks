@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <div class="ClickableBlocksContent">
+    <div class="ClickableBlocksContent" style="overflow: auto; width: 1200px; margin-right: 20px;padding-top: 20px;">
         <div id="P6_CB_1_parent">
         </div>
         <div id="clickB0_parent">
@@ -93,8 +93,9 @@
             for (var i = 0; i < 10; i++) {
                 // inicialization - test from APEX (string insted of objects)
                 var name = 'clickB' + i;
-                var name = new ClickB(name, '{"min":360,"max":1140,"step":15, "stepLabelDispFormat":"function (steps) {return \'\';}"}');
+                var name = new ClickB(name, '{"min":360,"max":1140,"step":15}');
                 name.addBlocks([block1, block2, block3, block4]);
+                //, "stepLabelDispFormat":"function (steps) {return \'\';}"
             }
         });
     </script>
