@@ -139,10 +139,11 @@
         }
 
 
-        function _addSteps(bSteps, value, planed, colorp, coloru) {
+        function _addSteps(bSteps, value, planed, colorp, coloru, id, meal) {
 
             for (var i = 0; i < bSteps.length; i++) {
                 bSteps[i].addClass('ClickableBlocksPlannedBlockBody');
+                bSteps[i].attr('data-id', id);
                 bSteps[i].attr('data-colorp', colorp);
                 bSteps[i].attr('data-coloru', coloru);
                 bSteps[i].attr('data-planned', planed);
@@ -167,7 +168,12 @@
                     _togglePlan(this);
                 });
             }
-
+            // add only meal TODO
+            if (meal === "1") {
+                if ($('#steps_' + elementID + ' i.fa-cutlery').hasClass('mealOff')) {
+                    $('#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa-cutlery').click();
+                }
+            }
             //TODO - should be possible in CSS
             $('.ClickableBlocksPlannedBlockStart').has('div.ClickableBlocksStepContentFullHour').css('border-left', '2px solid #656565');
 
@@ -293,7 +299,7 @@
             var stepsToAdd = [];
             for (var i = 0; i < ArrayOfBlocksObjects.length; i++) {
                 stepsToAdd = _getStepssInRange(ArrayOfBlocksObjects[i].start, ArrayOfBlocksObjects[i].value);
-                _addSteps(stepsToAdd, ArrayOfBlocksObjects[i].value, ArrayOfBlocksObjects[i].planned, ArrayOfBlocksObjects[i].colplanned, ArrayOfBlocksObjects[i].colunplanned);
+                _addSteps(stepsToAdd, ArrayOfBlocksObjects[i].value, ArrayOfBlocksObjects[i].planned, ArrayOfBlocksObjects[i].colplanned, ArrayOfBlocksObjects[i].colunplanned, ArrayOfBlocksObjects[i].id, ArrayOfBlocksObjects[i].meal);
             }
             return this;
         };
@@ -310,20 +316,20 @@
             if (_blocks.length > 0) {
                 _blocks.each(function (i, e) {
                     var block = {};
-                    block.id = e.getAttribute('id');
+                    block.id = e.getAttribute('data-id');
                     block.start = e.getAttribute('data-start');
                     block.value = e.getAttribute('data-value');
                     block.planned = e.getAttribute('data-planned');
-                    block.colorp = e.getAttribute('data-colorp');
-                    block.coloru = e.getAttribute('data-coloru');
+                    block.colplanned = e.getAttribute('data-colorp');
+                    block.colunplanned = e.getAttribute('data-coloru');
                     blocks.push(block);
                 });
             }
 
             if ($('div#steps_' + elementID + ' .ClickableBlocksMealSelector i').hasClass('mealOn')) {
-                meal.meal = 1;
+                meal.meal = "1";
             } else {
-                meal.meal = 0;
+                meal.meal = "0";
             }
             blocks.push(meal);
             return JSON.stringify(blocks);
