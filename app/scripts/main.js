@@ -23,7 +23,9 @@
             min: 0,
             max: 1440,
             step: 30,
-            stepLabelDispFormat: _stepLabelDispFormat
+            stepLabelDispFormat: _stepLabelDispFormat,
+            readonly: false,
+            toolbar: true
         };
 
         var _onChange = null;
@@ -31,6 +33,7 @@
 
         function _init() {
             _mergeOptions();
+
             if ((_options.max - _options.min) % _options.step !== 0) {
                 throw 'Blocks length should be multiple to step';
             }
@@ -44,12 +47,6 @@
             }
             if (typeof (userOptions) === 'string') {
                 userOptions = JSON.parse(userOptions);
-            }
-
-            if (typeof (userOptions.openBlocks) !== 'undefined') {
-                if (typeof (userOptions.openBlocks) === 'string') {
-                    userOptions.openBlocks = JSON.parse(userOptions.openBlocks);
-                }
             }
 
             if (typeof (userOptions.stepLabelDispFormat) !== 'undefined') {
@@ -85,16 +82,19 @@
             $('#steps_' + elementID).remove();
             $('#' + elementID + '_parent').append('<div id="steps_' + elementID + '" class="ClickableBlocksSteps"></div>');
 
-            $('#steps_' + elementID).append('<div id="selector_steps_' + elementID + '" class="ClickableBlocksAllBlockSelector"><i class="fa  fa-lg fa-2x fa-plus-square"></i><i class="fa  fa-lg fa-2x fa-minus-square"></i></div>');
+            if (_options.toolbar) {
+                $('#steps_' + elementID).append('<div id="selector_steps_' + elementID + '" class="ClickableBlocksAllBlockSelector"><i class="fa  fa-lg fa-2x fa-plus-square"></i><i class="fa  fa-lg fa-2x fa-minus-square"></i></div>');
 
-            $('#steps_' + elementID + ' .ClickableBlocksAllBlockSelector i.fa-plus-square').on('click', function () {
-                _planAll(this);
-            });
+                if (!_options.readonly) {
+                    $('#steps_' + elementID + ' .ClickableBlocksAllBlockSelector i.fa-plus-square').on('click', function () {
+                        _planAll(this);
+                    });
 
-            $('#steps_' + elementID + ' .ClickableBlocksAllBlockSelector i.fa-minus-square').on('click', function () {
-                _unplanAll(this);
-            });
-
+                    $('#steps_' + elementID + ' .ClickableBlocksAllBlockSelector i.fa-minus-square').on('click', function () {
+                        _unplanAll(this);
+                    });
+                }
+            }
             var eSteps = $('#steps_' + elementID);
             var nSteps = (_options.max - _options.min) / _options.step;
             //var stepWidth = 80 / nSteps;
@@ -132,10 +132,18 @@
                 }).appendTo(eSteps);
             }
             $('#steps_' + elementID).append('<div id="selector_steps_' + elementID + '" class="ClickableBlocksMealSelector"><span class="ClickableBlocksTick">' + _options.stepLabelDispFormat(_options.min + (nSteps * _options.step)) + '</span><i class="fa fa-cutlery fa-2x mealOff"></i></div>');
-            $('#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa-cutlery').on('click', function () {
-                _toggleMeal(this);
-            });
-            $('#' + elementID + '_parent').css('width', (nSteps * 1.2) + 10 + 'em');
+
+            if (!_options.readonly) {
+                $('#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa-cutlery').on('click', function () {
+                    _toggleMeal(this);
+                });
+            }
+
+            if (!_options.readonly) {
+                $('#' + elementID + '_parent').css('width', (nSteps * 1.2) + 10 + 'em');
+            } else {
+                $('#' + elementID + '_parent').css('width', (nSteps * 1.2) + 4 + 'em');
+            }
         }
 
 
@@ -163,15 +171,21 @@
                     bSteps[i].addClass('ClickableBlocksPlannedBlockEnd');
                 }
 
-                //initEvent
-                bSteps[i].unbind('click').on('click', function () {
-                    _togglePlan(this);
-                });
+                if (!_options.readonly) {
+                    //initEvent
+                    bSteps[i].unbind('click').on('click', function () {
+                        _togglePlan(this);
+                    });
+                }
             }
             // add only meal TODO
-            if (meal === "1") {
+            if (meal === '1') {
                 if ($('#steps_' + elementID + ' i.fa-cutlery').hasClass('mealOff')) {
-                    $('#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa-cutlery').click();
+                    if (!_options.readonly) {
+                        $('#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa-cutlery').click();
+                    } else {
+                        $('#steps_' + elementID + ' i.fa-cutlery').removeClass('mealOff').addClass('mealOn');
+                    }
                 }
             }
             //TODO - should be possible in CSS
@@ -215,10 +229,8 @@
 
                 if ($(e).hasClass('mealOff')) {
                     $('#steps_' + elementID + ' i.fa-cutlery').removeClass('mealOff').addClass('mealOn');
-                    $('#steps_' + elementID + ' i.fa-cutlery').attr('style', 'color: #ff8229; font-size: 1.8em;'); //IE8 problems
                 } else {
                     $('#steps_' + elementID + ' i.fa-cutlery').removeClass('mealOn').addClass('mealOff');
-                    $('#steps_' + elementID + ' i.fa-cutlery').attr('style', 'color: #ffd6b8; font-size: 1.5em;'); //IE8 problems
                 }
 
                 //$(e).toggleClass('mealOff mealOn');
@@ -327,9 +339,9 @@
             }
 
             if ($('div#steps_' + elementID + ' .ClickableBlocksMealSelector i').hasClass('mealOn')) {
-                meal.meal = "1";
+                meal.meal = '1';
             } else {
-                meal.meal = "0";
+                meal.meal = '0';
             }
             blocks.push(meal);
             return JSON.stringify(blocks);

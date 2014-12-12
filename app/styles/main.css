@@ -65,7 +65,6 @@ html {
     text-align: center;
     color: #656565;
     font-size: small;
-    visibility: hidden;
 }
 div.ClickableBlocksStep.ClickableBlocksPlannedBlockBody {
     border-left: 0px;
