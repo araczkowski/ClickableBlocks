@@ -139,7 +139,7 @@
                 });
             }
 
-            if (!_options.readonly) {
+            if (_options.toolbar) {
                 $('#' + elementID + '_parent').css('width', (nSteps * 1.2) + 10 + 'em');
             } else {
                 $('#' + elementID + '_parent').css('width', (nSteps * 1.2) + 4 + 'em');
@@ -178,15 +178,8 @@
                     });
                 }
             }
-            // add only meal TODO
             if (meal === '1') {
-                if ($('#steps_' + elementID + ' i.fa-cutlery').hasClass('mealOff')) {
-                    if (!_options.readonly) {
-                        $('#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa-cutlery').click();
-                    } else {
-                        $('#steps_' + elementID + ' i.fa-cutlery').removeClass('mealOff').addClass('mealOn');
-                    }
-                }
+                _mealOn();
             }
             //TODO - should be possible in CSS
             $('.ClickableBlocksPlannedBlockStart').has('div.ClickableBlocksStepContentFullHour').css('border-left', '2px solid #656565');
@@ -219,25 +212,42 @@
         }
 
         function _toggleMeal(e) {
-
+            //on click
             if ($('div#steps_' + elementID + ' .ClickableBlocksPlannedBlockStart').length > 0) {
-
-                $(e).addClass('click');
-                $(e).one('animationend webkitAnimationEnd onAnimationEnd', function () {
-                    $(e).removeClass('click');
-                });
-
                 if ($(e).hasClass('mealOff')) {
-                    $('#steps_' + elementID + ' i.fa-cutlery').removeClass('mealOff').addClass('mealOn');
+                    _mealOn();
                 } else {
-                    $('#steps_' + elementID + ' i.fa-cutlery').removeClass('mealOn').addClass('mealOff');
+                    _mealOff();
                 }
+            }
+            //$(e).toggleClass('mealOff mealOn');
+        }
 
-                //$(e).toggleClass('mealOff mealOn');
+        function _mealOn() {
+            var e = $('#steps_' + elementID + ' i.fa-cutlery');
+            e.addClass('click');
+            e.one('animationend webkitAnimationEnd onAnimationEnd', function () {
+                e.removeClass('click');
+            });
 
-                if (typeof (_onChange) === 'function') {
-                    _onChange();
-                }
+            e.removeClass('mealOff').addClass('mealOn');
+
+            if (typeof (_onChange) === 'function') {
+                _onChange();
+            }
+        }
+
+        function _mealOff() {
+            var e = $('#steps_' + elementID + ' i.fa-cutlery');
+            e.addClass('click');
+            e.one('animationend webkitAnimationEnd onAnimationEnd', function () {
+                e.removeClass('click');
+            });
+
+            e.removeClass('mealOn').addClass('mealOff');
+
+            if (typeof (_onChange) === 'function') {
+                _onChange();
             }
         }
 
@@ -254,9 +264,10 @@
                     $(e).removeClass('click');
                 });
 
-                if ($('#steps_' + elementID + ' i.fa-cutlery').hasClass('mealOff')) {
-                    $('#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa-cutlery').click();
-                } //IE8 problems
+                //If there is at least 1 time-slot between 12:00 and 13:00, the meal is selected as well, when clicking
+                if ($('div#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody[data-start="720"]').length > 0 || $('div#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody[data-start="735"]').length > 0 || $('div#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody[data-start="750"]').length > 0 || $('div#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody[data-start="765"]').length > 0 || $('div#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody[data-start="780"]').length > 0) {
+                    _mealOn();
+                }
 
                 if (typeof (_onChange) === 'function') {
                     _onChange();
@@ -274,9 +285,8 @@
                 $(e).one('animationend webkitAnimationEnd onAnimationEnd', function () {
                     $(e).removeClass('click');
                 });
-                if ($('#steps_' + elementID + ' i.fa-cutlery').hasClass('mealOn')) {
-                    $('#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa-cutlery').click();
-                } //IE8 problems
+                //When clicking the 'x'-button, the meal is always deselected
+                _mealOff();
 
                 if (typeof (_onChange) === 'function') {
                     _onChange();
@@ -309,9 +319,9 @@
                 ArrayOfBlocksObjects = JSON.parse(ArrayOfBlocksObjects);
             }
             var stepsToAdd = [];
-            for (var i = 0; i < ArrayOfBlocksObjects.length; i++) {
-                stepsToAdd = _getStepssInRange(ArrayOfBlocksObjects[i].start, ArrayOfBlocksObjects[i].value);
-                _addSteps(stepsToAdd, ArrayOfBlocksObjects[i].value, ArrayOfBlocksObjects[i].planned, ArrayOfBlocksObjects[i].colplanned, ArrayOfBlocksObjects[i].colunplanned, ArrayOfBlocksObjects[i].id, ArrayOfBlocksObjects[i].meal);
+            for (var i = 0; i < ArrayOfBlocksObjects.blocks.length; i++) {
+                stepsToAdd = _getStepssInRange(ArrayOfBlocksObjects.blocks[i].start, ArrayOfBlocksObjects.blocks[i].value);
+                _addSteps(stepsToAdd, ArrayOfBlocksObjects.blocks[i].value, ArrayOfBlocksObjects.blocks[i].planned, ArrayOfBlocksObjects.blocks[i].colplanned, ArrayOfBlocksObjects.blocks[i].colunplanned, ArrayOfBlocksObjects.blocks[i].id, ArrayOfBlocksObjects.blocks[i].meal);
             }
             return this;
         };
@@ -322,9 +332,10 @@
          * @return {ArrayOfBlocksObjects} of blocks
          */
         this.getBlocks = function () {
+            var obj = {};
             var blocks = [];
             var _blocks = $('div#steps_' + elementID + ' .ClickableBlocksPlannedBlockStart');
-            var meal = {};
+            var meal;
             if (_blocks.length > 0) {
                 _blocks.each(function (i, e) {
                     var block = {};
@@ -339,12 +350,13 @@
             }
 
             if ($('div#steps_' + elementID + ' .ClickableBlocksMealSelector i').hasClass('mealOn')) {
-                meal.meal = '1';
+                meal = '1';
             } else {
-                meal.meal = '0';
+                meal = '0';
             }
-            blocks.push(meal);
-            return JSON.stringify(blocks);
+            obj.blocks = blocks;
+            obj.meal = meal;
+            return JSON.stringify(obj);
         };
 
         /**
