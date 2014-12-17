@@ -318,10 +318,19 @@
             if (typeof (ArrayOfBlocksObjects) === 'string') {
                 ArrayOfBlocksObjects = JSON.parse(ArrayOfBlocksObjects);
             }
-            var stepsToAdd = [];
-            for (var i = 0; i < ArrayOfBlocksObjects.blocks.length; i++) {
-                stepsToAdd = _getStepssInRange(ArrayOfBlocksObjects.blocks[i].start, ArrayOfBlocksObjects.blocks[i].value);
-                _addSteps(stepsToAdd, ArrayOfBlocksObjects.blocks[i].value, ArrayOfBlocksObjects.blocks[i].planned, ArrayOfBlocksObjects.blocks[i].colplanned, ArrayOfBlocksObjects.blocks[i].colunplanned, ArrayOfBlocksObjects.blocks[i].id, ArrayOfBlocksObjects.blocks[i].meal);
+            //
+            if (typeof (ArrayOfBlocksObjects) === 'undefined') {
+                return;
+            }
+
+            //
+            if (typeof (ArrayOfBlocksObjects.blocks) === 'object') {
+
+                var stepsToAdd = [];
+                for (var i = 0; i < ArrayOfBlocksObjects.blocks.length; i++) {
+                    stepsToAdd = _getStepssInRange(ArrayOfBlocksObjects.blocks[i].start, ArrayOfBlocksObjects.blocks[i].value);
+                    _addSteps(stepsToAdd, ArrayOfBlocksObjects.blocks[i].value, ArrayOfBlocksObjects.blocks[i].planned, ArrayOfBlocksObjects.blocks[i].colplanned, ArrayOfBlocksObjects.blocks[i].colunplanned, ArrayOfBlocksObjects.blocks[i].id, ArrayOfBlocksObjects.blocks[i].meal);
+                }
             }
             return this;
         };
