@@ -146,7 +146,6 @@ i.fa.click {
 }
 div.ClickableBlocksMealSelector i.mealOn {
     padding-left: 0.6em;
-    color: #ff8229;
     cursor: pointer;
     cursor: hand;
     text-shadow: 2px 2px 2px #ccc;
@@ -154,7 +153,6 @@ div.ClickableBlocksMealSelector i.mealOn {
 }
 div.ClickableBlocksMealSelector i.mealOff {
     padding-left: 0.8em;
-    color: #ffd6b8;
     cursor: pointer;
     cursor: hand;
     font-size: 1.5em;

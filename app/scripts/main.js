@@ -25,7 +25,8 @@
             step: 30,
             stepLabelDispFormat: _stepLabelDispFormat,
             readonly: false,
-            toolbar: true
+            toolbar: true,
+            mode: 'plan'
         };
 
         var _onChange = null;
@@ -147,24 +148,26 @@
         }
 
 
-        function _addSteps(bSteps, value, planed, colorp, coloru, id, meal) {
+        function _addSteps(bSteps, block, meal, rmeal) {
 
             for (var i = 0; i < bSteps.length; i++) {
                 bSteps[i].addClass('ClickableBlocksPlannedBlockBody');
-                bSteps[i].attr('data-id', id);
-                bSteps[i].attr('data-colorp', colorp);
-                bSteps[i].attr('data-coloru', coloru);
-                bSteps[i].attr('data-planned', planed);
+                bSteps[i].attr('data-id', block.id);
+                bSteps[i].attr('data-colplanned', block.colplanned);
+                bSteps[i].attr('data-colunplanned', block.colunplanned);
+                bSteps[i].attr('data-colreal', block.colreal);
+                bSteps[i].attr('data-coladded', block.coladded);
+                bSteps[i].attr('data-colunreal', block.colunreal);
+                bSteps[i].attr('data-coldeleted', block.coldeleted);
+                bSteps[i].attr('data-planned', block.planned);
+                bSteps[i].attr('data-real', block.real);
                 bSteps[i].attr('data-block', bSteps[0].attr('id'));
-                if (planed === '1') {
-                    bSteps[i].find('div.ClickableBlocksStepContent').css('background', colorp);
-                } else {
-                    bSteps[i].find('div.ClickableBlocksStepContent').css('background', coloru);
-                }
+
+                bSteps[i].find('div.ClickableBlocksStepContent').css('background', block[_getBackgroundColor(block.planned, block.real)]);
 
                 if (i === 0) {
                     bSteps[i].addClass('ClickableBlocksPlannedBlockStart');
-                    bSteps[i].attr('data-value', value);
+                    bSteps[i].attr('data-value', block.value);
                 }
 
                 if (i === bSteps.length - 1) {
@@ -178,8 +181,20 @@
                     });
                 }
             }
-            if (meal === '1') {
-                _mealOn();
+            //
+            _addMeal(meal, rmeal);
+            if (_options.mode === 'real') {
+                if (rmeal === '1') {
+                    _mealOn();
+                } else {
+                    _mealOff();
+                }
+            } else {
+                if (meal === '1') {
+                    _mealOn();
+                } else {
+                    _mealOff();
+                }
             }
             //TODO - should be possible in CSS
             $('.ClickableBlocksPlannedBlockStart').has('div.ClickableBlocksStepContentFullHour').css('border-left', '2px solid #656565');
@@ -191,20 +206,52 @@
 
         }
 
+        function _getBackgroundColor(plan, real) {
+
+            if (_options.mode === 'real') {
+                if (real === '1' && plan === '1') {
+                    return 'colreal';
+                } else if (real === '1' && plan === '0') {
+                    return 'coladded';
+                } else if (real === '0' && plan === '0') {
+                    return 'colunreal';
+                } else if (real === '0' && plan === '1') {
+                    return 'coldeleted';
+                }
+
+            } else {
+                if (plan === '1') {
+                    return 'colplanned';
+                } else {
+                    return 'colunplanned';
+                }
+            }
+        }
+
         function _togglePlan(e) {
             var clickedBlock = $(e);
             var blocksSelector = $('[data-block=' + clickedBlock.attr('data-block') + ']');
+            var key;
 
-            if (clickedBlock.attr('data-planned') === '1') {
-                // unplan
-                blocksSelector.attr('data-planned', '0');
-                blocksSelector.find('div.ClickableBlocksStepContent').css('background', blocksSelector.attr('data-coloru'));
 
+            if (_options.mode === 'real') {
+                if (clickedBlock.attr('data-real') === '1') {
+                    blocksSelector.attr('data-real', '0');
+
+                } else {
+                    blocksSelector.attr('data-real', '1');
+                }
             } else {
-                //plan again
-                blocksSelector.attr('data-planned', '1');
-                blocksSelector.find('div.ClickableBlocksStepContent').css('background', blocksSelector.attr('data-colorp'));
+                if (clickedBlock.attr('data-planned') === '1') {
+                    blocksSelector.attr('data-planned', '0');
+
+                } else {
+                    blocksSelector.attr('data-planned', '1');
+                }
             }
+
+            key = _getBackgroundColor(clickedBlock.attr('data-planned'), clickedBlock.attr('data-real'));
+            blocksSelector.find('div.ClickableBlocksStepContent').css('background', blocksSelector.attr('data-' + key));
 
             if (typeof (_onChange) === 'function') {
                 _onChange();
@@ -223,6 +270,12 @@
             //$(e).toggleClass('mealOff mealOn');
         }
 
+        function _addMeal(plan, real) {
+            var e = $('#steps_' + elementID + ' i.fa-cutlery');
+            e.attr('data-meal', plan);
+            e.attr('data-rmeal', real);
+        }
+
         function _mealOn() {
             var e = $('#steps_' + elementID + ' i.fa-cutlery');
             e.addClass('click');
@@ -230,7 +283,16 @@
                 e.removeClass('click');
             });
 
+            if (_options.mode === 'real') {
+                e.attr('data-rmeal', 1);
+            } else {
+                e.attr('data-meal', 1);
+            }
+            var key = _getBackgroundColor(e.attr('data-meal'), e.attr('data-rmeal'));
+            var bcolor = $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody:first').attr('data-' + key);
+            e.css('color', bcolor);
             e.removeClass('mealOff').addClass('mealOn');
+
 
             if (typeof (_onChange) === 'function') {
                 _onChange();
@@ -244,6 +306,14 @@
                 e.removeClass('click');
             });
 
+            if (_options.mode === 'real') {
+                e.attr('data-rmeal', 0);
+            } else {
+                e.attr('data-meal', 0);
+            }
+            var key = _getBackgroundColor(e.attr('data-meal'), e.attr('data-rmeal'));
+            var bcolor = $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody:first').attr('data-' + key);
+            e.css('color', bcolor);
             e.removeClass('mealOn').addClass('mealOff');
 
             if (typeof (_onChange) === 'function') {
@@ -254,10 +324,18 @@
 
         function _planAll(e) {
             if ($('div#steps_' + elementID + ' .ClickableBlocksPlannedBlockStart').length > 0) {
-                var bcolor = $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody:first').attr('data-colorp');
 
-                $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody').attr('data-planned', '1');
-                $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody div.ClickableBlocksStepContent').css('background', bcolor);
+                if (_options.mode === 'real') {
+                    $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody').attr('data-real', '1');
+                } else {
+                    $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody').attr('data-planned', '1');
+                }
+
+                $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody').each(function (i, obj) {
+                    var key = _getBackgroundColor($(obj).attr('data-planned'), $(obj).attr('data-real'));
+                    var bcolor = $(obj).attr('data-' + key);
+                    $(obj).find('div.ClickableBlocksStepContent ').css('background', bcolor);
+                });
 
                 $(e).addClass('click');
                 $(e).one('animationend webkitAnimationEnd onAnimationEnd', function () {
@@ -277,14 +355,25 @@
 
         function _unplanAll(e) {
             if ($('div#steps_' + elementID + ' .ClickableBlocksPlannedBlockStart').length > 0) {
-                var bcolor = $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody:first').attr('data-coloru');
-                $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody').attr('data-planned', '0');
-                $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody div.ClickableBlocksStepContent').css('background', bcolor);
+
+                if (_options.mode === 'real') {
+                    $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody').attr('data-real', '0');
+                } else {
+                    $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody').attr('data-planned', '0');
+                }
+
+                $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody').each(function (i, obj) {
+                    var key = _getBackgroundColor($(obj).attr('data-planned'), $(obj).attr('data-real'));
+                    var bcolor = $(obj).attr('data-' + key);
+                    $(obj).find('div.ClickableBlocksStepContent').css('background', bcolor);
+                });
 
                 $(e).addClass('click');
                 $(e).one('animationend webkitAnimationEnd onAnimationEnd', function () {
                     $(e).removeClass('click');
                 });
+
+
                 //When clicking the 'x'-button, the meal is always deselected
                 _mealOff();
 
@@ -311,25 +400,22 @@
 
         /**
          * Adds multiple blocks to the block's scale
-         * @param {Object} ArrayOfBlocksObjects example: Array([{"start": 990, "value": 60, "planned": 0, "colorp": "#dff0d8", "coloru": "#FFFFFF"},...])
+         * @param {Object} ArrOfBloObj example: Array([{"start": 990, "value": 60, "planned": 0, "colplanned": "#dff0d8", "colunplanned": "#FFFFFF"},...])
          * @return {Object} self instance of ClickB class
          */
-        this.addBlocks = function (ArrayOfBlocksObjects) {
-            if (typeof (ArrayOfBlocksObjects) === 'string') {
-                ArrayOfBlocksObjects = JSON.parse(ArrayOfBlocksObjects);
+        this.addBlocks = function (ArrOfBloObj) {
+            if (typeof (ArrOfBloObj) === 'string') {
+                ArrOfBloObj = JSON.parse(ArrOfBloObj);
             }
-            //
-            if (typeof (ArrayOfBlocksObjects) === 'undefined') {
+            if (typeof (ArrOfBloObj) === 'undefined') {
                 return;
             }
-
-            //
-            if (typeof (ArrayOfBlocksObjects.blocks) === 'object') {
+            if (typeof (ArrOfBloObj.blocks) === 'object') {
 
                 var stepsToAdd = [];
-                for (var i = 0; i < ArrayOfBlocksObjects.blocks.length; i++) {
-                    stepsToAdd = _getStepssInRange(ArrayOfBlocksObjects.blocks[i].start, ArrayOfBlocksObjects.blocks[i].value);
-                    _addSteps(stepsToAdd, ArrayOfBlocksObjects.blocks[i].value, ArrayOfBlocksObjects.blocks[i].planned, ArrayOfBlocksObjects.blocks[i].colplanned, ArrayOfBlocksObjects.blocks[i].colunplanned, ArrayOfBlocksObjects.blocks[i].id, ArrayOfBlocksObjects.blocks[i].meal);
+                for (var i = 0; i < ArrOfBloObj.blocks.length; i++) {
+                    stepsToAdd = _getStepssInRange(ArrOfBloObj.blocks[i].start, ArrOfBloObj.blocks[i].value);
+                    _addSteps(stepsToAdd, ArrOfBloObj.blocks[i], ArrOfBloObj.meal, ArrOfBloObj.rmeal);
                 }
             }
             return this;
@@ -338,13 +424,12 @@
 
         /**
          * Gets all blocks for this ClickB instance
-         * @return {ArrayOfBlocksObjects} of blocks
+         * @return {ArrOfBloObj} of blocks
          */
         this.getBlocks = function () {
             var obj = {};
             var blocks = [];
             var _blocks = $('div#steps_' + elementID + ' .ClickableBlocksPlannedBlockStart');
-            var meal;
             if (_blocks.length > 0) {
                 _blocks.each(function (i, e) {
                     var block = {};
@@ -352,19 +437,21 @@
                     block.start = e.getAttribute('data-start');
                     block.value = e.getAttribute('data-value');
                     block.planned = e.getAttribute('data-planned');
-                    block.colplanned = e.getAttribute('data-colorp');
-                    block.colunplanned = e.getAttribute('data-coloru');
+                    block.real = e.getAttribute('data-real');
+                    block.colplanned = e.getAttribute('data-colplanned');
+                    block.colunplanned = e.getAttribute('data-colunplanned');
+                    block.coldeleted = e.getAttribute('data-coldeleted');
+                    block.colreal = e.getAttribute('data-colreal');
+                    block.coladded = e.getAttribute('data-coladded');
+                    block.colunreal = e.getAttribute('data-colunreal');
+
                     blocks.push(block);
                 });
             }
 
-            if ($('div#steps_' + elementID + ' .ClickableBlocksMealSelector i').hasClass('mealOn')) {
-                meal = '1';
-            } else {
-                meal = '0';
-            }
             obj.blocks = blocks;
-            obj.meal = meal;
+            obj.meal = $('div#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa').attr('data-meal');
+            obj.rmeal = $('div#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa').attr('data-rmeal');
             return JSON.stringify(obj);
         };
 
