@@ -32,19 +32,19 @@ html {
 }
 .ClickableBlocksStep.ClickableBlocksStepFullHour {
     border-left: 2px solid #656565;
-    height: 2.2em;
+    height: 2.5em;
 }
 .ClickableBlocksStep.ClickableBlocksStepHalfHour {
     border-left: 1px solid #ffd6b8;
-    height: 2.2em;
+    height: 2.5em;
 }
 .ClickableBlocksStep.ClickableBlocksStepQuarter {
     border-left: 1px solid #ffd6b8;
-    height: 2.2em;
+    height: 2.5em;
 }
 .ClickableBlocksStep.ClickableBlocksStepEnd {
     border-right: 2px solid #656565;
-    height: 2.2em;
+    height: 2.5em;
 }
 .ClickableBlocksStep .ClickableBlocksStepContentFullHour {
     height: 1.8em;
@@ -120,6 +120,9 @@ div.ClickableBlocksAllBlockSelector i.fa-minus-square {
 }
 div.ClickableBlocksAllBlockSelector i.fa-minus-square:hover {
     color: #FFB27A;
+}
+i.mealOff {
+    color: #ffd6b8;
 }
 i.fa.click {
     -webkit-animation: pulse-click .4s 1;
