@@ -30,7 +30,7 @@ html {
     height: 2.5em;
     vertical-align: bottom;
     line-height: 2.5em;
-     padding-top: 6px;
+    padding-top: 6px;
 }
 .ClickableBlocksStep.ClickableBlocksStepFullHour {
     border-left: 2px solid #656565;
@@ -78,8 +78,6 @@ div.ClickableBlocksPlannedBlockBody .ClickableBlocksStepContent {
     -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
-    cursor: pointer;
-    cursor: hand;
 }
 div.ClickableBlocksPlannedBlockStart .ClickableBlocksStepContent {
     border-left: 2px solid white;
@@ -103,25 +101,15 @@ div.ClickableBlocksAllBlockSelector i.fa-plus-square {
     padding-right: 0.2em;
     padding-left: 0.2em;
     color: #ff8229;
-    cursor: pointer;
-    cursor: hand;
     font-size: 1.8em;
     text-shadow: 2px 2px 2px #ccc;
-}
-div.ClickableBlocksAllBlockSelector i.fa-plus-square:hover {
-    color: #D55900;
 }
 div.ClickableBlocksAllBlockSelector i.fa-minus-square {
     padding-right: 0.2em;
     padding-right: 0.8em;
     color: #ffd6b8;
-    cursor: pointer;
-    cursor: hand;
     font-size: 1.8em;
     text-shadow: 2px 2px 2px #ccc;
-}
-div.ClickableBlocksAllBlockSelector i.fa-minus-square:hover {
-    color: #FFB27A;
 }
 i.mealOff {
     color: #ffd6b8;
@@ -151,14 +139,38 @@ i.fa.click {
 }
 div.ClickableBlocksMealSelector i.mealOn {
     padding-left: 0.6em;
-    cursor: pointer;
-    cursor: hand;
     text-shadow: 2px 2px 2px #ccc;
     font-size: 1.8em;
 }
 div.ClickableBlocksMealSelector i.mealOff {
     padding-left: 0.8em;
+    font-size: 1.5em;
+}
+/* cursors */
+
+div.ClickableBlocksEdit > div.ClickableBlocksPlannedBlockBody .ClickableBlocksStepContent {
     cursor: pointer;
     cursor: hand;
-    font-size: 1.5em;
+}
+div.ClickableBlocksEdit > div.ClickableBlocksAllBlockSelector i.fa-minus-square {
+    cursor: pointer;
+    cursor: hand;
+}
+div.ClickableBlocksEdit > div.ClickableBlocksAllBlockSelector i.fa-plus-square {
+    cursor: pointer;
+    cursor: hand;
+}
+div.ClickableBlocksEdit > div.ClickableBlocksMealSelector i.mealOn {
+    cursor: pointer;
+    cursor: hand;
+}
+div.ClickableBlocksEdit > div.ClickableBlocksMealSelector i.mealOff {
+    cursor: pointer;
+    cursor: hand;
+}
+div.ClickableBlocksEdit > div.ClickableBlocksAllBlockSelector i.fa-minus-square:hover {
+    color: #FFB27A;
+}
+div.ClickableBlocksEdit > div.ClickableBlocksAllBlockSelector i.fa-plus-square:hover {
+    color: #D55900;
 }

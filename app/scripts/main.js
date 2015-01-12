@@ -1,5 +1,4 @@
 'use strict';
-
 (function (w, $) {
 
     /**
@@ -83,8 +82,11 @@
 
         function _build() {
             $('#steps_' + elementID).remove();
-            $('#' + elementID + '_parent').append('<div id="steps_' + elementID + '" class="ClickableBlocksSteps"></div>');
-
+            if (_options.readonly) {
+                $('#' + elementID + '_parent').append('<div id="steps_' + elementID + '" class="ClickableBlocksSteps ClickableBlocksReadonly"></div>');
+            } else {
+                $('#' + elementID + '_parent').append('<div id="steps_' + elementID + '" class="ClickableBlocksSteps ClickableBlocksEdit"></div>');
+            }
             if (_options.toolbar) {
                 $('#steps_' + elementID).append('<div id="selector_steps_' + elementID + '" class="ClickableBlocksAllBlockSelector"><i class="fa  fa-lg fa-2x fa-plus-square"></i><i class="fa  fa-lg fa-2x fa-minus-square"></i></div>');
 
