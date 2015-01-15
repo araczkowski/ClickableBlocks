@@ -347,7 +347,7 @@
                 });
 
                 //If there is at least 1 time-slot between 12:00 and 13:00, the meal is selected as well, when clicking
-                if ($('div#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody[data-start="720"]').length > 0 || $('div#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody[data-start="735"]').length > 0 || $('div#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody[data-start="750"]').length > 0 || $('div#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody[data-start="765"]').length > 0 || $('div#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody[data-start="780"]').length > 0) {
+                if ($('div#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody[data-start="720"]').length > 0 || $('div#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody[data-start="735"]').length > 0 || $('div#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody[data-start="750"]').length > 0 || $('div#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody[data-start="765"]').length > 0) {
                     _mealOn();
                 }
 
