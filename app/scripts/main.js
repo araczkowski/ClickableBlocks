@@ -131,7 +131,7 @@
                 $('<div/>', {
                     'id': 'step_' + elementID + '_' + (Number(i) + 1),
                     'class': 'ClickableBlocksStep ' + stepClass,
-                    'style': 'width: 1.2em;',
+                    'style': 'width: 1.1em;',
                     'data-start': stepValue,
                     'html': '<span class="ClickableBlocksTick">' + _options.stepLabelDispFormat(stepValue) + '</span><div class="ClickableBlocksStepContent ' + contentClass + '"></div></div>'
                 }).appendTo(eSteps);
@@ -145,9 +145,9 @@
             }
 
             if (_options.toolbar) {
-                $('#' + elementID + '_parent').css('width', (nSteps * 1.2) + 10 + 'em');
+                $('#' + elementID + '_parent').css('width', (nSteps * 1.1) + 10 + 'em');
             } else {
-                $('#' + elementID + '_parent').css('width', (nSteps * 1.2) + 4 + 'em');
+                $('#' + elementID + '_parent').css('width', (nSteps * 1.1) + 4 + 'em');
             }
         }
 
