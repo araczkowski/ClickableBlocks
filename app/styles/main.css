@@ -84,8 +84,9 @@ html {
 }
 
 div.ClickableBlocksStep.ClickableBlocksPlannedBlockBody {
-    border-left: 0px;
-    border-right: 0px;
+    border-left: none;
+    border-right: none;
+    border: none;
 }
 
 div.ClickableBlocksPlannedBlockBody .ClickableBlocksStepContent {
@@ -94,6 +95,16 @@ div.ClickableBlocksPlannedBlockBody .ClickableBlocksStepContent {
     -webkit-box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.75);
+    color: white;
+}
+
+div.ClickableBlocksPlannedBlockBody .ClickableBlocksStepContent > i.fa {
+    color: white;
+    margin-top: 0.4em;
+    margin-left: 0px;
+    z-index: 99999;
+    margin-left: 0.1em;
+    position: absolute;
 }
 
 div.ClickableBlocksPlannedBlockStart .ClickableBlocksStepContent {
