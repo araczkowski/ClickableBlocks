@@ -104,6 +104,7 @@ box-shadow: 2px 2px 2px 0px rgba(0,
 0,
 0,
 0.75);*/
+
     color: white;
 }
 
@@ -190,8 +191,11 @@ div.ClickableBlocksMealSelector i.mealOn {
 }
 
 div.ClickableBlocksMealSelector i.mealOff {
-    padding-left: 0.8em;
-    font-size: 1.5em;
+    /*padding-left: 0.8em;
+    font-size: 1.5em; */
+
+    padding-left: 0.6em;
+    font-size: 1.8em;
 }
 /* cursors */
 
