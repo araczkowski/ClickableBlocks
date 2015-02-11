@@ -37,7 +37,7 @@
     <!-- endbuild -->
     <script>
         // test url
-        //http://localhost:3000/?options={"min":360,"max":1140,"mode":"real"}&blocks={"blocks":[{"id":1,"start":480,"value":60,"planned":"1","real":"1"}],"meal":"1","rmeal":"1"}
+        //http://localhost:3000/?params={"options":{"min":360,"max":1140,"mode":"real"},"blocks":{"blocks":[{"id":1,"start":480,"value":60,"planned":"1","real":"1"}],"meal":"1","rmeal":"1"}}
 
         function getParameterByName(name) {
             name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -46,12 +46,12 @@
             return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         }
 
-        var options = JSON.parse(getParameterByName('options'));
-        options.stepLabelDispFormat = "function (steps) {return \'\';}"
-        options.step = 15;
-        options.readonly = true;
-        options.toolbar = false;
-        var blocks = JSON.parse(getParameterByName('blocks'));
+        var params = JSON.parse(getParameterByName('params'));
+        params.options.stepLabelDispFormat = "function (steps) {return \'\';}"
+        params.options.step = 15;
+        params.options.readonly = true;
+        params.options.toolbar = false;
+        var blocks = params.blocks;
 
         // add default colors to each blocks to reduce the url length
         if (blocks.blocks) {
@@ -67,8 +67,8 @@
         }
 
         $(function () {
-            CB_1 = new ClickB('CB_1', options);
-            CB_1.addBlocks(blocks);
+            CB_1 = new ClickB('CB_1', params.options);
+            CB_1.addBlocks(params.blocks);
         });
     </script>
 </body>
