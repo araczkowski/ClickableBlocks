@@ -110,7 +110,7 @@
             var nSteps = (_options.max - _options.min) / _options.step;
             var stepWidth = '1.1em;';
             if (_options.width !== 'auto') {
-                var stepWidth = (100 / nSteps) + '%';
+                stepWidth = (100 / nSteps) + '%';
             }
             var clickStep = 0;
             var contentClass = '';
