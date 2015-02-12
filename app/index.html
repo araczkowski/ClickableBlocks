@@ -17,15 +17,50 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
 
+    <!--
+    special styles for BIP mode
+-->
     <style>
         body {
             margin: 0px;
+        }
+
+        .ClickableBlocksStep.ClickableBlocksStepHalfHour {
+            border-left: none;
+        }
+
+        .ClickableBlocksStep.ClickableBlocksStepQuarter {
+            border-left: none;
+        }
+
+        .ClickableBlocksStep.ClickableBlocksStepEnd {
+            border-right: none;
         }
     </style>
 </head>
 
 <body>
     <div id="CB_1_parent" style="float:left; display: inline-block;"></div>
+    <div style="float:left" id="clickB0_parent">
+    </div>
+    <div style="float:left" id="clickB1_parent">
+    </div>
+    <div style="float:left" id="clickB2_parent">
+    </div>
+    <div style="float:left" id="clickB3_parent">
+    </div>
+    <div style="float:left" id="clickB4_parent">
+    </div>
+    <div style="float:left" id="clickB5_parent">
+    </div>
+    <div style="float:left" id="clickB6_parent">
+    </div>
+    <div style="float:left" id="clickB7_parent">
+    </div>
+    <div style="float:left" id="clickB8_parent">
+    </div>
+    <div style="float:left" id="clickB9_parent">
+    </div>
 
     <!-- build:js({app,.tmp}) scripts/vendor.js -->
     <!-- bower:js -->
@@ -45,31 +80,137 @@
                 results = regex.exec(location.search);
             return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         }
-
-        var params = JSON.parse(getParameterByName('params'));
-        params.options.stepLabelDispFormat = "function (steps) {return \'\';}"
-        params.options.step = 15;
-        params.options.readonly = true;
-        params.options.toolbar = false;
-        var blocks = params.blocks;
-
-        // add default colors to each blocks to reduce the url length
-        if (blocks.blocks) {
-            blocks.blocks.forEach(function (entry) {
-                entry.coltoolbar = '#ff7c34';
-                entry.colplanned = '#ff7c34';
-                entry.colunplanned = '#ffd6b8';
-                entry.colreal = '#7bce5b';
-                entry.colunreal = '#ffd4ba';
-                entry.coladded = '#3c8a27';
-                entry.coldeleted = '#ff3d25';
-            });
+        var params;
+        try {
+            params = JSON.parse(getParameterByName('params'));
+        } catch (err) {
+            params = false;
         }
 
-        $(function () {
-            CB_1 = new ClickB('CB_1', params.options);
-            CB_1.addBlocks(params.blocks);
-        });
+
+
+
+        if (params) {
+
+            params.options.stepLabelDispFormat = "function (steps) {return \'\';}"
+            params.options.step = 15;
+            params.options.readonly = true;
+            params.options.toolbar = false;
+            var blocks = params.blocks;
+
+            // add default colors to each blocks to reduce the url length
+            if (blocks.blocks) {
+                blocks.blocks.forEach(function (entry) {
+                    entry.coltoolbar = '#ff7c34';
+                    entry.colplanned = '#ff7c34';
+                    entry.colunplanned = '#ffd6b8';
+                    entry.colreal = '#7bce5b';
+                    entry.colunreal = '#ffd4ba';
+                    entry.coladded = '#3c8a27';
+                    entry.coldeleted = '#ff3d25';
+                });
+            }
+
+            $(function () {
+                CB_1 = new ClickB('CB_1', params.options);
+                CB_1.addBlocks(params.blocks);
+            });
+
+        } else {
+
+            $(function () {
+                for (var i = 0; i < 10; i++) {
+                    // inicialization - test from APEX (string insted of objects)
+                    var name = 'clickB' + i;
+                    var name = new ClickB(name, '{"mealbar":false,"toolbar":false,"width":"30cm","mode":"real","min":360,"max":1140,"step":15,"readonly":false, "stepLabelDispFormat":"function (steps) {return \'\';}"}');
+
+
+                    name.addBlocks({
+                        "blocks": [{
+                            "id": 1,
+                            "start": 480,
+                            "value": 60,
+                            "planned": "1",
+                            "real": "1",
+                            "coltoolbar": "#ff7c34",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "colreal": "#7bce5b",
+                            "colunreal": "#ffd4ba",
+                            "coladded": "#3c8a27",
+                            "coldeleted": "#ff3d25"
+                    }, {
+                            "id": 1,
+                            "start": 570,
+                            "value": 30,
+                            "planned": "1",
+                            "real": "1",
+                            "coltoolbar": "#ff7c34",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "colreal": "#7bce5b",
+                            "colunreal": "#ffd4ba",
+                            "coladded": "#3c8a27",
+                            "coldeleted": "#ff3d25"
+                    }, {
+                            "id": 1,
+                            "start": 600,
+                            "value": 30,
+                            "planned": "1",
+                            "real": "1",
+                            "coltoolbar": "#ff7c34",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "colreal": "#7bce5b",
+                            "colunreal": "#ffd4ba",
+                            "coladded": "#3c8a27",
+                            "coldeleted": "#ff3d25"
+                    }, {
+                            "id": 1,
+                            "start": 825,
+                            "value": 15,
+                            "planned": "1",
+                            "real": "1",
+                            "coltoolbar": "#ff7c34",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "colreal": "#7bce5b",
+                            "colunreal": "#ffd4ba",
+                            "coladded": "#3c8a27",
+                            "coldeleted": "#ff3d25"
+                    }, {
+                            "id": 1,
+                            "start": 840,
+                            "value": 120,
+                            "planned": "1",
+                            "real": "1",
+                            "coltoolbar": "#ff7c34",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "colreal": "#7bce5b",
+                            "colunreal": "#ffd4ba",
+                            "coladded": "#3c8a27",
+                            "coldeleted": "#ff3d25"
+                    }, {
+                            "id": 1,
+                            "start": 960,
+                            "value": 30,
+                            "planned": "1",
+                            "real": "1",
+                            "coltoolbar": "#ff7c34",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "colreal": "#7bce5b",
+                            "colunreal": "#ffd4ba",
+                            "coladded": "#3c8a27",
+                            "coldeleted": "#ff3d25"
+                    }],
+                        "meal": "1",
+                        "rmeal": "1"
+                    });
+                }
+            });
+        }
     </script>
 </body>
 

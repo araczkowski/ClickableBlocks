@@ -27,6 +27,8 @@
             stepLabelDispFormat: _stepLabelDispFormat,
             readonly: false,
             toolbar: true,
+            mealbar: true,
+            width: 'auto',
             mode: 'plan'
         };
 
@@ -87,6 +89,8 @@
             } else {
                 $('#' + elementID + '_parent').append('<div id="steps_' + elementID + '" class="ClickableBlocksSteps ClickableBlocksEdit"></div>');
             }
+
+            // 1. toolbar
             if (_options.toolbar) {
                 $('#steps_' + elementID).append('<div id="selector_steps_' + elementID + '" class="ClickableBlocksAllBlockSelector"><i class="fa  fa-lg fa-2x fa-plus-square"></i><i class="fa  fa-lg fa-2x fa-minus-square"></i></div>');
 
@@ -100,9 +104,14 @@
                     });
                 }
             }
+
+            // 2. blocks
             var eSteps = $('#steps_' + elementID);
             var nSteps = (_options.max - _options.min) / _options.step;
-            //var stepWidth = 80 / nSteps;
+            var stepWidth = '1.1em;';
+            if (_options.width !== 'auto') {
+                var stepWidth = (100 / nSteps) + '%';
+            }
             var clickStep = 0;
             var contentClass = '';
             var stepClass = '';
@@ -131,23 +140,32 @@
                 $('<div/>', {
                     'id': 'step_' + elementID + '_' + (Number(i) + 1),
                     'class': 'ClickableBlocksStep ' + stepClass,
-                    'style': 'width: 1.1em;',
+                    'style': 'width: ' + stepWidth,
                     'data-start': stepValue,
                     'html': '<span class="ClickableBlocksTick">' + _options.stepLabelDispFormat(stepValue) + '</span><div class="ClickableBlocksStepContent ' + contentClass + '"></div></div>'
                 }).appendTo(eSteps);
             }
-            $('#steps_' + elementID).append('<div id="selector_steps_' + elementID + '" class="ClickableBlocksMealSelector"><span class="ClickableBlocksTick">' + _options.stepLabelDispFormat(_options.min + (nSteps * _options.step)) + '</span><i class="fa fa-cutlery fa-2x mealOff"></i></div>');
 
-            if (!_options.readonly) {
-                $('#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa-cutlery').on('click', function () {
-                    _toggleMeal(this);
-                });
+            // 3. mealbar
+            if (_options.mealbar) {
+                $('#steps_' + elementID).append('<div id="selector_steps_' + elementID + '" class="ClickableBlocksMealSelector"><span class="ClickableBlocksTick">' + _options.stepLabelDispFormat(_options.min + (nSteps * _options.step)) + '</span><i class="fa fa-cutlery fa-2x mealOff"></i></div>');
+
+                if (!_options.readonly) {
+                    $('#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa-cutlery').on('click', function () {
+                        _toggleMeal(this);
+                    });
+                }
             }
 
-            if (_options.toolbar) {
-                $('#' + elementID + '_parent').css('width', (nSteps * 1.1) + 10 + 'em');
+            if (_options.width === 'auto') {
+
+                if (_options.toolbar) {
+                    $('#' + elementID + '_parent').css('width', (nSteps * 1.1) + 10 + 'em');
+                } else {
+                    $('#' + elementID + '_parent').css('width', (nSteps * 1.1) + 4 + 'em');
+                }
             } else {
-                $('#' + elementID + '_parent').css('width', (nSteps * 1.1) + 4 + 'em');
+                $('#' + elementID + '_parent').css('width', _options.width);
             }
         }
 
@@ -190,18 +208,20 @@
                 }
             }
             //
-            _addMeal(meal, rmeal);
-            if (_options.mode === 'real') {
-                if (rmeal === '1') {
-                    _mealOn();
+            if (_options.mealbar) {
+                _addMeal(meal, rmeal);
+                if (_options.mode === 'real') {
+                    if (rmeal === '1') {
+                        _mealOn();
+                    } else {
+                        _mealOff();
+                    }
                 } else {
-                    _mealOff();
-                }
-            } else {
-                if (meal === '1') {
-                    _mealOn();
-                } else {
-                    _mealOff();
+                    if (meal === '1') {
+                        _mealOn();
+                    } else {
+                        _mealOff();
+                    }
                 }
             }
             //TODO - should be possible in CSS
