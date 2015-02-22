@@ -41,26 +41,6 @@
 
 <body>
     <div id="CB_1_parent" style="float:left; display: inline-block;"></div>
-    <div style="float:left" id="clickB0_parent">
-    </div>
-    <div style="float:left" id="clickB1_parent">
-    </div>
-    <div style="float:left" id="clickB2_parent">
-    </div>
-    <div style="float:left" id="clickB3_parent">
-    </div>
-    <div style="float:left" id="clickB4_parent">
-    </div>
-    <div style="float:left" id="clickB5_parent">
-    </div>
-    <div style="float:left" id="clickB6_parent">
-    </div>
-    <div style="float:left" id="clickB7_parent">
-    </div>
-    <div style="float:left" id="clickB8_parent">
-    </div>
-    <div style="float:left" id="clickB9_parent">
-    </div>
 
     <!-- build:js({app,.tmp}) scripts/vendor.js -->
     <!-- bower:js -->
@@ -120,95 +100,553 @@
         } else {
 
             $(function () {
-                for (var i = 0; i < 10; i++) {
+
+                for (var i = 0; i < 30; i++) {
                     // inicialization - test from APEX (string insted of objects)
-                    var name = 'clickB' + i;
-                    var name = new ClickB(name, '{"mealbar":false,"toolbar":false,"width":"30cm","mode":"real","min":360,"max":1140,"step":15,"readonly":false, "stepLabelDispFormat":"function (steps) {return \'\';}"}');
+                    var divId = 'clickB' + i;
+                    $('body').prepend('<div style="float:left" id="' + divId + '_parent"></div>');
+                    var name = new ClickB(divId, '{"mealbar":false,"toolbar":false,"width":"30cm","mode":"real","min":0,"max":1440,"step":15,"readonly":false, "stepLabelDispFormat":"function (steps) {return \'\';}"}');
 
 
                     name.addBlocks({
+
                         "blocks": [{
-                            "id": 1,
-                            "start": 480,
-                            "value": 60,
+                            "id": "2",
+                            "start": "0",
+                            "value": "30",
                             "planned": "1",
-                            "real": "1",
-                            "coltoolbar": "#ff7c34",
+                            "real": "0",
                             "colplanned": "#ff7c34",
                             "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
                             "colreal": "#7bce5b",
-                            "colunreal": "#ffd4ba",
                             "coladded": "#3c8a27",
-                            "coldeleted": "#ff3d25"
-                    }, {
-                            "id": 1,
-                            "start": 570,
-                            "value": 30,
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "30",
+                            "value": "30",
                             "planned": "1",
-                            "real": "1",
-                            "coltoolbar": "#ff7c34",
+                            "real": "0",
                             "colplanned": "#ff7c34",
                             "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
                             "colreal": "#7bce5b",
-                            "colunreal": "#ffd4ba",
                             "coladded": "#3c8a27",
-                            "coldeleted": "#ff3d25"
-                    }, {
-                            "id": 1,
-                            "start": 600,
-                            "value": 30,
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "60",
+                            "value": "30",
                             "planned": "1",
-                            "real": "1",
-                            "coltoolbar": "#ff7c34",
+                            "real": "0",
                             "colplanned": "#ff7c34",
                             "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
                             "colreal": "#7bce5b",
-                            "colunreal": "#ffd4ba",
                             "coladded": "#3c8a27",
-                            "coldeleted": "#ff3d25"
-                    }, {
-                            "id": 1,
-                            "start": 825,
-                            "value": 15,
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "90",
+                            "value": "30",
                             "planned": "1",
-                            "real": "1",
-                            "coltoolbar": "#ff7c34",
+                            "real": "0",
                             "colplanned": "#ff7c34",
                             "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
                             "colreal": "#7bce5b",
-                            "colunreal": "#ffd4ba",
                             "coladded": "#3c8a27",
-                            "coldeleted": "#ff3d25"
-                    }, {
-                            "id": 1,
-                            "start": 840,
-                            "value": 120,
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "120",
+                            "value": "30",
                             "planned": "1",
-                            "real": "1",
-                            "coltoolbar": "#ff7c34",
+                            "real": "0",
                             "colplanned": "#ff7c34",
                             "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
                             "colreal": "#7bce5b",
-                            "colunreal": "#ffd4ba",
                             "coladded": "#3c8a27",
-                            "coldeleted": "#ff3d25"
-                    }, {
-                            "id": 1,
-                            "start": 960,
-                            "value": 30,
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "150",
+                            "value": "30",
                             "planned": "1",
-                            "real": "1",
-                            "coltoolbar": "#ff7c34",
+                            "real": "0",
                             "colplanned": "#ff7c34",
                             "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
                             "colreal": "#7bce5b",
-                            "colunreal": "#ffd4ba",
                             "coladded": "#3c8a27",
-                            "coldeleted": "#ff3d25"
-                    }],
-                        "meal": "1",
-                        "rmeal": "1"
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "180",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "210",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "240",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "270",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "300",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "330",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "360",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "390",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "420",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "450",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "480",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "510",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "540",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "570",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "600",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "630",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "660",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "690",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "720",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "750",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "3",
+                            "start": "780",
+                            "value": "60",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "840",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "870",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "3",
+                            "start": "900",
+                            "value": "60",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "3",
+                            "start": "960",
+                            "value": "60",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "3",
+                            "start": "1020",
+                            "value": "60",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "1080",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "1110",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "1140",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "1170",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "1200",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "1230",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "1260",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "1290",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "1320",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "1350",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "1380",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }, {
+                            "id": "2",
+                            "start": "1410",
+                            "value": "30",
+                            "planned": "1",
+                            "real": "0",
+                            "colplanned": "#ff7c34",
+                            "colunplanned": "#ffd6b8",
+                            "coldeleted": "#ff3d25",
+                            "colreal": "#7bce5b",
+                            "coladded": "#3c8a27",
+                            "colunreal": "#ffd4ba"
+                                }],
+                        "meal": "1"
                     });
+
+
+                    //because it's not possible in CSS
+                    $('div.ClickableBlocksStepContentFullHour').parent().css('border-left', '2px solid #656565');
+                    $('.ClickableBlocksStepEnd').css('border-right', '2px solid #656565');
+
                 }
             });
         }

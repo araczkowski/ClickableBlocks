@@ -173,27 +173,10 @@
         function _addSteps(bSteps, block, meal, rmeal) {
 
             for (var i = 0; i < bSteps.length; i++) {
-                bSteps[i].addClass('ClickableBlocksPlannedBlockBody');
-                bSteps[i].attr('data-id', block.id);
-                bSteps[i].attr('data-colplanned', block.colplanned);
-                bSteps[i].attr('data-colunplanned', block.colunplanned);
-                bSteps[i].attr('data-colreal', block.colreal);
-                bSteps[i].attr('data-coladded', block.coladded);
-                bSteps[i].attr('data-colunreal', block.colunreal);
-                bSteps[i].attr('data-coldeleted', block.coldeleted);
-                bSteps[i].attr('data-planned', block.planned);
-                bSteps[i].attr('data-real', block.real);
-                bSteps[i].attr('data-block', bSteps[0].attr('id'));
-
-                bSteps[i].find('div.ClickableBlocksStepContent').css('background', block[_getBackgroundColor(block.planned, block.real).color]);
-
-
-
+                bSteps[i].addClass('ClickableBlocksPlannedBlockBody').attr('data-id', block.id).attr('data-colplanned', block.colplanned).attr('data-colunplanned', block.colunplanned).attr('data-colreal', block.colreal).attr('data-coladded', block.coladded).attr('data-colunreal', block.colunreal).attr('data-coldeleted', block.coldeleted).attr('data-planned', block.planned).attr('data-real', block.real).attr('data-block', bSteps[0].attr('id')).find('div.ClickableBlocksStepContent').css('background', block[_getBackgroundColor(block.planned, block.real).color]);
 
                 if (i === 0) {
-                    bSteps[i].addClass('ClickableBlocksPlannedBlockStart');
-                    bSteps[i].attr('data-value', block.value);
-                    bSteps[i].find('div.ClickableBlocksStepContent').html('<i class="' + _getBackgroundColor(block.planned, block.real).item + '">');
+                    bSteps[i].addClass('ClickableBlocksPlannedBlockStart').attr('data-value', block.value).find('div.ClickableBlocksStepContent').html('<i class="' + _getBackgroundColor(block.planned, block.real).item + '">');
                 }
 
                 if (i === bSteps.length - 1) {
@@ -224,8 +207,6 @@
                     }
                 }
             }
-            //TODO - should be possible in CSS
-            $('.ClickableBlocksPlannedBlockStart').has('div.ClickableBlocksStepContentFullHour').css('border-left', '2px solid #656565');
 
             if (typeof (_onChange) === 'function') {
                 _onChange();
@@ -481,6 +462,7 @@
                     _addSteps(stepsToAdd, ArrOfBloObj.blocks[i], ArrOfBloObj.meal, ArrOfBloObj.rmeal);
                 }
             }
+
             return this;
         };
 
