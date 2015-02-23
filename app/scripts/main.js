@@ -176,11 +176,13 @@
                 bSteps[i].addClass('ClickableBlocksPlannedBlockBody').attr('data-id', block.id).attr('data-colplanned', block.colplanned).attr('data-colunplanned', block.colunplanned).attr('data-colreal', block.colreal).attr('data-coladded', block.coladded).attr('data-colunreal', block.colunreal).attr('data-coldeleted', block.coldeleted).attr('data-planned', block.planned).attr('data-real', block.real).attr('data-block', bSteps[0].attr('id')).find('div.ClickableBlocksStepContent').css('background', block[_getBackgroundColor(block.planned, block.real).color]);
 
                 if (i === 0) {
-                    bSteps[i].addClass('ClickableBlocksPlannedBlockStart').attr('data-value', block.value).find('div.ClickableBlocksStepContent').html('<i class="' + _getBackgroundColor(block.planned, block.real).item + '">');
+                    bSteps[i].addClass('ClickableBlocksPlannedBlockStart').attr('data-value', block.value).find('div.ClickableBlocksStepContent').html('<i class="' + _getBackgroundColor(block.planned, block.real).item + '">').parent().addClass('ClickableBlocksStepHesBlockStart');
+
                 }
 
                 if (i === bSteps.length - 1) {
-                    bSteps[i].addClass('ClickableBlocksPlannedBlockEnd');
+                    bSteps[i].addClass('ClickableBlocksPlannedBlockEnd').addClass('ClickableBlocksStepHesBlockEnd');
+
                 }
 
                 if (!_options.readonly) {
