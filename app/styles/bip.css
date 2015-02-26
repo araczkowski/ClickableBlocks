@@ -1,0 +1,17 @@
+/* special styles for BIP mode */
+
+body {
+    margin: 0px !important;
+}
+
+.ClickableBlocksStep.ClickableBlocksStepHalfHour {
+    border-left: none;
+}
+
+.ClickableBlocksStep.ClickableBlocksStepQuarter {
+    border-left: none;
+}
+
+.ClickableBlocksStep.ClickableBlocksStepEnd {
+    border-right: none;
+}

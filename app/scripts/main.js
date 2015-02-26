@@ -473,8 +473,8 @@
                 _addMeal(ArrOfBloObj.meal, ArrOfBloObj.rmeal);
 
                 return this;
-            };
-        }
+            }
+        };
 
 
         /**

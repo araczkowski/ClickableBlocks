@@ -7,6 +7,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <link rel="shortcut icon" href="/favicon.ico">
+    <!-- the same like in apex -->
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- build:css styles/vendor.css -->
@@ -16,33 +17,10 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
-
-    <!--
-    special styles for BIP mode
--->
-    <!--
-    <style>
-        body {
-            margin: 0px;
-        }
-
-        .ClickableBlocksStep.ClickableBlocksStepHalfHour {
-            border-left: none;
-        }
-
-        .ClickableBlocksStep.ClickableBlocksStepQuarter {
-            border-left: none;
-        }
-
-        .ClickableBlocksStep.ClickableBlocksStepEnd {
-            border-right: none;
-        }
-    </style>
-  -->
 </head>
 
-<body>
-    <div id="CB_1_parent" style="float:left; display: inline-block;"></div>
+<body style="margin-top: 2em;">
+    <div id="bipSchedule_parent" style="float:left; display: inline-block;"></div>
 
     <!-- build:js({app,.tmp}) scripts/vendor.js -->
     <!-- bower:js -->
@@ -54,7 +32,7 @@
     <!-- endbuild -->
     <script>
         // test url
-        //http://localhost:3000/?params={"options":{"min":360,"max":1140,"mode":"real"},"blocks":{"blocks":[{"id":1,"start":480,"value":60,"planned":"1","real":"1"}],"meal":"1","rmeal":"1"}}
+        //http://localhost:3000/?params={"options":{"min":360,"max":1140,"mode":"real"},"schedule":{"blocks":[{"id":1,"start":480,"value":60,"planned":"1","real":"1"}],"meal":"1","rmeal":"1"}}
 
         function getParameterByName(name) {
             name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -70,16 +48,26 @@
         }
 
         if (params) {
+            //add special css for BIP
+            var head = document.getElementsByTagName('head')[0];
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = 'styles/bip.css';
+            link.media = 'all';
+            head.appendChild(link);
+
+            //default BIP params
             params.options.stepLabelDispFormat = "function (steps) {return \'\';}"
             params.options.step = 15;
             params.options.readonly = true;
             params.options.toolbar = false;
             params.options.mealbar = false;
-            var blocks = params.blocks;
+            var schedule = params.schedule;
 
-            // add default colors to each blocks to reduce the url length
-            if (blocks.blocks) {
-                blocks.blocks.forEach(function (entry) {
+            //default colors to each blocks to reduce the url length
+            if (schedule.blocks) {
+                schedule.blocks.forEach(function (entry) {
                     entry.coltoolbar = '#ff7c34';
                     entry.colplanned = '#ff7c34';
                     entry.colunplanned = '#ffd6b8';
@@ -91,28 +79,28 @@
             }
 
             $(function () {
-                CB_1 = new ClickB('CB_1', params.options);
-                CB_1.addBlocks(params.blocks);
+
+                var bipSchedule = new ClickB('bipSchedule', params.options);
+                bipSchedule.addBlocks(params.schedule);
             });
         } else {
 
             $(function () {
 
-
-                var options = {
-                    "mealbar": true,
-                    "toolbar": true,
-                    "mode": "real",
-                    "min": 0,
-                    "max": 1440,
-                    "step": 15,
-                    "readonly": false,
-                    "stepLabelDispFormat": "function (steps) {return \'\';}"
-                };
-
-                $.getJSON("testBlocks.json", function (blocksJson) {
-
-                    for (var i = 0; i < 100; i++) {
+                $.getJSON("testBlocks13h.json", function (blocksJson) {
+                    var options = {
+                        "mealbar": true,
+                        "toolbar": true,
+                        "mode": "real",
+                        "min": 360, //0
+                        "max": 1260, //1440
+                        "step": 15,
+                        "readonly": false
+                    };
+                    for (var i = 0; i < 5; i++) {
+                        if (i > 0) {
+                            options.stepLabelDispFormat = "function (steps) {return \'\';}";
+                        }
                         var divId = 'clickB' + i;
                         $('body').append('<div style="float:left" id="' + divId + '_parent"></div>');
                         // create widget object
