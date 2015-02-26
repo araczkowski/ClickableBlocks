@@ -170,45 +170,36 @@
         }
 
 
-        function _addSteps(bSteps, block, meal, rmeal) {
+        function _addBlock(bSteps, block) {
+            var i = 0;
+            var blockSelector;
 
-            for (var i = 0; i < bSteps.length; i++) {
-                bSteps[i].addClass('ClickableBlocksPlannedBlockBody').attr('data-id', block.id).attr('data-colplanned', block.colplanned).attr('data-colunplanned', block.colunplanned).attr('data-colreal', block.colreal).attr('data-coladded', block.coladded).attr('data-colunreal', block.colunreal).attr('data-coldeleted', block.coldeleted).attr('data-planned', block.planned).attr('data-real', block.real).attr('data-block', bSteps[0].attr('id')).find('div.ClickableBlocksStepContent').css('background', block[_getBackgroundColor(block.planned, block.real).color]);
+            bSteps.forEach(function addBlockOnStep(step) {
 
                 if (i === 0) {
-                    bSteps[i].addClass('ClickableBlocksPlannedBlockStart').attr('data-value', block.value).find('div.ClickableBlocksStepContent').html('<i class="' + _getBackgroundColor(block.planned, block.real).item + '">').parent().addClass('ClickableBlocksStepHesBlockStart');
-
+                    step.addClass('ClickableBlocksPlannedBlockStart').attr('data-value', block.value).find('div.ClickableBlocksStepContent').html('<i class="' + _getBackgroundColor(block.planned, block.real).item + '">').parent().addClass('ClickableBlocksStepHesBlockStart');
+                    blockSelector = step.attr('id');
                 }
+
+                step.addClass('ClickableBlocksPlannedBlockBody').attr('data-id', block.id).attr('data-colplanned', block.colplanned).attr('data-colunplanned', block.colunplanned).attr('data-colreal', block.colreal).attr('data-coladded', block.coladded).attr('data-colunreal', block.colunreal).attr('data-coldeleted', block.coldeleted).attr('data-planned', block.planned).attr('data-real', block.real).attr('data-block', blockSelector).find('div.ClickableBlocksStepContent').css('background', block[_getBackgroundColor(block.planned, block.real).color]);
+
+
 
                 if (i === bSteps.length - 1) {
-                    bSteps[i].addClass('ClickableBlocksPlannedBlockEnd').addClass('ClickableBlocksStepHesBlockEnd');
+                    step.addClass('ClickableBlocksPlannedBlockEnd').addClass('ClickableBlocksStepHesBlockEnd');
 
                 }
-
                 if (!_options.readonly) {
                     //initEvent
-                    bSteps[i].unbind('click').on('click', function () {
-                        _togglePlan(this);
+                    step.unbind('click').on('click', function () {
+                        _togglePlan(blockSelector);
                     });
                 }
-            }
-            //
-            if (_options.mealbar) {
-                _addMeal(meal, rmeal);
-                if (_options.mode === 'real') {
-                    if (rmeal === '1') {
-                        _mealOn();
-                    } else {
-                        _mealOff();
-                    }
-                } else {
-                    if (meal === '1') {
-                        _mealOn();
-                    } else {
-                        _mealOff();
-                    }
-                }
-            }
+
+                i++;
+            });
+
+
 
             if (typeof (_onChange) === 'function') {
                 _onChange();
@@ -257,31 +248,32 @@
             }
         }
 
-        function _togglePlan(e) {
-            var clickedBlock = $(e);
-            var blocksSelector = $('[data-block=' + clickedBlock.attr('data-block') + ']');
+        function _togglePlan(blockSelector) {
+
+
+            var blocks = $('[data-block=' + blockSelector + ']');
             var key;
 
 
             if (_options.mode === 'real') {
-                if (clickedBlock.attr('data-real') === '1') {
-                    blocksSelector.attr('data-real', '0');
+                if (blocks.attr('data-real') === '1') {
+                    blocks.attr('data-real', '0');
 
                 } else {
-                    blocksSelector.attr('data-real', '1');
+                    blocks.attr('data-real', '1');
                 }
             } else {
-                if (clickedBlock.attr('data-planned') === '1') {
-                    blocksSelector.attr('data-planned', '0');
+                if (blocks.attr('data-planned') === '1') {
+                    blocks.attr('data-planned', '0');
 
                 } else {
-                    blocksSelector.attr('data-planned', '1');
+                    blocks.attr('data-planned', '1');
                 }
             }
 
-            key = _getBackgroundColor(clickedBlock.attr('data-planned'), clickedBlock.attr('data-real')).color;
-            blocksSelector.find('div.ClickableBlocksStepContent').css('background', blocksSelector.attr('data-' + key));
-            blocksSelector.find('div.ClickableBlocksStepContent').first().html('<i class="' + _getBackgroundColor(clickedBlock.attr('data-planned'), clickedBlock.attr('data-real')).item + '">');
+            key = _getBackgroundColor(blocks.attr('data-planned'), blocks.attr('data-real')).color;
+            blocks.find('div.ClickableBlocksStepContent').css('background', blocks.attr('data-' + key));
+            blocks.find('div.ClickableBlocksStepContent').first().html('<i class="' + _getBackgroundColor(blocks.attr('data-planned'), blocks.attr('data-real')).item + '">');
 
             if (typeof (_onChange) === 'function') {
                 _onChange();
@@ -300,10 +292,26 @@
             //$(e).toggleClass('mealOff mealOn');
         }
 
-        function _addMeal(plan, real) {
-            var e = $('#steps_' + elementID + ' i.fa-cutlery');
-            e.attr('data-meal', plan);
-            e.attr('data-rmeal', real);
+        function _addMeal(meal, rmeal) {
+            if (_options.mealbar) {
+                var e = $('#steps_' + elementID + ' i.fa-cutlery');
+                e.attr('data-meal', meal);
+                e.attr('data-rmeal', rmeal);
+                if (_options.mode === 'real') {
+                    if (rmeal === '1') {
+                        _mealOn();
+                    } else {
+                        _mealOff();
+                    }
+                } else {
+                    if (meal === '1') {
+                        _mealOn();
+                    } else {
+                        _mealOff();
+                    }
+                }
+            }
+
         }
 
         function _mealOn() {
@@ -458,15 +466,15 @@
             }
             if (typeof (ArrOfBloObj.blocks) === 'object') {
 
-                var stepsToAdd = [];
-                for (var i = 0; i < ArrOfBloObj.blocks.length; i++) {
-                    stepsToAdd = _getStepssInRange(ArrOfBloObj.blocks[i].start, ArrOfBloObj.blocks[i].value);
-                    _addSteps(stepsToAdd, ArrOfBloObj.blocks[i], ArrOfBloObj.meal, ArrOfBloObj.rmeal);
-                }
-            }
+                ArrOfBloObj.blocks.forEach(function addBlock(block) {
+                    _addBlock(_getStepssInRange(block.start, block.value), block);
+                });
 
-            return this;
-        };
+                _addMeal(ArrOfBloObj.meal, ArrOfBloObj.rmeal);
+
+                return this;
+            };
+        }
 
 
         /**
@@ -549,7 +557,7 @@ $(function () {
         };
     }
 
-    // to have jQuery forEach in IE8
+    // to have forEach in IE8
     if (typeof Array.prototype.forEach !== 'function') {
         Array.prototype.forEach = function (callback) {
             for (var i = 0; i < this.length; i++) {
