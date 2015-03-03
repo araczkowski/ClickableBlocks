@@ -30,7 +30,7 @@
             mealbar: true,
             width: 'auto',
             mode: 'plan',
-            addEmptyColumns: true
+            addEmptyColumns: false
         };
 
         //
@@ -177,7 +177,7 @@
                 }).appendTo(mainDiv);
 
                 // additional, empty columns
-                if (_options.addEmptyColumns && stepValue === 465 || stepValue === 825 || stepValue === 705 || stepValue === 945) {
+                if (_options.addEmptyColumns && (stepValue === 465 || stepValue === 825 || stepValue === 705 || stepValue === 945)) {
                     $('<div/>', {
                         'class': 'ClickableBlocksStep ClickableBlocksEmptyColumn',
                         'style': 'width:' + stepWidth
