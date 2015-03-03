@@ -182,31 +182,7 @@
     }, {
         "id": "23256442",
         "start": "900",
-        "value": "60",
-        "planned": "1",
-        "real": "1",
-        "colplanned": "#ff7c34",
-        "colunplanned": "#ffd6b8",
-        "coldeleted": "#ff3d25",
-        "colreal": "#7bce5b",
-        "coladded": "#3c8a27",
-        "colunreal": "#ffd4ba"
-    }, {
-        "id": "23256443",
-        "start": "960",
-        "value": "60",
-        "planned": "0",
-        "real": "1",
-        "colplanned": "#ff7c34",
-        "colunplanned": "#ffd6b8",
-        "coldeleted": "#ff3d25",
-        "colreal": "#7bce5b",
-        "coladded": "#3c8a27",
-        "colunreal": "#ffd4ba"
-    }, {
-        "id": "23256444",
-        "start": "1020",
-        "value": "60",
+        "value": "120",
         "planned": "1",
         "real": "1",
         "colplanned": "#ff7c34",

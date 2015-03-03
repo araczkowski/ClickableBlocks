@@ -29,7 +29,20 @@
             toolbar: true,
             mealbar: true,
             width: 'auto',
-            mode: 'plan'
+            mode: 'plan',
+            addEmptyColumns: true
+        };
+
+        //
+        var parentDiv = $('#' + elementID + '_parent');
+        var mainDiv;
+
+        // SELECTORS
+        var s = {
+            cbs: 'ClickableBlocksSteps',
+            cbr: 'ClickableBlocksReadonly',
+            cbe: 'ClickableBlocksEdit',
+
         };
 
         var _onChange = null;
@@ -83,40 +96,57 @@
         }
 
         function _build() {
-            $('#steps_' + elementID).remove();
-            if (_options.readonly) {
-                $('#' + elementID + '_parent').append('<div id="steps_' + elementID + '" class="ClickableBlocksSteps ClickableBlocksReadonly"></div>');
-            } else {
-                $('#' + elementID + '_parent').append('<div id="steps_' + elementID + '" class="ClickableBlocksSteps ClickableBlocksEdit"></div>');
-            }
+            // 0. main div
+            mainDiv = $('<div/>', {
+                'id': 'steps_' + elementID,
+                'class': s.cbs + ' ' + (_options.readonly) ? s.cbr : s.cbe
+            }).appendTo(parentDiv);
 
             // 1. toolbar
             if (_options.toolbar) {
-                $('#steps_' + elementID).append('<div id="selector_steps_' + elementID + '" class="ClickableBlocksAllBlockSelector"><i class="fa  fa-lg fa-2x fa-plus-square"></i><i class="fa  fa-lg fa-2x fa-minus-square"></i></div>');
+
+                var planAll = $('<i/>', {
+                    'class': 'fa fa-lg fa-2x fa-plus-square'
+                });
+                var unplanAll = $('<i/>', {
+                    'class': 'fa fa-lg fa-2x fa-minus-square'
+                });
+
+
+                $('<div/>', {
+                    'id': 'toolbarSelectorSteps' + elementID,
+                    'class': 'ClickableBlocksAllBlockSelector',
+                    'html': planAll.add(unplanAll)
+                }).appendTo(mainDiv);
+
 
                 if (!_options.readonly) {
-                    $('#steps_' + elementID + ' .ClickableBlocksAllBlockSelector i.fa-plus-square').on('click', function () {
+                    planAll.on('click', function () {
                         _planAll(this);
                     });
-
-                    $('#steps_' + elementID + ' .ClickableBlocksAllBlockSelector i.fa-minus-square').on('click', function () {
+                    unplanAll.on('click', function () {
                         _unplanAll(this);
                     });
                 }
             }
 
             // 2. blocks
-            var eSteps = $('#steps_' + elementID);
             var nSteps = (_options.max - _options.min) / _options.step;
+            var nStepsAll = nSteps;
+            if (_options.addEmptyColumns) {
+                nStepsAll = nSteps + 4;
+            }
+
             var stepWidth = '1.1em;';
             if (_options.width !== 'auto') {
-                stepWidth = (100 / nSteps) + '%';
+                stepWidth = (100 / nStepsAll) + '%';
             }
             var clickStep = 0;
             var contentClass = '';
             var stepClass = '';
 
             for (var i = 0; nSteps > i; i++) {
+
                 clickStep = (i * _options.step) % 60;
                 if (clickStep === 0) {
                     contentClass = 'ClickableBlocksStepContentFullHour';
@@ -137,35 +167,66 @@
                     stepClass = stepClass + ' ClickableBlocksStepEnd';
                 }
                 var stepValue = _options.min + (i * _options.step);
+
                 $('<div/>', {
                     'id': 'step_' + elementID + '_' + (Number(i) + 1),
                     'class': 'ClickableBlocksStep ' + stepClass,
                     'style': 'width: ' + stepWidth,
                     'data-start': stepValue,
-                    'html': '<span class="ClickableBlocksTick">' + _options.stepLabelDispFormat(stepValue) + '</span><div class="ClickableBlocksStepContent ' + contentClass + '"></div></div>'
-                }).appendTo(eSteps);
+                    'html': '<span class="ClickableBlocksTick">' + _options.stepLabelDispFormat(stepValue) + '</span><div class="ClickableBlocksStepContent ' + contentClass + '"></div>'
+                }).appendTo(mainDiv);
+
+                // additional, empty columns
+                if (_options.addEmptyColumns && stepValue === 465 || stepValue === 825 || stepValue === 705 || stepValue === 945) {
+                    $('<div/>', {
+                        'class': 'ClickableBlocksStep ClickableBlocksEmptyColumn',
+                        'style': 'width:' + stepWidth
+                    }).appendTo(mainDiv);
+                }
             }
 
             // 3. mealbar
             if (_options.mealbar) {
-                $('#steps_' + elementID).append('<div id="selector_steps_' + elementID + '" class="ClickableBlocksMealSelector"><span class="ClickableBlocksTick">' + _options.stepLabelDispFormat(_options.min + (nSteps * _options.step)) + '</span><i class="fa fa-cutlery fa-2x mealOff"></i></div>');
+
+                var tick = $('<span/>', {
+                    class: 'ClickableBlocksTick',
+                    html: _options.stepLabelDispFormat(_options.min + (nSteps * _options.step))
+                });
+
+                var cutlery = $('<i/>', {
+                    class: 'fa fa-cutlery fa-2x mealOff'
+                });
+
+                $('<div/>', {
+                    id: 'mealSelectorSteps' + elementID,
+                    class: 'ClickableBlocksMealSelector',
+                    html: tick.add(cutlery)
+                }).appendTo(mainDiv);
+
 
                 if (!_options.readonly) {
-                    $('#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa-cutlery').on('click', function () {
+                    cutlery.on('click', function () {
                         _toggleMeal(this);
                     });
                 }
             }
 
+            // widget width
             if (_options.width === 'auto') {
 
                 if (_options.toolbar) {
-                    $('#' + elementID + '_parent').css('width', (nSteps * 1.1) + 10 + 'em');
+                    $('#' + elementID + '_parent').css('width', (nStepsAll * 1.1) + 10 + 'em');
                 } else {
-                    $('#' + elementID + '_parent').css('width', (nSteps * 1.1) + 4 + 'em');
+                    $('#' + elementID + '_parent').css('width', (nStepsAll * 1.1) + 4 + 'em');
                 }
             } else {
                 $('#' + elementID + '_parent').css('width', _options.width);
+            }
+
+            // additional, empty columns
+            if (_options.addEmptyColumns) {
+                //TODO should be possible in CSS
+                $('.ClickableBlocksStep.ClickableBlocksEmptyColumn').next('div').not('.ClickableBlocksPlannedBlockStart').css('border-left', '2px solid #656565');
             }
         }
 
@@ -177,11 +238,11 @@
             bSteps.forEach(function addBlockOnStep(step) {
 
                 if (i === 0) {
-                    step.addClass('ClickableBlocksPlannedBlockStart').attr('data-value', block.value).find('div.ClickableBlocksStepContent').html('<i class="' + _getBackgroundColor(block.planned, block.real).item + '">').parent().addClass('ClickableBlocksStepHesBlockStart');
+                    step.addClass('ClickableBlocksPlannedBlockStart').attr('data-value', block.value).find('div.ClickableBlocksStepContent').html('<i class="' + _getBlockFeatures(block.planned, block.real).item + '">').parent().addClass('ClickableBlocksStepHesBlockStart');
                     blockSelector = step.attr('id');
                 }
 
-                step.addClass('ClickableBlocksPlannedBlockBody').attr('data-id', block.id).attr('data-colplanned', block.colplanned).attr('data-colunplanned', block.colunplanned).attr('data-colreal', block.colreal).attr('data-coladded', block.coladded).attr('data-colunreal', block.colunreal).attr('data-coldeleted', block.coldeleted).attr('data-planned', block.planned).attr('data-real', block.real).attr('data-block', blockSelector).find('div.ClickableBlocksStepContent').css('background', block[_getBackgroundColor(block.planned, block.real).color]);
+                step.addClass('ClickableBlocksPlannedBlockBody').attr('data-id', block.id).attr('data-colplanned', block.colplanned).attr('data-colunplanned', block.colunplanned).attr('data-colreal', block.colreal).attr('data-coladded', block.coladded).attr('data-colunreal', block.colunreal).attr('data-coldeleted', block.coldeleted).attr('data-planned', block.planned).attr('data-real', block.real).attr('data-block', blockSelector).find('div.ClickableBlocksStepContent').css('background', block[_getBlockFeatures(block.planned, block.real).color]);
 
 
 
@@ -208,7 +269,7 @@
 
         }
 
-        function _getBackgroundColor(plan, real) {
+        function _getBlockFeatures(plan, real) {
 
             if (_options.mode === 'real') {
                 if (real === '1' && plan === '1') {
@@ -271,9 +332,9 @@
                 }
             }
 
-            key = _getBackgroundColor(blocks.attr('data-planned'), blocks.attr('data-real')).color;
+            key = _getBlockFeatures(blocks.attr('data-planned'), blocks.attr('data-real')).color;
             blocks.find('div.ClickableBlocksStepContent').css('background', blocks.attr('data-' + key));
-            blocks.find('div.ClickableBlocksStepContent').first().html('<i class="' + _getBackgroundColor(blocks.attr('data-planned'), blocks.attr('data-real')).item + '">');
+            blocks.find('div.ClickableBlocksStepContent').first().html('<i class="' + _getBlockFeatures(blocks.attr('data-planned'), blocks.attr('data-real')).item + '">');
 
             if (typeof (_onChange) === 'function') {
                 _onChange();
@@ -315,21 +376,15 @@
         }
 
         function _mealOn() {
-            var e = $('#steps_' + elementID + ' i.fa-cutlery');
-            e.addClass('click');
-            e.one('animationend webkitAnimationEnd onAnimationEnd', function () {
+            var e = mainDiv.find('i.fa-cutlery');
+            e.addClass('click').attr((_options.mode === 'real') ? 'data-rmeal' : 'data-meal', 1).one('animationend webkitAnimationEnd onAnimationEnd', function () {
                 e.removeClass('click');
             });
 
-            if (_options.mode === 'real') {
-                e.attr('data-rmeal', 1);
-            } else {
-                e.attr('data-meal', 1);
-            }
-            var key = _getBackgroundColor(e.attr('data-meal'), e.attr('data-rmeal')).color;
-            var bcolor = $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody:first').attr('data-' + key);
-            e.css('color', bcolor);
-            e.removeClass('mealOff').addClass('mealOn');
+
+            var key = _getBlockFeatures(e.attr('data-meal'), e.attr('data-rmeal')).color;
+            var bcolor = mainDiv.find('div.ClickableBlocksPlannedBlockBody:first').attr('data-' + key);
+            e.css('color', bcolor).removeClass('mealOff').addClass('mealOn');
 
 
             if (typeof (_onChange) === 'function') {
@@ -338,21 +393,14 @@
         }
 
         function _mealOff() {
-            var e = $('#steps_' + elementID + ' i.fa-cutlery');
-            e.addClass('click');
-            e.one('animationend webkitAnimationEnd onAnimationEnd', function () {
+            var e = mainDiv.find('i.fa-cutlery').addClass('click').one('animationend webkitAnimationEnd onAnimationEnd', function () {
                 e.removeClass('click');
-            });
+            }).attr((_options.mode === 'real') ? 'data-rmeal' : 'data-meal', 0);
 
-            if (_options.mode === 'real') {
-                e.attr('data-rmeal', 0);
-            } else {
-                e.attr('data-meal', 0);
-            }
-            var key = _getBackgroundColor(e.attr('data-meal'), e.attr('data-rmeal')).color;
-            var bcolor = $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody:first').attr('data-' + key);
-            e.css('color', bcolor);
-            e.removeClass('mealOn').addClass('mealOff');
+
+            var key = _getBlockFeatures(e.attr('data-meal'), e.attr('data-rmeal')).color;
+            var bcolor = mainDiv.find('div.ClickableBlocksPlannedBlockBody:first').attr('data-' + key);
+            e.css('color', bcolor).removeClass('mealOn').addClass('mealOff');
 
             if (typeof (_onChange) === 'function') {
                 _onChange();
@@ -361,35 +409,35 @@
 
 
         function _planAll(e) {
-            if ($('div#steps_' + elementID + ' .ClickableBlocksPlannedBlockStart').length > 0) {
+            var clickedElement = $(e);
+            if (mainDiv.find('.ClickableBlocksPlannedBlockStart').length > 0) {
 
                 if (_options.mode === 'real') {
-                    $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody').attr('data-real', '1');
+                    mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-real', '1');
                 } else {
-                    $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody').attr('data-planned', '1');
+                    mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-planned', '1');
                 }
 
-                // color
-                $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody').each(function (i, obj) {
-                    var key = _getBackgroundColor($(obj).attr('data-planned'), $(obj).attr('data-real')).color;
-                    var bcolor = $(obj).attr('data-' + key);
-                    $(obj).find('div.ClickableBlocksStepContent').css('background', bcolor);
+                // color and item
+                mainDiv.find('div.ClickableBlocksPlannedBlockBody').each(function (i, obj) {
+                    var o = $(obj);
+                    var bFeatures = _getBlockFeatures(o.attr('data-planned'), o.attr('data-real'));
+                    var bcolor = o.attr('data-' + bFeatures.color);
+                    o.find('div.ClickableBlocksStepContent').css('background', bcolor);
+
+                    // item
+                    if (o.hasClass('ClickableBlocksPlannedBlockStart')) {
+                        o.find('div.ClickableBlocksStepContent').html('<i class="' + bFeatures.item + '">');
+                    }
+
                 });
 
-                // item
-                $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockStart').each(function (i, obj) {
-                    var item = _getBackgroundColor($(obj).attr('data-planned'), $(obj).attr('data-real')).item;
-                    $(obj).find('div.ClickableBlocksStepContent').html('<i class="' + item + '">');
-
-                });
-
-                $(e).addClass('click');
-                $(e).one('animationend webkitAnimationEnd onAnimationEnd', function () {
-                    $(e).removeClass('click');
+                clickedElement.addClass('click').one('animationend webkitAnimationEnd onAnimationEnd', function () {
+                    clickedElement.removeClass('click');
                 });
 
                 //If there is at least 1 time-slot between 12:00 and 13:00, the meal is selected as well, when clicking
-                if ($('div#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody[data-start="720"]').length > 0 || $('div#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody[data-start="735"]').length > 0 || $('div#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody[data-start="750"]').length > 0 || $('div#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody[data-start="765"]').length > 0) {
+                if (mainDiv.find('div.ClickableBlocksPlannedBlockBody').filter('[data-start="720"],[data-start="735"],[data-start="750"],[data-start="765"]').length > 0) {
                     _mealOn();
                 }
 
@@ -400,31 +448,30 @@
         }
 
         function _unplanAll(e) {
-            if ($('div#steps_' + elementID + ' .ClickableBlocksPlannedBlockStart').length > 0) {
+            var clickedElement = $(e);
+            if (mainDiv.find('.ClickableBlocksPlannedBlockStart').length > 0) {
 
                 if (_options.mode === 'real') {
-                    $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody').attr('data-real', '0');
+                    mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-real', '0');
                 } else {
-                    $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody').attr('data-planned', '0');
+                    mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-planned', '0');
                 }
 
                 // color
-                $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockBody').each(function (i, obj) {
-                    var key = _getBackgroundColor($(obj).attr('data-planned'), $(obj).attr('data-real')).color;
-                    var bcolor = $(obj).attr('data-' + key);
-                    $(obj).find('div.ClickableBlocksStepContent').css('background', bcolor);
+                mainDiv.find('div.ClickableBlocksPlannedBlockBody').each(function (i, obj) {
+                    var o = $(obj);
+                    var bFeatures = _getBlockFeatures(o.attr('data-planned'), o.attr('data-real'));
+                    var bcolor = o.attr('data-' + bFeatures.color);
+                    o.find('div.ClickableBlocksStepContent').css('background', bcolor);
+                    // item
+                    if (o.hasClass('ClickableBlocksPlannedBlockStart')) {
+                        o.find('div.ClickableBlocksStepContent').html('<i class="' + bFeatures.item + '">');
+                    }
+
                 });
 
-                // item
-                $('#steps_' + elementID + ' div.ClickableBlocksPlannedBlockStart').each(function (i, obj) {
-                    var item = _getBackgroundColor($(obj).attr('data-planned'), $(obj).attr('data-real')).item;
-                    $(obj).find('div.ClickableBlocksStepContent').html('<i class="' + item + '">');
-
-                });
-
-                $(e).addClass('click');
-                $(e).one('animationend webkitAnimationEnd onAnimationEnd', function () {
-                    $(e).removeClass('click');
+                clickedElement.addClass('click').one('animationend webkitAnimationEnd onAnimationEnd', function () {
+                    clickedElement.removeClass('click');
                 });
 
 

@@ -38,6 +38,11 @@ html {
     padding-top: 3px;
 }
 
+.ClickableBlocksStep.ClickableBlocksEmptyColumn {
+    border-left: 2px solid #656565;
+    height: 2.5em;
+}
+
 .ClickableBlocksStep.ClickableBlocksStepFullHour {
     border-left: 2px solid #656565;
     height: 2.5em;
