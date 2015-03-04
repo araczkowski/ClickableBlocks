@@ -37,14 +37,6 @@
         var parentDiv = $('#' + elementID + '_parent');
         var mainDiv;
 
-        // SELECTORS
-        var s = {
-            cbs: 'ClickableBlocksSteps',
-            cbr: 'ClickableBlocksReadonly',
-            cbe: 'ClickableBlocksEdit',
-
-        };
-
         var _onChange = null;
 
 
@@ -97,9 +89,16 @@
 
         function _build() {
             // 0. main div
+            var mainDivClass = 'ClickableBlocksSteps';
+            if (_options.readonly) {
+                mainDivClass = mainDivClass + ' ClickableBlocksReadonly';
+            } else {
+                mainDivClass = mainDivClass + ' ClickableBlocksEdit';
+            }
+
             mainDiv = $('<div/>', {
                 'id': 'steps_' + elementID,
-                'class': s.cbs + ' ' + (_options.readonly) ? s.cbr : s.cbe
+                'class': mainDivClass
             }).appendTo(parentDiv);
 
             // 1. toolbar
@@ -114,7 +113,7 @@
 
 
                 $('<div/>', {
-                    'id': 'toolbarSelectorSteps' + elementID,
+                    'id': 'selector_steps_' + elementID,
                     'class': 'ClickableBlocksAllBlockSelector',
                     'html': planAll.add(unplanAll)
                 }).appendTo(mainDiv);
@@ -514,7 +513,26 @@
             if (typeof (ArrOfBloObj.blocks) === 'object') {
 
                 ArrOfBloObj.blocks.forEach(function addBlock(block) {
+                    if (!block.colplanned) {
+                        block.colplanned = '#ff7c34';
+                    }
+                    if (!block.colunplanned) {
+                        block.colunplanned = '#ffd6b8';
+                    }
+                    if (!block.colreal) {
+                        block.colreal = '#7bce5b';
+                    }
+                    if (!block.colunreal) {
+                        block.colunreal = '#ffd4ba';
+                    }
+                    if (!block.coladded) {
+                        block.coladded = '#3c8a27';
+                    }
+                    if (!block.coldeleted) {
+                        block.coldeleted = '#ff3d25';
+                    }
                     _addBlock(_getStepssInRange(block.start, block.value), block);
+
                 });
 
                 _addMeal(ArrOfBloObj.meal, ArrOfBloObj.rmeal);
@@ -540,13 +558,6 @@
                     block.value = e.getAttribute('data-value');
                     block.planned = e.getAttribute('data-planned');
                     block.real = e.getAttribute('data-real');
-                    block.colplanned = e.getAttribute('data-colplanned');
-                    block.colunplanned = e.getAttribute('data-colunplanned');
-                    block.coldeleted = e.getAttribute('data-coldeleted');
-                    block.colreal = e.getAttribute('data-colreal');
-                    block.coladded = e.getAttribute('data-coladded');
-                    block.colunreal = e.getAttribute('data-colunreal');
-
                     blocks.push(block);
                 });
             }
