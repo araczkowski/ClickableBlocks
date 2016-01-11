@@ -35,6 +35,7 @@
   <script src="scripts/main.js"></script>
   <!-- endbuild -->
   <script>
+    var clickB;
     // test url
     //http://localhost:3000/?params={"options":{"min":360,"max":1140,"mode":"real"},"schedule":{"blocks":[{"id":1,"start":480,"value":60,"planned":"1","real":"1"}],"meal":"1","rmeal":"1"}}
 
@@ -107,31 +108,83 @@
         $.getJSON("testBlocks13h.json", function(blocksJson) {
           var options = {
             "mealbar": true,
-            "toolbar": true,
+            "toolbar": false,
             "mode": "real",
             "min": 360, //0
             "max": 1260, //1440
             "step": 15,
-            "readonly": false
+            "readonly": true
           };
           for (var i = 0; i < 1; i++) {
             if (1 === 1) {
               options.stepLabelDispFormat = "function (steps) {return \'\';}";
             }
-            var divId = 'clickB' + i;
-            $('body').append('<div style="float:left" id="' + divId + '_parent" data-intro="Hello step one!"></div>');
+            var divId = 'clickB';
+            $('body').append('<div style="float:left; margin-left:250px" id="' + divId + '_parent" class="editScheduleRegion"></div>');
             // create widget object
-            var name = new ClickB(divId, options);
+            clickB = new ClickB(divId, options);
 
 
             // add blocks
-            name.addBlocks(blocksJson);
+            clickB.addBlocks(blocksJson);
           }
         });
       });
     };
+
+    //
+    function editAllBlocks(calback) {
+      var intro = introJs();
+      intro.setOptions({
+        steps: [{
+          element: document.querySelector('.editScheduleRegion'),
+          intro: 'Cliquez “Esc” pour annuler vous changements.',
+          position: 'left'
+        }],
+        showBullets: false,
+        showStepNumbers: false,
+        exitOnOverlayClick: false
+      });
+      intro.start();
+
+      var introLeyer = $('div.introjs-helperLayer');
+      var introLeyerWidth = introLeyer.width();
+      introLeyer.width(introLeyerWidth + 70);
+
+
+      $('div.popUpEdit').hide();
+      $('div.customPagination').hide();
+      $('a.introjs-skipbutton').text("Sauvegarder");
+
+      $('div.introjs-tooltipbuttons').detach().insertBefore($('div.introjs-tooltiptext'));
+
+      var id;
+      $('div.ClickableBlocksSteps').each(function(index) {
+        /* jshint ignore:start */
+        id = $(this).attr("data-clickB");
+        eval(id + '.editAllOn();');
+        /* jshint ignore:end */
+      });
+
+      intro.onexit(function() {
+        location.reload();
+      });
+
+      intro.oncomplete(function() {
+        //location.reload();
+        clickB.editAllOff();
+        $('div.popUpEdit').show();
+        $('div.customPagination').show();
+        calback();
+      });
+    };
+
+    function calbackTest(){
+      alert('All data are saved in the DB!');
+    }
+
   </script>
-  <button onclick="introJs().start();">Click me for Intro.js</button>
+  <button onclick="editAllBlocks(calbackTest)">Click me for Intro.js</button>
   </br>
   </br>
 </body>
