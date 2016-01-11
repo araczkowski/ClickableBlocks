@@ -2,131 +2,138 @@
 <html class="no-js">
 
 <head>
-    <meta charset="utf-8">
-    <title>ClickableBlocks</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-    <link rel="shortcut icon" href="/favicon.ico">
-    <!-- the same like in apex -->
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <title>ClickableBlocks</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <!-- the same like in apex -->
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <!-- build:css styles/vendor.css -->
-    <!-- bower:css -->
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild -->
+  <!-- build:css styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="../bower_components/intro.js/introjs.css">
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css(.tmp) styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild -->
 </head>
 
 <body style="margin-top: 2em;">
-    <div id="bipSchedule_parent" style="float:left; display: inline-block;"></div>
 
-    <!-- build:js({app,.tmp}) scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/jquery/jquery.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:js({app,.tmp}) scripts/main.js -->
-    <script src="scripts/main.js"></script>
-    <!-- endbuild -->
-    <script>
-        // test url
-        //http://localhost:3000/?params={"options":{"min":360,"max":1140,"mode":"real"},"schedule":{"blocks":[{"id":1,"start":480,"value":60,"planned":"1","real":"1"}],"meal":"1","rmeal":"1"}}
 
-        function getParameterByName(name) {
-            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-                results = regex.exec(location.search);
-            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-        }
-        var params;
-        try {
-            params = JSON.parse(getParameterByName('params'));
-        } catch (err) {
-            params = false;
-        }
+  <div id="bipSchedule_parent" style="float:left; display: inline-block;"></div>
 
-        if (params) {
-            //add special css for BIP
-            var head = document.getElementsByTagName('head')[0];
-            var link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.type = 'text/css';
-            link.href = 'styles/bip.css';
-            link.media = 'all';
-            head.appendChild(link);
+  <!-- build:js({app,.tmp}) scripts/vendor.js -->
+  <!-- bower:js -->
+  <script src="../bower_components/jquery/jquery.js"></script>
+  <script src="../bower_components/intro.js/intro.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:js({app,.tmp}) scripts/main.js -->
+  <script src="scripts/main.js"></script>
+  <!-- endbuild -->
+  <script>
+    // test url
+    //http://localhost:3000/?params={"options":{"min":360,"max":1140,"mode":"real"},"schedule":{"blocks":[{"id":1,"start":480,"value":60,"planned":"1","real":"1"}],"meal":"1","rmeal":"1"}}
 
-            //default BIP params
-            params.options.stepLabelDispFormat = "function (steps) {return \'\';}"
-            params.options.step = 15;
-            params.options.readonly = true;
-            params.options.toolbar = false;
-            params.options.mealbar = false;
-            var schedule = params.schedule;
+    function getParameterByName(name) {
+      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+      return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+    var params;
+    try {
+      params = JSON.parse(getParameterByName('params'));
+    } catch (err) {
+      params = false;
+    }
 
-            //default colors to each blocks to reduce the url length
-            if (schedule.blocks) {
-                if (params.options.colorMode === 'monochrome') {
-                    schedule.blocks.forEach(function (entry) {
-                        entry.coltoolbar = 'rgb(144,144,144)'
-                        entry.colplanned = 'rgb(144,144,144)';
-                        entry.colunplanned = 'rgb(218,218,218)';
-                        entry.colreal = 'rgb(140,140,140)';
-                        entry.colunreal = 'rgb(218,218,218)';
-                        entry.coladded = 'rgb(79,79,79)';
-                        entry.coldeleted = 'rgb(118,118,118)';
-                    });
+    if (params) {
+      //add special css for BIP
+      var head = document.getElementsByTagName('head')[0];
+      var link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = 'styles/bip.css';
+      link.media = 'all';
+      head.appendChild(link);
 
-                } else {
-                    schedule.blocks.forEach(function (entry) {
-                        entry.coltoolbar = '#ff7c34'; //rgb(255,124,52)
-                        entry.colplanned = '#ff7c34'; //rgb(255,124,52)
-                        entry.colunplanned = '#ffd6b8'; //rgb(255,214,184)
-                        entry.colreal = '#7bce5b'; //rgb(123,206,91)
-                        entry.colunreal = '#ffd4ba'; //rgb(255,212,186)
-                        entry.coladded = '#3c8a27'; //rgb(60,138,39)
-                        entry.coldeleted = '#ff3d25'; //rgb(255,61,37)
-                    });
-                }
-            }
+      //default BIP params
+      params.options.stepLabelDispFormat = "function (steps) {return \'\';}"
+      params.options.step = 15;
+      params.options.readonly = true;
+      params.options.toolbar = false;
+      params.options.mealbar = false;
+      var schedule = params.schedule;
 
-            $(function () {
+      //default colors to each blocks to reduce the url length
+      if (schedule.blocks) {
+        if (params.options.colorMode === 'monochrome') {
+          schedule.blocks.forEach(function(entry) {
+            entry.coltoolbar = 'rgb(144,144,144)'
+            entry.colplanned = 'rgb(144,144,144)';
+            entry.colunplanned = 'rgb(218,218,218)';
+            entry.colreal = 'rgb(140,140,140)';
+            entry.colunreal = 'rgb(218,218,218)';
+            entry.coladded = 'rgb(79,79,79)';
+            entry.coldeleted = 'rgb(118,118,118)';
+          });
 
-                var bipSchedule = new ClickB('bipSchedule', params.options);
-                bipSchedule.addBlocks(params.schedule);
-            });
         } else {
+          schedule.blocks.forEach(function(entry) {
+            entry.coltoolbar = '#ff7c34'; //rgb(255,124,52)
+            entry.colplanned = '#ff7c34'; //rgb(255,124,52)
+            entry.colunplanned = '#ffd6b8'; //rgb(255,214,184)
+            entry.colreal = '#7bce5b'; //rgb(123,206,91)
+            entry.colunreal = '#ffd4ba'; //rgb(255,212,186)
+            entry.coladded = '#3c8a27'; //rgb(60,138,39)
+            entry.coldeleted = '#ff3d25'; //rgb(255,61,37)
+          });
+        }
+      }
 
-            $(function () {
+      $(function() {
 
-                $.getJSON("testBlocks13h.json", function (blocksJson) {
-                    var options = {
-                        "mealbar": true,
-                        "toolbar": true,
-                        "mode": "real",
-                        "min": 360, //0
-                        "max": 1260, //1440
-                        "step": 15,
-                        "readonly": false
-                    };
-                    for (var i = 0; i < 1; i++) {
-                        if (1 === 1) {
-                            options.stepLabelDispFormat = "function (steps) {return \'\';}";
-                        }
-                        var divId = 'clickB' + i;
-                        $('body').append('<div style="float:left" id="' + divId + '_parent"></div>');
-                        // create widget object
-                        var name = new ClickB(divId, options);
+        var bipSchedule = new ClickB('bipSchedule', params.options);
+        bipSchedule.addBlocks(params.schedule);
+      });
+    } else {
+
+      $(function() {
+
+        $.getJSON("testBlocks13h.json", function(blocksJson) {
+          var options = {
+            "mealbar": true,
+            "toolbar": true,
+            "mode": "real",
+            "min": 360, //0
+            "max": 1260, //1440
+            "step": 15,
+            "readonly": false
+          };
+          for (var i = 0; i < 1; i++) {
+            if (1 === 1) {
+              options.stepLabelDispFormat = "function (steps) {return \'\';}";
+            }
+            var divId = 'clickB' + i;
+            $('body').append('<div style="float:left" id="' + divId + '_parent" data-intro="Hello step one!"></div>');
+            // create widget object
+            var name = new ClickB(divId, options);
 
 
-                        // add blocks
-                        name.addBlocks(blocksJson);
-                    }
-                });
-            });
-        };
-    </script>
+            // add blocks
+            name.addBlocks(blocksJson);
+          }
+        });
+      });
+    };
+  </script>
+  <button onclick="introJs().start();">Click me for Intro.js</button>
+  </br>
+  </br>
 </body>
 
 </html>

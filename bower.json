@@ -1,8 +1,9 @@
 {
-    "name": "clickableBlocks",
-    "private": true,
-    "dependencies": {
-        "jquery": "~1.9.1"
-    },
-    "devDependencies": {}
+  "name": "clickableBlocks",
+  "private": true,
+  "dependencies": {
+    "jquery": "~1.9.1",
+    "intro.js": "~1.1.1"
+  },
+  "devDependencies": {}
 }
