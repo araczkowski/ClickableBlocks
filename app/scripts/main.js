@@ -32,7 +32,8 @@
       mode: 'plan',
       addEmptyColumns: false,
       preId: 0,
-      enfId: 0
+      enfId: 0,
+      preDay: ''
     };
 
     //
@@ -593,6 +594,7 @@
       obj.blocks = blocks;
       obj.preId = _options.preId;
       obj.enfId = _options.enfId;
+      obj.preDay = _options.preDay;
       obj.meal = $('div#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa').attr('data-meal');
       obj.rmeal = $('div#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa').attr('data-rmeal');
       return JSON.stringify(obj);
