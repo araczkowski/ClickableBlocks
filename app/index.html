@@ -113,7 +113,9 @@
             "min": 360, //0
             "max": 1260, //1440
             "step": 15,
-            "readonly": true
+            "readonly": true,
+            "preId": 997,
+            "enfId": 2016
           };
           for (var i = 0; i < 1; i++) {
             if (1 === 1) {
@@ -172,19 +174,33 @@
 
       intro.oncomplete(function() {
         //location.reload();
+        var id;
+        var preId;
+        $('div.ClickableBlocksSteps').each(function(index) {
+          /* jshint ignore:start */
+          id = $(this).attr("data-clickB");
+          eval(id + '.editAllOff();');
+          /* jshint ignore:end */
+          preId = new Function('return '+id + '.getOption("preId");')();
+          calbackTest(preId);
+
+        });
+
         clickB.editAllOff();
         $('div.popUpEdit').show();
         $('div.customPagination').show();
-        calback();
+
+        if (calback) {
+          calback();
+        }
       });
     };
 
-    function calbackTest(){
-      alert('All data are saved in the DB!');
+    function calbackTest(id) {
+      alert('All data are saved in the DB for ID: '+id);
     }
-
   </script>
-  <button onclick="editAllBlocks(calbackTest)">Click me for Intro.js</button>
+  <button onclick="editAllBlocks()">Click me for Intro.js</button>
   </br>
   </br>
 </body>

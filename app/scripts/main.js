@@ -30,7 +30,9 @@
       mealbar: true,
       width: 'auto',
       mode: 'plan',
-      addEmptyColumns: false
+      addEmptyColumns: false,
+      preId: 0,
+      enfId: 0
     };
 
     //
@@ -112,6 +114,8 @@
       mainDiv = $('<div/>', {
         'id': 'steps_' + elementID,
         'data-clickB': elementID,
+        'data-pre-id': _options.preId,
+        'data-enf-id': _options.enfId,
         'class': mainDivClass
       }).appendTo(parentDiv);
 
@@ -570,6 +574,7 @@
      * @return {ArrOfBloObj} of blocks
      */
     this.getBlocks = function() {
+
       var obj = {};
       var blocks = [];
       var _blocks = $('div#steps_' + elementID + ' .ClickableBlocksPlannedBlockStart');
@@ -586,6 +591,8 @@
       }
 
       obj.blocks = blocks;
+      obj.preId = _options.preId;
+      obj.enfId = _options.enfId;
       obj.meal = $('div#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa').attr('data-meal');
       obj.rmeal = $('div#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa').attr('data-rmeal');
       return JSON.stringify(obj);
@@ -634,6 +641,10 @@
       $('div#steps_' + elementID + ' > .ClickableBlocksDisp').addClass('ClickableBlocksNoDisp').removeClass('ClickableBlocksDisp');
       $('div#steps_' + elementID + '.ClickableBlocksEdit').addClass('ClickableBlocksReadonly').removeClass('ClickableBlocksEdit');
       _setWidth();
+    };
+
+    this.getOption = function(option) {
+      return _options[option];
     };
 
     _init();
