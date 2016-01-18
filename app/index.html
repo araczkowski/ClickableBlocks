@@ -116,7 +116,7 @@
             "readonly": true,
             "preId": 997,
             "enfId": 2016,
-            "preDay":"13/01/2015"
+            "preDay": "13/01/2015"
           };
           for (var i = 0; i < 1; i++) {
             if (1 === 1) {
@@ -170,7 +170,12 @@
       });
 
       intro.onexit(function() {
-        location.reload();
+        // FF isue with reload
+        setTimeout(
+          function() {
+            window.location.reload();
+          },
+          1);
       });
 
       intro.oncomplete(function() {
@@ -182,7 +187,7 @@
           id = $(this).attr("data-clickB");
           eval(id + '.editAllOff();');
           /* jshint ignore:end */
-          preId = new Function('return '+id + '.getOption("preId");')();
+          preId = new Function('return ' + id + '.getOption("preId");')();
           calbackTest(preId);
 
         });
@@ -198,7 +203,7 @@
     };
 
     function calbackTest(id) {
-      alert('All data are saved in the DB for ID:gr '+id);
+      alert('All data are saved in the DB for ID:gr ' + id);
     }
   </script>
   <button onclick="editAllBlocks()">Click me for Intro.js</button>
