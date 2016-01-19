@@ -212,3 +212,7 @@ a.introjs-button {
   color: black;
   border: solid black 1px;
 }
+a.introjs-button:hover {
+  color: black;
+  border: solid black 1px;
+}
