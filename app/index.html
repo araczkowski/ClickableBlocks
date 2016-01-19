@@ -142,7 +142,8 @@
         steps: [{
           element: document.querySelector('.editScheduleRegion'),
           intro: 'Cliquez “Esc” pour annuler vous changements.',
-          position: 'left'
+          position: 'left',
+          doneLabel: 'Sauvegarder',
         }],
         showBullets: false,
         showStepNumbers: false,
@@ -157,6 +158,7 @@
 
       $('div.popUpEdit').hide();
       $('div.customPagination').hide();
+      //doneLabel doesn't work
       $('a.introjs-skipbutton').text("Sauvegarder");
 
       $('div.introjs-tooltipbuttons').detach().insertBefore($('div.introjs-tooltiptext'));

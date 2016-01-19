@@ -200,11 +200,15 @@ div.introjs-tooltipbuttons {
 a.introjs-button {
   font-size: 1em;
   margin: 10px;
-  padding-left: 20px;introjs-tooltiptext
-  padding-right: 20px;
+  padding-left: 20px;
+  introjs-tooltiptext padding-right: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
 }
-div.introjs-tooltiptext{
+div.introjs-tooltiptext {
   font-size: 0.9em;
+}
+a.introjs-button {
+  color: black;
+  border: solid black 1px;
 }
