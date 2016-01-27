@@ -322,6 +322,8 @@
     }
 
     function _togglePlan(blockSelector) {
+      var bStart;
+      var bEnd;
 
       if (_options.readonly) {
         return;
@@ -339,17 +341,29 @@
           blocks.attr('data-real', '1');
         }
       } else {
+        bStart = Number(blocks.attr('data-start'));
+        bEnd = Number(blocks.attr('data-start')) + Number(blocks.attr('data-value'));
         if (blocks.attr('data-planned') === '1') {
           blocks.attr('data-planned', '0');
 
+          // When a time-slot, starting at 12:00 or containing 12:00 (starting before and ending after),
+          // is checked, the meal must be checked as well.
+          // When such a time-slot is unchecked, the meal must be unchecked as well
+          if (bStart === 720 || (bStart < 720 && bEnd > 720)){
+            _mealOff();
+          }
         } else {
           blocks.attr('data-planned', '1');
+          if (bStart === 720 || (bStart < 720 && bEnd > 720)){
+            _mealOn();
+          }
         }
       }
 
       key = _getBlockFeatures(blocks.attr('data-planned'), blocks.attr('data-real')).color;
       blocks.find('div.ClickableBlocksStepContent').css('background', blocks.attr('data-' + key));
       blocks.find('div.ClickableBlocksStepContent').first().html('<i class="' + _getBlockFeatures(blocks.attr('data-planned'), blocks.attr('data-real')).item + '">');
+
 
       if (typeof(_onChange) === 'function') {
         _onChange();
