@@ -322,39 +322,44 @@
     }
 
     function _togglePlan(blockSelector) {
-      var bStart;
-      var bEnd;
-
       if (_options.readonly) {
         return;
       }
 
       var blocks = $('[data-block=' + blockSelector + ']');
       var key;
-
+      var bStart = Number(blocks.attr('data-start'));
+      var bEnd = Number(blocks.attr('data-start')) + Number(blocks.attr('data-value'));
 
       if (_options.mode === 'real') {
         if (blocks.attr('data-real') === '1') {
           blocks.attr('data-real', '0');
-
-        } else {
-          blocks.attr('data-real', '1');
-        }
-      } else {
-        bStart = Number(blocks.attr('data-start'));
-        bEnd = Number(blocks.attr('data-start')) + Number(blocks.attr('data-value'));
-        if (blocks.attr('data-planned') === '1') {
-          blocks.attr('data-planned', '0');
-
           // When a time-slot, starting at 12:00 or containing 12:00 (starting before and ending after),
           // is checked, the meal must be checked as well.
-          // When such a time-slot is unchecked, the meal must be unchecked as well
-          if (bStart === 720 || (bStart < 720 && bEnd > 720)){
+          if (bStart === 720 || (bStart < 720 && bEnd > 720)) {
+            _mealOff();
+          }
+        } else {
+          blocks.attr('data-real', '1');
+          // When a time-slot, starting at 12:00 or containing 12:00 (starting before and ending after),
+          // is unchecked, the meal must be unchecked as well
+          if (bStart === 720 || (bStart < 720 && bEnd > 720)) {
+            _mealOn();
+          }
+        }
+      } else {
+        if (blocks.attr('data-planned') === '1') {
+          blocks.attr('data-planned', '0');
+          // When a time-slot, starting at 12:00 or containing 12:00 (starting before and ending after),
+          // is checked, the meal must be checked as well.
+          if (bStart === 720 || (bStart < 720 && bEnd > 720)) {
             _mealOff();
           }
         } else {
           blocks.attr('data-planned', '1');
-          if (bStart === 720 || (bStart < 720 && bEnd > 720)){
+          // When a time-slot, starting at 12:00 or containing 12:00 (starting before and ending after),
+          // is unchecked, the meal must be unchecked as well
+          if (bStart === 720 || (bStart < 720 && bEnd > 720)) {
             _mealOn();
           }
         }
