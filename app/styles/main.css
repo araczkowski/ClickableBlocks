@@ -118,6 +118,9 @@ div.ClickableBlocksAllBlockSelector i.fa-plus-square {
   font-size: 1.8em;
   text-shadow: 2px 2px 2px #ccc;
 }
+div.ClickableBlocksAllBlockSelector i.fa-plus-square.budg{
+  color: #07A4EB;
+}
 div.ClickableBlocksAllBlockSelector i.fa-minus-square {
   padding-right: 0.2em;
   padding-right: 0.8em;
@@ -190,6 +193,9 @@ div.ClickableBlocksEdit > div.ClickableBlocksAllBlockSelector i.fa-minus-square:
 }
 div.ClickableBlocksEdit > div.ClickableBlocksAllBlockSelector i.fa-plus-square:hover {
   color: #D55900;
+}
+div.ClickableBlocksEdit > div.ClickableBlocksAllBlockSelector i.fa-plus-square.budg:hover {
+  color: #048ac5;
 }
 .ClickableBlocksNoDisp {
   display: none;

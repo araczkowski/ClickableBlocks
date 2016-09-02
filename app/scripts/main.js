@@ -91,13 +91,18 @@
     }
 
     function _setWidth() {
+      var tw = 1;
+      var mw = 0;
       if (_options.width === 'auto') {
-
         if (_options.toolbar) {
-          $('#' + elementID + '_parent').css('width', (allSteps * 1.1) + 10 + 'em');
-        } else {
-          $('#' + elementID + '_parent').css('width', (allSteps * 1.1) + 4 + 'em');
+          tw = 7;
         }
+        if (_options.mealbar) {
+          mw = 3;
+        }
+
+        $('#' + elementID + '_parent').css('width', (allSteps * 1.1) + tw + mw + 'em');
+
       } else {
         $('#' + elementID + '_parent').css('width', _options.width);
       }
@@ -127,10 +132,10 @@
       }
 
       var planAll = $('<i/>', {
-        'class': 'fa fa-lg fa-2x fa-plus-square'
+        'class': 'fa fa-lg fa-2x fa-plus-square ' + _options.mode
       });
       var unplanAll = $('<i/>', {
-        'class': 'fa fa-lg fa-2x fa-minus-square'
+        'class': 'fa fa-lg fa-2x fa-minus-square ' + _options.mode
       });
 
 
@@ -306,7 +311,9 @@
           };
         }
 
-      } else {
+      }
+      // plan or budg
+      else {
         if (plan === '1') {
           return {
             'color': 'colplanned',
@@ -561,10 +568,18 @@
 
         ArrOfBloObj.blocks.forEach(function addBlock(block) {
           if (!block.colplanned) {
-            block.colplanned = '#ff7c34';
+            if (_options.mode === 'budg') {
+              block.colplanned = '#07A4EB';
+            } else {
+              block.colplanned = '#ff7c34';
+            }
           }
           if (!block.colunplanned) {
-            block.colunplanned = '#ffd6b8';
+            if (_options.mode === 'budg') {
+              block.colunplanned = '#ffd6b8';
+            } else {
+              block.colunplanned = '#ffd6b8';
+            }
           }
           if (!block.colreal) {
             block.colreal = '#7bce5b';
