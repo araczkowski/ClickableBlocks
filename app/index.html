@@ -66,8 +66,8 @@
       params.options.stepLabelDispFormat = "function (steps) {return \'\';}"
       params.options.step = 15;
       params.options.readonly = true;
-      params.options.toolbar = false;
-      params.options.mealbar = false;
+      params.options.toolbar = true;
+      params.options.mealbar = true;
       var schedule = params.schedule;
 
       //default colors to each blocks to reduce the url length
@@ -107,7 +107,7 @@
 
         $.getJSON("testBlocks13h.json", function(blocksJson) {
           var options = {
-            "mealbar": true,
+            "mealbar": false,
             "toolbar": true,
             "mode": "budg",
             "min": 360, //0
@@ -121,6 +121,7 @@
           for (var i = 0; i < 1; i++) {
             if (1 === 1) {
               options.stepLabelDispFormat = "function (steps) {return \'\';}";
+              // options.stepLabelDispFormat = "function (steps) {return 1;}";
             }
             var divId = 'clickB';
             $('body').append('<div style="float:left; margin-left:250px" id="' + divId + '_parent" class="editScheduleRegion"></div>');

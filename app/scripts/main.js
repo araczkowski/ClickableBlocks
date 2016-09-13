@@ -211,13 +211,14 @@
         }
       }
 
+
+      var tick = $('<span/>', {
+        class: 'ClickableBlocksTick',
+        html: _options.stepLabelDispFormat(_options.min + (nSteps * _options.step))
+      });
+
       // 3. mealbar
       if (_options.mealbar) {
-
-        var tick = $('<span/>', {
-          class: 'ClickableBlocksTick',
-          html: _options.stepLabelDispFormat(_options.min + (nSteps * _options.step))
-        });
 
         var cutlery = $('<i/>', {
           class: 'fa fa-cutlery fa-2x mealOff'
@@ -235,6 +236,11 @@
           _toggleMeal(this);
         });
 
+      } else {
+        $('<div/>', {
+            class: 'ClickableBlocksStep',
+            html: tick
+          }).appendTo(mainDiv);
       }
 
       // widget width
