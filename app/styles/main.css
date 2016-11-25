@@ -19,14 +19,15 @@ html {
 }
 .ClickableBlocksStep, .ClickableBlocksMealSelector {
   float: left;
-  height: 2em;
-  padding-top: 3px;
+  height: 2.5em;
+  line-height: 2.5em;
+  padding-top: 6px;
 }
 .ClickableBlocksAllBlockSelector {
   float: left;
-  height: 2em;
+  height: 2.5em;
   vertical-align: bottom;
-  line-height: 2em;
+  line-height: 2.5em;
   padding-top: 3px;
 }
 .ClickableBlocksStep.ClickableBlocksEmptyColumn {
@@ -131,6 +132,29 @@ div.ClickableBlocksAllBlockSelector i.fa-minus-square {
 i.mealOff {
   color: #ffd6b8;
 }
+div.BasedOnBarSelector{
+    height: 2.5em;
+    line-height: 2.5em;
+    width: 3em;
+    float: left;
+    margin-left: 10px;
+}
+div.BasedOnBarSelector span.BasedOn{
+    font-weight: bold;
+    vertical-align: middle;
+    padding-left:6px;
+    font-size: 1.5em;
+}
+div.BasedOnBarSelector span.BasedOnOption{
+    vertical-align: middle;
+    padding-left:6px;
+    color: grey;
+    font-size: 0.8em;
+}
+div.BasedOnBarSelector.click {
+  -webkit-animation: pulse-click .4s 1;
+  animation: pulse-click .4s 1;
+}
 i.fa.click {
   -webkit-animation: pulse-click .4s 1;
   animation: pulse-click .4s 1;
@@ -188,6 +212,16 @@ div.ClickableBlocksEdit > div.ClickableBlocksMealSelector i.mealOff {
   cursor: pointer;
   cursor: hand;
 }
+div.ClickableBlocksEdit > div.BasedOnBarSelector {
+  cursor: pointer;
+  cursor: hand;
+}
+
+div.ClickableBlocksEdit > div.BasedOnBarSelector > span.BasedOnOption:hover {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
 div.ClickableBlocksEdit > div.ClickableBlocksAllBlockSelector i.fa-minus-square:hover {
   color: #FFB27A;
 }

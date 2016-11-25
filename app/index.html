@@ -107,8 +107,9 @@
 
         $.getJSON("testBlocks13h.json", function(blocksJson) {
           var options = {
-            "mealbar": false,
+            "mealbar": true,
             "toolbar": true,
+            "basedonbar": true,
             "mode": "budg",
             "min": 360, //0
             "max": 1260, //1440
@@ -118,12 +119,12 @@
             "enfId": 2016,
             "preDay": "13/01/2015"
           };
-          for (var i = 0; i < 1; i++) {
+          for (var i = 0; i < 2; i++) {
             if (1 === 1) {
               options.stepLabelDispFormat = "function (steps) {return \'\';}";
               // options.stepLabelDispFormat = "function (steps) {return 1;}";
             }
-            var divId = 'clickB';
+            var divId = 'clickB' + i;
             $('body').append('<div style="float:left; margin-left:250px" id="' + divId + '_parent" class="editScheduleRegion"></div>');
             // create widget object
             clickB = new ClickB(divId, options);

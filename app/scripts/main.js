@@ -28,6 +28,7 @@
       readonly: false,
       toolbar: true,
       mealbar: true,
+      basedonbar: false,
       width: 'auto',
       mode: 'plan',
       addEmptyColumns: false,
@@ -93,6 +94,7 @@
     function _setWidth() {
       var tw = 1;
       var mw = 0;
+      var bw = 0
       if (_options.width === 'auto') {
         if (_options.toolbar) {
           tw = 7;
@@ -100,8 +102,11 @@
         if (_options.mealbar) {
           mw = 3;
         }
+        if (_options.basedonbar) {
+          bw = 4;
+        }
 
-        $('#' + elementID + '_parent').css('width', (allSteps * 1.1) + tw + mw + 'em');
+        $('#' + elementID + '_parent').css('width', (allSteps * 1.1) + tw + mw + bw + 'em');
 
       } else {
         $('#' + elementID + '_parent').css('width', _options.width);
@@ -241,6 +246,18 @@
             class: 'ClickableBlocksStep',
             html: tick
           }).appendTo(mainDiv);
+      }
+
+
+      // 4. based_on
+      if (_options.basedonbar) {
+        var basedonbar = $('<div/>', {
+          id: 'basedOnBar' + elementID,
+          class: 'BasedOnBarSelector'
+        }).appendTo(mainDiv);
+        basedonbar.on('click', function() {
+          _toggleBasedOn(this);
+        });
       }
 
       // widget width
@@ -386,6 +403,42 @@
       if (typeof(_onChange) === 'function') {
         _onChange();
       }
+    }
+
+    function _setBasedOn(basedon){
+      var e = $('#steps_' + elementID + ' div.BasedOnBarSelector');
+      if (basedon === 'P'){
+        e.html('<span class="BasedOn" style="color:rgb(255, 124, 52);">' +
+          'P</span><span class="BasedOnOption" style="color:rgb(123, 206, 91);">R</span>');
+      } else if (basedon === 'R'){
+        e.html('<span class="BasedOn" style="color:rgb(123, 206, 91);">' +
+          'R</span><span class="BasedOnOption" style="color:rgb(255, 124, 52);">P</span>');
+      } else if (basedon === 'M'){
+        e.html('<span class="BasedOn" style="color:#00afe5;">M</span>');
+      }
+      e.addClass('click');
+      e.attr('data-basedon', basedon).one('animationend webkitAnimationEnd onAnimationEnd', function() {
+        e.removeClass('click');
+      });
+    }
+
+    function _toggleBasedOn(e) {
+      //on click
+      if (_options.readonly) {
+        return;
+      }
+      var e = $('#steps_' + elementID + ' div.BasedOnBarSelector');
+      var basedon = e.attr('data-basedon');
+      var newbasedon = basedon;
+      if (basedon === 'M'){
+        return;
+      }
+      if (basedon === 'P'){
+        newbasedon = 'R'
+      } else {
+        newbasedon = 'P'
+      }
+      _setBasedOn(newbasedon)
     }
 
     function _toggleMeal(e) {
@@ -605,6 +658,8 @@
 
         _addMeal(ArrOfBloObj.meal, ArrOfBloObj.rmeal);
 
+        _setBasedOn(ArrOfBloObj.basedon)
+
         return this;
       }
     };
@@ -637,6 +692,7 @@
       obj.preDay = _options.preDay;
       obj.meal = $('div#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa').attr('data-meal');
       obj.rmeal = $('div#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa').attr('data-rmeal');
+      obj.basedon = $('div#steps_' + elementID + ' .BasedOnBarSelector').attr('data-basedon');
       return JSON.stringify(obj);
     };
 
