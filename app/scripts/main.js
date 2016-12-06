@@ -253,11 +253,12 @@
       if (_options.basedonbar) {
         var basedonbar = $('<div/>', {
           id: 'basedOnBar' + elementID,
-          class: 'BasedOnBarSelector'
+          class: 'BasedOnBarSelector',
         }).appendTo(mainDiv);
-        basedonbar.on('click', function() {
-          _toggleBasedOn(this);
-        });
+
+        // basedonbar.on('click', function() {
+        //   _toggleBasedOn(this);
+        // });
       }
 
       // widget width
@@ -406,20 +407,37 @@
     }
 
     function _setBasedOn(basedon){
-      var e = $('#steps_' + elementID + ' div.BasedOnBarSelector');
-      if (basedon === 'PLAN'){
-        e.html('<span class="BasedOn" style="color:rgb(255, 124, 52);">' +
-          'P</span><span class="BasedOnOption" style="color:rgb(123, 206, 91);">R</span>');
-      } else if (basedon === 'REAL'){
-        e.html('<span class="BasedOn" style="color:rgb(123, 206, 91);">' +
-          'R</span><span class="BasedOnOption" style="color:rgb(255, 124, 52);">P</span>');
-      } else if (basedon === 'USER'){
-        e.html('<span class="BasedOn" style="color:#00afe5;">M</span>');
-      }
-      e.addClass('click');
-      e.attr('data-basedon', basedon).one('animationend webkitAnimationEnd onAnimationEnd', function() {
-        e.removeClass('click');
-      });
+      if (_options.basedonbar) {
+        var e = $('#steps_' + elementID + ' div.BasedOnBarSelector');
+        if (basedon === 'PLAN'){
+            e.html('<span class="BasedOn" style="color:rgb(255, 124, 52);">P</span>');
+            var boption = $('<span/>', {
+              class: 'BasedOnOption',
+              style: 'color:rgb(123, 206,91)',
+              text: 'R'
+            }).appendTo(e);
+            boption.on('click', function() {
+              _toggleBasedOn(this);
+            });
+          } else if (basedon === 'REAL'){
+            e.html('<span class="BasedOn" style="color:rgb(123, 206, 91);">R</span>');
+            var boption = $('<span/>', {
+              class: 'BasedOnOption',
+              style: 'color:rgb(255, 124, 52)',
+              text: 'P'
+            }).appendTo(e);
+            boption.on('click', function() {
+              _toggleBasedOn(this);
+            });
+          } else if (basedon === 'USER'){
+            e.html('<span class="BasedOn" style="color:#00afe5;">M</span>');
+          }
+          e.addClass('click');
+          e.one('animationend webkitAnimationEnd onAnimationEnd', function() {
+            e.removeClass('click');
+          });
+        }
+      mainDiv.attr('data-basedon', basedon);
     }
 
     function _toggleBasedOn(e) {
@@ -428,7 +446,7 @@
         return;
       }
       var e = $('#steps_' + elementID + ' div.BasedOnBarSelector');
-      var basedon = e.attr('data-basedon');
+      var basedon = mainDiv.attr('data-basedon');
       var newbasedon = basedon;
       if (basedon === 'USER'){
         return;
@@ -692,7 +710,7 @@
       obj.preDay = _options.preDay;
       obj.meal = $('div#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa').attr('data-meal');
       obj.rmeal = $('div#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa').attr('data-rmeal');
-      obj.basedon = $('div#steps_' + elementID + ' .BasedOnBarSelector').attr('data-basedon');
+      obj.basedon = mainDiv.attr('data-basedon');
       return JSON.stringify(obj);
     };
 
