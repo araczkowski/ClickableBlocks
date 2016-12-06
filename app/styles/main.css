@@ -211,7 +211,7 @@ div.ClickableBlocksEdit > div.ClickableBlocksMealSelector i.mealOff {
   cursor: pointer;
   cursor: hand;
 }
-div.ClickableBlocksEdit > div.BasedOnBarSelector {
+div.ClickableBlocksEdit > div.BasedOnBarSelector > span.BasedOnOption {
   cursor: pointer;
   cursor: hand;
 }

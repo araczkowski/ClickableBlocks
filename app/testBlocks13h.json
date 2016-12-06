@@ -122,5 +122,5 @@
     }],
     "meal": "1",
     "rmeal": "1",
-    "basedon": "P"
+    "basedon": "PLAN"
 }

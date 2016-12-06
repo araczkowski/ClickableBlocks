@@ -407,13 +407,13 @@
 
     function _setBasedOn(basedon){
       var e = $('#steps_' + elementID + ' div.BasedOnBarSelector');
-      if (basedon === 'P'){
+      if (basedon === 'PLAN'){
         e.html('<span class="BasedOn" style="color:rgb(255, 124, 52);">' +
           'P</span><span class="BasedOnOption" style="color:rgb(123, 206, 91);">R</span>');
-      } else if (basedon === 'R'){
+      } else if (basedon === 'REAL'){
         e.html('<span class="BasedOn" style="color:rgb(123, 206, 91);">' +
           'R</span><span class="BasedOnOption" style="color:rgb(255, 124, 52);">P</span>');
-      } else if (basedon === 'U'){
+      } else if (basedon === 'USER'){
         e.html('<span class="BasedOn" style="color:#00afe5;">M</span>');
       }
       e.addClass('click');
@@ -430,13 +430,13 @@
       var e = $('#steps_' + elementID + ' div.BasedOnBarSelector');
       var basedon = e.attr('data-basedon');
       var newbasedon = basedon;
-      if (basedon === 'U'){
+      if (basedon === 'USER'){
         return;
       }
-      if (basedon === 'P'){
-        newbasedon = 'R'
+      if (basedon === 'PLAN'){
+        newbasedon = 'REAL'
       } else {
-        newbasedon = 'P'
+        newbasedon = 'PLAN'
       }
       _setBasedOn(newbasedon)
     }
