@@ -71,7 +71,7 @@ html {
 .ClickableBlocksTick {
   position: absolute;
   margin-left: -.6em;
-  margin-top: -20px;
+  margin-top: -2.5em;
   text-align: center;
   color: #656565;
   font-size: small;
@@ -135,7 +135,6 @@ i.mealOff {
 div.BasedOnBarSelector{
     height: 2.5em;
     line-height: 2.5em;
-    width: 3em;
     float: left;
     margin-left: 10px;
 }
@@ -220,6 +219,12 @@ div.ClickableBlocksEdit > div.BasedOnBarSelector {
 div.ClickableBlocksEdit > div.BasedOnBarSelector > span.BasedOnOption:hover {
   font-size: 1.5em;
   font-weight: bold;
+}
+div.ClickableBlocksReadonly > div.BasedOnBarSelector > span.BasedOnOption {
+  display: none;
+}
+div.ClickableBlocksEdit > div.BasedOnBarSelector > span.BasedOnOption {
+  display: initial;
 }
 
 div.ClickableBlocksEdit > div.ClickableBlocksAllBlockSelector i.fa-minus-square:hover {

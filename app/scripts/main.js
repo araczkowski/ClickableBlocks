@@ -103,7 +103,7 @@
           mw = 3;
         }
         if (_options.basedonbar) {
-          bw = 4;
+          bw = 3;
         }
 
         $('#' + elementID + '_parent').css('width', (allSteps * 1.1) + tw + mw + bw + 'em');
@@ -413,7 +413,7 @@
       } else if (basedon === 'R'){
         e.html('<span class="BasedOn" style="color:rgb(123, 206, 91);">' +
           'R</span><span class="BasedOnOption" style="color:rgb(255, 124, 52);">P</span>');
-      } else if (basedon === 'M'){
+      } else if (basedon === 'U'){
         e.html('<span class="BasedOn" style="color:#00afe5;">M</span>');
       }
       e.addClass('click');
@@ -430,7 +430,7 @@
       var e = $('#steps_' + elementID + ' div.BasedOnBarSelector');
       var basedon = e.attr('data-basedon');
       var newbasedon = basedon;
-      if (basedon === 'M'){
+      if (basedon === 'U'){
         return;
       }
       if (basedon === 'P'){
