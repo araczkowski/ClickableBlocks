@@ -407,6 +407,7 @@
     }
 
     function _setBasedOn(basedon){
+      mainDiv.attr('data-basedon', basedon);
       if (_options.basedonbar) {
         var e = $('#steps_' + elementID + ' div.BasedOnBarSelector');
         if (basedon === 'PLAN'){
@@ -437,7 +438,6 @@
             e.removeClass('click');
           });
         }
-      mainDiv.attr('data-basedon', basedon);
     }
 
     function _toggleBasedOn(e) {
@@ -710,7 +710,7 @@
       obj.preDay = _options.preDay;
       obj.meal = $('div#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa').attr('data-meal');
       obj.rmeal = $('div#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa').attr('data-rmeal');
-      obj.basedon = mainDiv.attr('data-basedon');
+      obj.basedon = $('div#steps_' + elementID).attr('data-basedon');
       return JSON.stringify(obj);
     };
 
