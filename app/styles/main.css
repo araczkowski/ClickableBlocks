@@ -261,3 +261,25 @@ a.introjs-button:hover {
   color: black;
   border: solid black 1px;
 }
+
+i.fa-letter-N:after {
+  font-style: normal;
+  font-family: Arial;
+  font-weight: bold;
+  content: 'N';
+  margin-top: -0.4em;
+  margin-left: 0.1em;
+  position: absolute;
+  color: white;
+}
+
+i.fa-letter-E:after {
+  font-style: normal;
+  font-family: Arial;
+  font-weight: bold;
+  content: 'E';
+  margin-top: -0.4em;
+  margin-left: 0.1em;
+  position: absolute;
+  color: white;
+}

@@ -4,121 +4,141 @@
         "start": "420",
         "value": "30",
         "planned": "1",
-        "real": "1"
+        "real": "1",
+        "excused": "N"
     }, {
         "id": "23256428",
         "start": "450",
         "value": "30",
         "planned": "0",
-        "real": "1"
+        "real": "1",
+        "excused": "N"
     }, {
         "id": "23256429",
         "start": "480",
         "value": "30",
         "planned": "1",
-        "real": "0"
+        "real": "0",
+        "excused": "N"
     }, {
         "id": "23256430",
         "start": "510",
         "value": "30",
         "planned": "1",
-        "real": "0"
+        "real": "0",
+        "excused": "N"
     }, {
         "id": "23256431",
         "start": "540",
         "value": "30",
         "planned": "0",
-        "real": "0"
+        "real": "0",
+        "excused": "Y"
     }, {
         "id": "23256432",
         "start": "570",
         "value": "30",
         "planned": "0",
-        "real": "0"
+        "real": "0",
+        "excused": "Y"
     }, {
         "id": "23256433",
         "start": "600",
         "value": "30",
         "planned": "1",
-        "real": "0"
+        "real": "0",
+        "excused": "Y"
     }, {
         "id": "23256434",
         "start": "630",
         "value": "30",
         "planned": "1",
-        "real": "1"
+        "real": "1",
+        "excused": "Y"
     }, {
         "id": "23256435",
         "start": "660",
         "value": "30",
         "planned": "1",
-        "real": "0"
+        "real": "0",
+        "excused": "Y"
     }, {
         "id": "23256436",
         "start": "690",
         "value": "30",
         "planned": "0",
-        "real": "1"
+        "real": "1",
+        "excused": "Y"
     }, {
         "id": "23256437",
         "start": "720",
         "value": "30",
         "planned": "1",
-        "real": "1"
+        "real": "1",
+        "excused": "Y"
     }, {
         "id": "23256438",
         "start": "750",
         "value": "30",
         "planned": "0",
-        "real": "0"
+        "real": "0",
+        "excused": "Y"
     }, {
         "id": "23256439",
         "start": "780",
         "value": "60",
         "planned": "1",
-        "real": "1"
+        "real": "1",
+        "excused": "Y"
     }, {
         "id": "23256440",
         "start": "840",
         "value": "30",
         "planned": "1",
-        "real": "1"
+        "real": "1",
+        "excused": "Y"
     }, {
         "id": "23256441",
         "start": "870",
         "value": "30",
         "planned": "0",
-        "real": "0"
+        "real": "0",
+        "excused": "Y"
     }, {
         "id": "23256442",
         "start": "900",
         "value": "120",
         "planned": "1",
-        "real": "1"
+        "real": "1",
+        "excused": "Y"
     }, {
         "id": "23256445",
         "start": "1080",
         "value": "30",
         "planned": "1",
-        "real": "1"
+        "real": "1",
+        "excused": "Y"
     }, {
         "id": "23256446",
         "start": "1110",
         "value": "30",
         "planned": "0",
-        "real": "0"
+        "real": "0",
+        "excused": "Y"
     }, {
         "id": "23256447",
         "start": "1140",
         "value": "30",
         "planned": "1",
-        "real": "1"
+        "real": "1",
+        "excused": "Y"
     }, {
         "id": "23256448",
         "start": "1170",
         "value": "30",
         "planned": "1",
-        "real": "1"
+        "real": "1",
+        "excused": "Y"
     }],
     "meal": "1",
     "rmeal": "1",

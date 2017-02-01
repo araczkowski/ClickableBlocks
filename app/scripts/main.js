@@ -279,11 +279,11 @@
       bSteps.forEach(function addBlockOnStep(step) {
 
         if (i === 0) {
-          step.addClass('ClickableBlocksPlannedBlockStart').attr('data-value', block.value).find('div.ClickableBlocksStepContent').html('<i class="' + _getBlockFeatures(block.planned, block.real).item + '">').parent().addClass('ClickableBlocksStepHesBlockStart');
+          step.addClass('ClickableBlocksPlannedBlockStart').attr('data-value', block.value).find('div.ClickableBlocksStepContent').html('<i class="' + _getBlockFeatures(block.planned, block.real, block.excused).item + '">').parent().addClass('ClickableBlocksStepHesBlockStart');
           blockSelector = step.attr('id');
         }
 
-        step.addClass('ClickableBlocksPlannedBlockBody').attr('data-id', block.id).attr('data-colplanned', block.colplanned).attr('data-colunplanned', block.colunplanned).attr('data-colreal', block.colreal).attr('data-coladded', block.coladded).attr('data-colunreal', block.colunreal).attr('data-coldeleted', block.coldeleted).attr('data-planned', block.planned).attr('data-real', block.real).attr('data-block', blockSelector).find('div.ClickableBlocksStepContent').css('background', block[_getBlockFeatures(block.planned, block.real).color]);
+        step.addClass('ClickableBlocksPlannedBlockBody').attr('data-id', block.id).attr('data-colplanned', block.colplanned).attr('data-colunplanned', block.colunplanned).attr('data-colreal', block.colreal).attr('data-coladded', block.coladded).attr('data-colunreal', block.colunreal).attr('data-coldeleted', block.coldeleted).attr('data-colexcused', block.colexcused).attr('data-planned', block.planned).attr('data-real', block.real).attr('data-excused', block.excused).attr('data-block', blockSelector).find('div.ClickableBlocksStepContent').css('background', block[_getBlockFeatures(block.planned, block.real, block.excused).color]);
 
 
 
@@ -310,7 +310,7 @@
 
     }
 
-    function _getBlockFeatures(plan, real) {
+    function _getBlockFeatures(plan, real, excused) {
 
       if (_options.mode === 'real') {
         if (real === '1' && plan === '1') {
@@ -329,10 +329,18 @@
             'item': ''
           };
         } else if (real === '0' && plan === '1') {
-          return {
-            'color': 'coldeleted',
-            'item': 'fa fa-minus'
-          };
+          if (excused === 'Y'){
+            return {
+              'color': 'colexcused',
+              'item': 'fa-letter-E'
+            };
+          } else {
+            return {
+              'color': 'coldeleted',
+              'item': 'fa-letter-N'
+            };
+          }
+
         }
 
       }
@@ -365,18 +373,25 @@
       if (_options.mode === 'real') {
         if (blocks.attr('data-real') === '1') {
           blocks.attr('data-real', '0');
+          blocks.attr('data-excused', 'Y');
           // When a time-slot, starting at 12:00 or containing 12:00 (starting before and ending after),
           // is checked, the meal must be checked as well.
           if (bStart === 720 || (bStart < 720 && bEnd > 720)) {
             _mealOff();
           }
         } else {
-          blocks.attr('data-real', '1');
-          // When a time-slot, starting at 12:00 or containing 12:00 (starting before and ending after),
-          // is unchecked, the meal must be unchecked as well
-          if (bStart === 720 || (bStart < 720 && bEnd > 720)) {
-            _mealOn();
-          }
+            //
+            if (blocks.attr('data-excused') === 'Y' && blocks.attr('data-planned') === '1'){
+              blocks.attr('data-excused', 'N');
+            } else {
+              blocks.attr('data-real', '1');
+              blocks.attr('data-excused', 'Y');
+              // When a time-slot, starting at 12:00 or containing 12:00 (starting before and ending after),
+              // is unchecked, the meal must be unchecked as well
+              if (bStart === 720 || (bStart < 720 && bEnd > 720)) {
+                _mealOn();
+              }
+            }
         }
       } else {
         if (blocks.attr('data-planned') === '1') {
@@ -395,10 +410,9 @@
           }
         }
       }
-
-      key = _getBlockFeatures(blocks.attr('data-planned'), blocks.attr('data-real')).color;
+      key = _getBlockFeatures(blocks.attr('data-planned'), blocks.attr('data-real'), blocks.attr('data-excused')).color;
       blocks.find('div.ClickableBlocksStepContent').css('background', blocks.attr('data-' + key));
-      blocks.find('div.ClickableBlocksStepContent').first().html('<i class="' + _getBlockFeatures(blocks.attr('data-planned'), blocks.attr('data-real')).item + '">');
+      blocks.find('div.ClickableBlocksStepContent').first().html('<i class="' + _getBlockFeatures(blocks.attr('data-planned'), blocks.attr('data-real'), blocks.attr('data-excused')).item + '">');
 
 
       if (typeof(_onChange) === 'function') {
@@ -547,7 +561,7 @@
         // color and item
         mainDiv.find('div.ClickableBlocksPlannedBlockBody').each(function(i, obj) {
           var o = $(obj);
-          var bFeatures = _getBlockFeatures(o.attr('data-planned'), o.attr('data-real'));
+          var bFeatures = _getBlockFeatures(o.attr('data-planned'), o.attr('data-real'), o.attr('data-excused'));
           var bcolor = o.attr('data-' + bFeatures.color);
           o.find('div.ClickableBlocksStepContent').css('background', bcolor);
 
@@ -590,7 +604,7 @@
         // color
         mainDiv.find('div.ClickableBlocksPlannedBlockBody').each(function(i, obj) {
           var o = $(obj);
-          var bFeatures = _getBlockFeatures(o.attr('data-planned'), o.attr('data-real'));
+          var bFeatures = _getBlockFeatures(o.attr('data-planned'), o.attr('data-real'), o.attr('data-excused'));
           var bcolor = o.attr('data-' + bFeatures.color);
           o.find('div.ClickableBlocksStepContent').css('background', bcolor);
           // item
@@ -670,6 +684,9 @@
           if (!block.coldeleted) {
             block.coldeleted = '#ff3d25';
           }
+          if (!block.colexcused) {
+            block.colexcused = '#ac001a';
+          }
           _addBlock(_getStepssInRange(block.start, block.value), block);
 
         });
@@ -700,6 +717,7 @@
           block.value = e.getAttribute('data-value');
           block.planned = e.getAttribute('data-planned');
           block.real = e.getAttribute('data-real');
+          block.real = e.getAttribute('data-excused');
           blocks.push(block);
         });
       }
