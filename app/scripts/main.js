@@ -717,7 +717,7 @@
           block.value = e.getAttribute('data-value');
           block.planned = e.getAttribute('data-planned');
           block.real = e.getAttribute('data-real');
-          block.real = e.getAttribute('data-excused');
+          block.excused = e.getAttribute('data-excused');
           blocks.push(block);
         });
       }
