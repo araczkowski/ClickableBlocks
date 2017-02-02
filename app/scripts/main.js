@@ -554,6 +554,7 @@
 
         if (_options.mode === 'real') {
           mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-real', '1');
+          mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-excused', 'Y');
         } else {
           mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-planned', '1');
         }
@@ -594,9 +595,16 @@
 
       var clickedElement = $(e);
       if (mainDiv.find('.ClickableBlocksPlannedBlockStart').length > 0) {
-
         if (_options.mode === 'real') {
+          var l_real = mainDiv.find('div.ClickableBlocksPlannedBlockBody[data-real=1]').length
+          var l_excused = mainDiv.find('div.ClickableBlocksPlannedBlockBody[data-excused="Y"]').length
           mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-real', '0');
+          if (l_real === 0){
+            mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-excused', 'N');
+          }
+          if (l_real !== 0 || l_excused === 0) {
+            mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-excused', 'Y');
+          }
         } else {
           mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-planned', '0');
         }
