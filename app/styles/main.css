@@ -28,7 +28,7 @@ html {
   height: 2.5em;
   vertical-align: bottom;
   line-height: 2.5em;
-  padding-top: 3px;
+  padding-top: 0.7em;
 }
 .ClickableBlocksStep.ClickableBlocksEmptyColumn {
   border-left: 2px solid #656565;
