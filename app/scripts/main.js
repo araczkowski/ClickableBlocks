@@ -582,7 +582,7 @@
 
     }
 
-    function _mealOn(init=false) {
+    function _mealOn(init) {
       var e = mainDiv.find('i.fa-cutlery');
       e.addClass('click').one('animationend webkitAnimationEnd onAnimationEnd', function() {
         e.removeClass('click');
@@ -609,7 +609,7 @@
       }
     }
 
-    function _mealOff(init=false, billBlock12) {
+    function _mealOff(init, billBlock12) {
       var e = mainDiv.find('i.fa-cutlery').addClass('click').one('animationend webkitAnimationEnd onAnimationEnd', function() {
         e.removeClass('click');
       })
