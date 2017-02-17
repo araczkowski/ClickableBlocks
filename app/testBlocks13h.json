@@ -142,5 +142,6 @@
     }],
     "meal": "1",
     "rmeal": "1",
+    "fmeal": "1",
     "basedon": "PLAN"
 }

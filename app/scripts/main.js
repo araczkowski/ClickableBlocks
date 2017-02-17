@@ -34,7 +34,9 @@
       addEmptyColumns: false,
       preId: 0,
       enfId: 0,
-      preDay: ''
+      preDay: '',
+      "billexcused" : 0,
+      "billunexcused" : 0
     };
 
     //
@@ -360,6 +362,56 @@
       }
     }
 
+    function _getMeelFeatures(plan, real, fact) {
+
+      if (_options.mode === 'real') {
+        if (real === '1' && plan === '1') {
+          return {
+            'color': 'colreal',
+            'icon': ''
+          };
+        } else if (real === '1' && plan === '0') {
+          return {
+            'color': 'coladded',
+            'icon': ''
+          };
+        } else if (real === '0' && plan === '0') {
+          return {
+            'color': 'colunreal',
+            'icon': ''
+          };
+        } else if (real === '0' && plan === '1') {
+          if (fact === '1'){
+            return {
+              'color': 'coldeleted',
+              'icon': '<i class="AddIcon" style="fill:#ff3d25; position:absolute; margin-left:5px;"><svg viewBox="0 0 133 133" width="0.9em" height="0.9em"> <path d="M101.896,109.739c-0.184,-0.737 -0.644,-1.473 -1.381,-1.934c-0.737,-0.368 -1.658,-0.461 -2.395,-0.184c-0.092,0 -6.632,2.21 -14.645,2.21c-15.658,0 -28.922,-9.026 -34.816,-23.395l35.645,0c1.381,0 2.579,-1.013 2.855,-2.395l2.211,-10.316c0.184,-0.829 0,-1.75 -0.553,-2.486c-0.553,-0.645 -1.381,-1.106 -2.303,-1.106l-42.277,0c-0.184,-3.592 -0.276,-6.724 0,-9.671l44.949,0c1.473,0 2.671,-1.013 2.947,-2.395l2.211,-10.5c0.184,-0.829 -0.093,-1.75 -0.645,-2.395c-0.553,-0.737 -1.382,-1.105 -2.303,-1.105l-43.106,0c6.171,-13.724 19.158,-22.106 34.632,-22.106c6.54,0 12.803,1.566 12.895,1.566c1.566,0.461 3.132,-0.46 3.5,-2.026l3.961,-14.645c0.184,-0.737 0.092,-1.566 -0.276,-2.211c-0.461,-0.644 -1.106,-1.197 -1.843,-1.381c-0.368,-0.092 -8.289,-2.119 -17.868,-2.119c-27.54,0 -51.12,17.132 -59.317,42.922l-9.027,0c-1.658,0 -2.947,1.29 -2.947,2.947l0,10.501c0,1.658 1.289,2.947 2.947,2.947l6.172,0c-0.185,3.224 -0.185,6.724 -0.093,9.671l-6.079,0c-1.658,0 -2.947,1.382 -2.947,2.948l0,10.408c0,1.566 1.289,2.947 2.947,2.947l8.751,0c7.737,27.08 30.855,44.396 59.593,44.396c11.053,0 19.618,-2.948 19.987,-3.04c1.381,-0.46 2.21,-1.934 1.842,-3.408l-3.224,-14.645Z"/></svg></i>'
+            };
+          } else {
+            return {
+              'color': 'colexcused',
+              'icon': '<i class="AddIcon" style="fill:#ac001a; position:absolute; margin-left:5px;"><svg viewBox="0 0 133 133" width="0.9em" height="0.9em"> <path d="M131.078,117.41l-115.935,-115.946c-0.491,-0.492 -1.228,-0.819 -1.884,-0.819c-0.655,0 -1.392,0.327 -1.883,0.819l-9.336,9.336c-0.492,0.491 -0.819,1.228 -0.819,1.883c0,0.656 0.327,1.393 0.819,1.884l115.935,115.946c0.491,0.492 1.228,0.819 1.884,0.819c0.655,0 1.392,-0.327 1.883,-0.819l9.336,-9.336c0.492,-0.491 0.819,-1.228 0.819,-1.883c0,-0.656 -0.327,-1.393 -0.819,-1.884Zm-82.968,-30.974c5.895,14.369 19.158,23.395 34.816,23.395c2.317,0 4.51,-0.184 6.461,-0.447c5.049,5.014 10.11,10.017 15.185,15.005c0.366,1.472 -0.463,2.943 -1.843,3.403c-0.368,0.092 -8.934,3.04 -19.987,3.04c-28.737,0 -51.856,-17.316 -59.593,-44.396l-8.75,0c-1.659,0 -2.948,-1.382 -2.948,-2.947l0,-10.408c0,-1.566 1.289,-2.947 2.948,-2.948l6.079,0c-0.092,-2.947 -0.092,-6.447 0.092,-9.671l-6.171,0c-1.659,0 -2.948,-1.29 -2.948,-2.947l0,-10.501c0,-1.657 1.289,-2.947 2.948,-2.947l9.026,0c0.075,-0.235 0.151,-0.47 0.229,-0.703c6.626,6.677 13.248,13.359 19.873,20.038c-0.045,2.09 0.037,4.305 0.162,6.731l6.515,0c5.398,5.44 10.799,10.875 16.208,16.303l-18.302,0Zm40.527,-25.974l-7.094,0c-5.43,-5.47 -10.864,-10.936 -16.306,-16.395l25.61,0c0.921,0 1.75,0.368 2.303,1.105c0.553,0.645 0.829,1.566 0.645,2.395l-2.211,10.5c-0.276,1.382 -1.473,2.395 -2.947,2.395Zm-49.233,-42.16c11.255,-10.799 26.562,-17.157 43.338,-17.157c9.579,0 17.5,2.027 17.869,2.119c0.737,0.184 1.381,0.737 1.842,1.381c0.368,0.645 0.46,1.474 0.276,2.211l-3.96,14.645c-0.369,1.566 -1.935,2.487 -3.5,2.026c-0.093,0 -6.356,-1.566 -12.895,-1.566c-10.985,0 -20.717,4.224 -27.646,11.585c-5.098,-5.092 -10.205,-10.174 -15.324,-15.244Z"/></svg></i>'
+            };
+          }
+
+        }
+
+      }
+      // plan or budg
+      else {
+        if (plan === '1') {
+          return {
+            'color': 'colplanned',
+            'icon': ''
+          };
+        } else {
+          return {
+            'color': 'colunplanned',
+            'icon': ''
+          };
+        }
+      }
+    }
+
     function _togglePlan(blockSelector) {
       if (_options.readonly) {
         return;
@@ -377,12 +429,23 @@
           // When a time-slot, starting at 12:00 or containing 12:00 (starting before and ending after),
           // is checked, the meal must be checked as well.
           if (bStart === 720 || (bStart < 720 && bEnd > 720)) {
-            _mealOff();
+            if (_options.billexcused === 1){
+              _mealOff(false, true);
+            } else {
+                _mealOff(false, false);
+            }
           }
         } else {
             //
             if (blocks.attr('data-excused') === 'Y' && blocks.attr('data-planned') === '1'){
               blocks.attr('data-excused', 'N');
+              if (bStart === 720 || (bStart < 720 && bEnd > 720)) {
+                if (_options.billunexcused === 1){
+                  _mealOff(false, true);
+                } else {
+                    _mealOff(false, false);
+                }
+              }
             } else {
               blocks.attr('data-real', '1');
               blocks.attr('data-excused', 'Y');
@@ -478,65 +541,123 @@
       if (_options.readonly) {
         return;
       }
-
       if ($('div#steps_' + elementID + ' .ClickableBlocksPlannedBlockStart').length > 0) {
-        if ($(e).hasClass('mealOff')) {
-          _mealOn();
+        e = $(e)
+        if (e.hasClass('mealOn')) {
+            _mealOff();
         } else {
-          _mealOff();
+          if (_options.mode !== 'real' || e.attr('data-meal') === "0"){
+            _mealOn();
+          } else {
+            if(e.attr('data-fmeal') !== "0"){
+              _mealOff();
+            } else {
+              _mealOn();
+            }
         }
       }
-      //$(e).toggleClass('mealOff mealOn');
+    }
     }
 
-    function _addMeal(meal, rmeal) {
+    function _addMeal(meal, rmeal, fmeal) {
       if (_options.mealbar) {
         var e = $('#steps_' + elementID + ' i.fa-cutlery');
         e.attr('data-meal', meal);
         e.attr('data-rmeal', rmeal);
+        e.attr('data-fmeal', fmeal);
         if (_options.mode === 'real') {
           if (rmeal === '1') {
-            _mealOn();
+            _mealOn(true);
           } else {
-            _mealOff();
+            _mealOff(true);
           }
         } else {
           if (meal === '1') {
-            _mealOn();
+            _mealOn(true);
           } else {
-            _mealOff();
+            _mealOff(true);
           }
         }
       }
 
     }
 
-    function _mealOn() {
+    function _mealOn(init=false) {
       var e = mainDiv.find('i.fa-cutlery');
-      e.addClass('click').attr((_options.mode === 'real') ? 'data-rmeal' : 'data-meal', 1).one('animationend webkitAnimationEnd onAnimationEnd', function() {
+      e.addClass('click').one('animationend webkitAnimationEnd onAnimationEnd', function() {
         e.removeClass('click');
       });
 
+      if (_options.mode === 'real'){
+        e.attr('data-rmeal', 1);
+        if (!init){
+          e.attr('data-fmeal', 1);
+        }
+      } else {
+          e.attr('data-meal', 1);
+      }
 
-      var key = _getBlockFeatures(e.attr('data-meal'), e.attr('data-rmeal')).color;
-      var bcolor = mainDiv.find('div.ClickableBlocksPlannedBlockBody:first').attr('data-' + key);
+      var MeelFeatures = _getMeelFeatures(e.attr('data-meal'), e.attr('data-rmeal'));
+      var color_key = MeelFeatures.color;
+      var bcolor = mainDiv.find('div.ClickableBlocksPlannedBlockBody:first').attr('data-' + color_key);
+      e.find("i.AddIcon").remove()
       e.css('color', bcolor).removeClass('mealOff').addClass('mealOn');
-
+      e.css("width", "40px")
 
       if (typeof(_onChange) === 'function') {
         _onChange();
       }
     }
 
-    function _mealOff() {
+    function _mealOff(init=false, billBlock12) {
       var e = mainDiv.find('i.fa-cutlery').addClass('click').one('animationend webkitAnimationEnd onAnimationEnd', function() {
         e.removeClass('click');
-      }).attr((_options.mode === 'real') ? 'data-rmeal' : 'data-meal', 0);
+      })
 
+      if (_options.mode === 'real'){
+          var old_rmeal = e.attr('data-rmeal')
+          e.attr('data-rmeal', 0);
+          if (!init){
+            var new_rmeal = e.attr('data-rmeal')
+            if (e.attr('data-meal') === "0"){
+                e.attr('data-fmeal', 0);
+            } else {
+              if (old_rmeal === new_rmeal){
+                if (e.attr('data-fmeal') === "0"){
+                  e.attr('data-fmeal', 1);
+                } else {
+                  e.attr('data-fmeal', 0);
+                }
+              }
+          }
+        }
+        // case when the meal should be changed after the click on 12 o'clock block
+        if (arguments.length > 1){
+          if (billBlock12){
+            e.attr('data-rmeal', 0);
+            e.attr('data-fmeal', 1);
+          } else {
+            e.attr('data-rmeal', 0);
+            e.attr('data-fmeal', 0);
+          }
+      }
+      } else {
+         e.attr('data-meal', 0);
+      }
 
-      var key = _getBlockFeatures(e.attr('data-meal'), e.attr('data-rmeal')).color;
-      var bcolor = mainDiv.find('div.ClickableBlocksPlannedBlockBody:first').attr('data-' + key);
+      var MeelFeatures = _getMeelFeatures(e.attr('data-meal'), e.attr('data-rmeal'), e.attr('data-fmeal'))
+      var color_key = MeelFeatures.color;
+      var additional_icon = MeelFeatures.icon;
+      var bcolor = mainDiv.find('div.ClickableBlocksPlannedBlockBody:first').attr('data-' + color_key);
       e.css('color', bcolor).removeClass('mealOn').addClass('mealOff');
+      e.find("i.AddIcon").remove()
+
+      if (additional_icon.length > 0){
+        e.css("width", "70px");
+        $(additional_icon).appendTo(e);
+      } else {
+        e.css("width", "40px")
+      }
 
       if (typeof(_onChange) === 'function') {
         _onChange();
@@ -578,7 +699,8 @@
         });
 
         //If there is at least 1 time-slot between 12:00 and 13:00, the meal is selected as well, when clicking
-        if (mainDiv.find('div.ClickableBlocksPlannedBlockBody').filter('[data-start="720"],[data-start="735"],[data-start="750"],[data-start="765"]').length > 0) {
+        var sunSetBlock = mainDiv.find('div.ClickableBlocksPlannedBlockBody').filter('[data-start="720"],[data-start="735"],[data-start="750"],[data-start="765"]');
+        if (sunSetBlock.length > 0) {
           _mealOn();
         }
 
@@ -594,6 +716,7 @@
       }
 
       var clickedElement = $(e);
+      var dExcused = '';
       if (mainDiv.find('.ClickableBlocksPlannedBlockStart').length > 0) {
         if (_options.mode === 'real') {
           var l_real = mainDiv.find('div.ClickableBlocksPlannedBlockBody[data-real=1]').length
@@ -601,9 +724,11 @@
           mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-real', '0');
           if (l_real === 0){
             mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-excused', 'N');
+            dExcused = 'N';
           }
           if (l_real !== 0 || l_excused === 0) {
             mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-excused', 'Y');
+            dExcused = 'Y';
           }
         } else {
           mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-planned', '0');
@@ -628,7 +753,22 @@
 
 
         //When clicking the 'x'-button, the meal is always deselected
-        _mealOff();
+        if (_options.mode === 'real') {
+            var blockWillBeBilled = false;
+            if (dExcused === 'Y') {
+                if (_options.billexcused === 1) {
+                    blockWillBeBilled = true;
+                }
+            } else {
+                if (_options.billunexcused === 1) {
+                    blockWillBeBilled = true;
+                  }
+            }
+            _mealOff(false, blockWillBeBilled);
+        } else {
+            _mealOff();
+        }
+
 
         if (typeof(_onChange) === 'function') {
           _onChange();
@@ -699,7 +839,7 @@
 
         });
 
-        _addMeal(ArrOfBloObj.meal, ArrOfBloObj.rmeal);
+        _addMeal(ArrOfBloObj.meal, ArrOfBloObj.rmeal, ArrOfBloObj.fmeal);
 
         _setBasedOn(ArrOfBloObj.basedon)
 
@@ -736,6 +876,7 @@
       obj.preDay = _options.preDay;
       obj.meal = $('div#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa').attr('data-meal');
       obj.rmeal = $('div#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa').attr('data-rmeal');
+      obj.fmeal = $('div#steps_' + elementID + ' .ClickableBlocksMealSelector i.fa').attr('data-fmeal');
       obj.basedon = $('div#steps_' + elementID).attr('data-basedon');
       return JSON.stringify(obj);
     };
