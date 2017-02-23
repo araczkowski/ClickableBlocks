@@ -549,7 +549,7 @@
           if (_options.mode !== 'real' || e.attr('data-meal') === "0"){
             _mealOn();
           } else {
-            if(e.attr('data-fmeal') !== "0"){
+            if(e.attr('data-fmeal') !== "1"){
               _mealOff();
             } else {
               _mealOn();
@@ -628,6 +628,8 @@
                 } else {
                   e.attr('data-fmeal', 0);
                 }
+              } else {
+                e.attr('data-fmeal', 0);
               }
           }
         }
