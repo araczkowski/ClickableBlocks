@@ -285,7 +285,13 @@
                     blockSelector = step.attr('id');
                 }
 
-                step.addClass('ClickableBlocksPlannedBlockBody').attr('data-id', block.id).attr('data-colplanned', block.colplanned).attr('data-colunplanned', block.colunplanned).attr('data-colreal', block.colreal).attr('data-coladded', block.coladded).attr('data-colunreal', block.colunreal).attr('data-coldeleted', block.coldeleted).attr('data-colexcused', block.colexcused).attr('data-planned', block.planned).attr('data-real', block.real).attr('data-excused', block.excused).attr('data-block', blockSelector).find('div.ClickableBlocksStepContent').css('background', block[_getBlockFeatures(block.planned, block.real, block.excused).color]);
+                step.addClass('ClickableBlocksPlannedBlockBody').attr('data-id', block.id);
+                step.attr('data-colplanned', block.colplanned).attr('data-colunplanned', block.colunplanned);
+                step.attr('data-colreal', block.colreal).attr('data-coladded', block.coladded);
+                step.attr('data-colunreal', block.colunreal).attr('data-coldeleted', block.coldeleted);
+                step.attr('data-colexcused', block.colexcused).attr('data-planned', block.planned);
+                step.attr('data-real', block.real).attr('data-excused', block.excused);
+                step.attr('data-block', blockSelector).find('div.ClickableBlocksStepContent').css('background', block[_getBlockFeatures(block.planned, block.real, block.excused).color]);
 
 
 
@@ -577,7 +583,18 @@
                     e.removeClass('click');
                 });
             }
+
+            if (typeof(_onChange) === 'function') {
+                _onChange();
+            }
+        }
+
+        function _changeBasedOn(basedon) {
+            //
+            _setBasedOn(basedon);
+            //
             // set all blocks as excused
+            var e = $('#steps_' + elementID + ' div.BasedOnBarSelector');
             var clickedElement = $(e);
             mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-excused', 'Y');
             // color and icon
@@ -614,7 +631,6 @@
             if (typeof(_onChange) === 'function') {
                 _onChange();
             }
-
         }
 
         function _toggleBasedOn(e) {
@@ -633,7 +649,7 @@
             } else {
                 newbasedon = 'PLAN'
             }
-            _setBasedOn(newbasedon)
+            _changeBasedOn(newbasedon)
         }
 
         function _toggleMeal(e) {
@@ -968,6 +984,8 @@
             }
             if (typeof(ArrOfBloObj.blocks) === 'object') {
 
+              _setBasedOn(ArrOfBloObj.basedon)
+
                 ArrOfBloObj.blocks.forEach(function addBlock(block) {
                     if (!block.colplanned) {
                         if (_options.mode === 'budg') {
@@ -1003,8 +1021,6 @@
                 });
 
                 _addMeal(ArrOfBloObj.meal, ArrOfBloObj.rmeal, ArrOfBloObj.fmeal);
-
-                _setBasedOn(ArrOfBloObj.basedon)
 
                 return this;
             }
@@ -1093,7 +1109,7 @@
             if (newbasedon !== 'PLAN' && newbasedon !== 'REAL' && newbasedon !== 'USER') {
                 return;
             }
-            _setBasedOn(newbasedon);
+            _changeBasedOn(newbasedon);
         };
 
 

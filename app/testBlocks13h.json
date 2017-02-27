@@ -4,7 +4,7 @@
         "start": "420",
         "value": "30",
         "planned": "1",
-        "real": "1",
+        "real": "0",
         "excused": "N"
     }, {
         "id": "23256428",
@@ -143,5 +143,5 @@
     "meal": "1",
     "rmeal": "1",
     "fmeal": "1",
-    "basedon": "PLAN"
+    "basedon": "REAL"
 }
