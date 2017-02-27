@@ -634,7 +634,7 @@
           }
         }
         // case when the meal should be changed after the click on 12 o'clock block
-        if (arguments.length > 1){
+        if (arguments.length > 1 && e.attr('data-meal') !== "0"){
           if (billBlock12){
             e.attr('data-rmeal', 0);
             e.attr('data-fmeal', 1);
@@ -722,14 +722,16 @@
       if (mainDiv.find('.ClickableBlocksPlannedBlockStart').length > 0) {
         if (_options.mode === 'real') {
           var l_real = mainDiv.find('div.ClickableBlocksPlannedBlockBody[data-real=1]').length
-          var l_excused = mainDiv.find('div.ClickableBlocksPlannedBlockBody[data-excused="Y"]').length
+          var l_excused = mainDiv.find('div.ClickableBlocksPlannedBlockBody[data-excused="Y"][data-planned=1]').length
           mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-real', '0');
           if (l_real === 0){
-            mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-excused', 'N');
+            mainDiv.find('div.ClickableBlocksPlannedBlockBody[data-planned=1]').attr('data-excused', 'N');
+            // mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-excused', 'N');
             dExcused = 'N';
           }
           if (l_real !== 0 || l_excused === 0) {
-            mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-excused', 'Y');
+            mainDiv.find('div.ClickableBlocksPlannedBlockBody[data-planned=1]').attr('data-excused', 'Y');
+            // mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-excused', 'Y');
             dExcused = 'Y';
           }
         } else {
