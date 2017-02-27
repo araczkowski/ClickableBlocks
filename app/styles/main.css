@@ -177,6 +177,10 @@ i.fa.click {
     transform: scale(1);
   }
 }
+
+div.ClickableBlocksMealSelector > i.fa.fa-cutlery.fa-2x{
+  width: 40px;
+}
 div.ClickableBlocksMealSelector i.mealOn {
   padding-left: 0.6em;
   text-shadow: 2px 2px 2px #ccc;

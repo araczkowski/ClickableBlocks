@@ -725,7 +725,6 @@
             var bcolor = mainDiv.find('div.ClickableBlocksPlannedBlockBody:first').attr('data-' + color_key);
             e.find("i.AddIcon").remove()
             e.css('color', bcolor).removeClass('mealOff').addClass('mealOn');
-            e.css("width", "40px")
 
             if (typeof(_onChange) === 'function') {
                 _onChange();
@@ -788,19 +787,14 @@
                 var bcolor = mainDiv.find('div.ClickableBlocksPlannedBlockBody:first').attr('data-' + color_key);
                 e.css('color', bcolor).removeClass('mealOn').addClass('mealOff');
                 e.find("i.AddIcon").remove()
-
                 if (additional_icon.length > 0) {
-                    e.css("width", "40px");
                     $(additional_icon).appendTo(e);
-                } else {
-                    e.css("width", "40px")
                 }
-
-                if (typeof(_onChange) === 'function') {
-                    _onChange();
-                }
-
             }
+            if (typeof(_onChange) === 'function') {
+                _onChange();
+            }
+
         }
 
 
@@ -984,7 +978,7 @@
             }
             if (typeof(ArrOfBloObj.blocks) === 'object') {
 
-              _setBasedOn(ArrOfBloObj.basedon)
+                _setBasedOn(ArrOfBloObj.basedon)
 
                 ArrOfBloObj.blocks.forEach(function addBlock(block) {
                     if (!block.colplanned) {
