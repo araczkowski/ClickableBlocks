@@ -313,8 +313,8 @@
         }
 
         function _modeFullReal() {
-
-            if (_options.mode === 'real' && $('div#steps_' + elementID).attr('data-basedon') === 'REAL') {
+            var basedon = $('div#steps_' + elementID).attr('data-basedon');
+            if (_options.mode === 'real' && basedon === 'REAL') {
                 return true;
             }
             return false;
@@ -434,7 +434,7 @@
             if (_options.readonly) {
                 return;
             }
-            if (!_modeFullReal) {
+            if (!_modeFullReal()) {
                 var blocks = $('[data-block=' + blockSelector + ']');
                 var key;
                 var bStart = Number(blocks.attr('data-start'));
