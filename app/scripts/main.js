@@ -375,7 +375,7 @@
             }
         }
 
-        function _getMeelFeatures(plan, real, fact) {
+        function _getMealFeatures(plan, real, fact) {
 
             if (_options.mode === 'real') {
                 if (real === '1' && plan === '1') {
@@ -639,7 +639,7 @@
                 e.attr('data-meal', 1);
             }
 
-            var MeelFeatures = _getMeelFeatures(e.attr('data-meal'), e.attr('data-rmeal'));
+            var MeelFeatures = _getMealFeatures(e.attr('data-meal'), e.attr('data-rmeal'));
             var color_key = MeelFeatures.color;
             var bcolor = mainDiv.find('div.ClickableBlocksPlannedBlockBody:first').attr('data-' + color_key);
             e.find("i.AddIcon").remove()
@@ -651,6 +651,7 @@
         }
 
         function _mealOff(init, billBlock12) {
+            var basedon = $('div#steps_' + elementID).attr('data-basedon');
             if (_options.mode !== 'real') {
                 var e = mainDiv.find('i.fa-cutlery').addClass('click').one('animationend webkitAnimationEnd onAnimationEnd', function() {
                     e.removeClass('click');
@@ -671,7 +672,6 @@
                 e.attr('data-rmeal', 0);
                 if (!init) {
                     var new_rmeal = e.attr('data-rmeal')
-                    var basedon = $('div#steps_' + elementID).attr('data-basedon');
                     if (basedon === 'REAL') {
                         if (e.attr('data-meal') === "0") {
                             e.attr('data-fmeal', 0);
@@ -703,10 +703,14 @@
                         e.attr('data-rmeal', 0);
                         e.attr('data-fmeal', 0);
                     }
+                    if (basedon !== 'REAL') {
+                        e.attr('data-fmeal', e.attr('data-meal'));
+                    }
+
                 }
 
 
-                var MeelFeatures = _getMeelFeatures(e.attr('data-meal'), e.attr('data-rmeal'), e.attr('data-fmeal'))
+                var MeelFeatures = _getMealFeatures(e.attr('data-meal'), e.attr('data-rmeal'), e.attr('data-fmeal'))
                 var color_key = MeelFeatures.color;
                 var additional_icon = MeelFeatures.icon;
                 var bcolor = mainDiv.find('div.ClickableBlocksPlannedBlockBody:first').attr('data-' + color_key);
