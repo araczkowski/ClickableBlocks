@@ -222,8 +222,9 @@ div.ClickableBlocksMealSelector i.mealOn {
 }
 
 div.ClickableBlocksMealSelector {
-    -webkit-filter: drop-shadow( 2px 2px 2px #7a7a7a);
-    filter: drop-shadow( 2px 2px 2px #7a7a7a);
+    /*-webkit-filter: drop-shadow( 2px 2px 2px #7a7a7a);
+    filter: drop-shadow( 2px 2px 2px #7a7a7a);*/
+    text-shadow: 2px 2px 2px #ccc
 }
 
 div.ClickableBlocksMealSelector i.mealOff {
