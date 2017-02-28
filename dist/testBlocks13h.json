@@ -141,7 +141,7 @@
         "excused": "Y"
     }],
     "meal": "1",
-    "rmeal": "1",
-    "fmeal": "1",
+    "rmeal": "0",
+    "fmeal": "0",
     "basedon": "REAL"
 }

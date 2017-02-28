@@ -344,12 +344,7 @@
                         'color': 'colunreal',
                         'item': ''
                     };
-                } else if (real === '0' && plan === '1' && !_modeFullReal()) {
-                    return {
-                        'color': 'coldeleted',
-                        'item': 'fa fa-minus'
-                    };
-                } else if (real === '0' && plan === '1' && _modeFullReal()) {
+                } else if (real === '0' && plan === '1') {
                     if (excused === 'Y') {
                         return {
                             'color': 'colexcused',
@@ -398,13 +393,7 @@
                         'color': 'colunreal',
                         'icon': ''
                     };
-                } else if (real === '0' && plan === '1' && !_modeFullReal()) {
-                    return {
-                        'color': 'coldeleted',
-                        'icon': ''
-                    };
-
-                } else if (real === '0' && plan === '1' && _modeFullReal()) {
+                } else if (real === '0' && plan === '1') {
                     if (fact === '1') {
                         return {
                             'color': 'coldeleted',
@@ -440,99 +429,39 @@
             if (_options.readonly) {
                 return;
             }
-            if (!_modeFullReal()) {
-                var blocks = $('[data-block=' + blockSelector + ']');
-                var key;
-                var bStart = Number(blocks.attr('data-start'));
-                var bEnd = Number(blocks.attr('data-start')) + Number(blocks.attr('data-value'));
 
-                if (_options.mode === 'real') {
-                    if (blocks.attr('data-real') === '1') {
-                        blocks.attr('data-real', '0');
-                        // When a time-slot, starting at 12:00 or containing 12:00 (starting before and ending after),
-                        // is checked, the meal must be checked as well.
-                        if (bStart === 720 || (bStart < 720 && bEnd > 720)) {
-                            _mealOff();
-                        }
-                    } else {
-                        blocks.attr('data-real', '1');
-                        // When a time-slot, starting at 12:00 or containing 12:00 (starting before and ending after),
-                        // is unchecked, the meal must be unchecked as well
-                        if (bStart === 720 || (bStart < 720 && bEnd > 720)) {
-                            _mealOn();
+            var blocks = $('[data-block=' + blockSelector + ']');
+            var key;
+            var bStart = Number(blocks.attr('data-start'));
+            var bEnd = Number(blocks.attr('data-start')) + Number(blocks.attr('data-value'));
+
+            if (_options.mode === 'real') {
+                if (blocks.attr('data-real') === '1') {
+                    blocks.attr('data-real', '0');
+                    blocks.attr('data-excused', 'Y');
+                    // When a time-slot, starting at 12:00 or containing 12:00 (starting before and ending after),
+                    // is checked, the meal must be checked as well.
+                    if (bStart === 720 || (bStart < 720 && bEnd > 720)) {
+                        if (_options.billexcused === 1) {
+                            _mealOff(false, true);
+                        } else {
+                            _mealOff(false, false);
                         }
                     }
                 } else {
-                    if (blocks.attr('data-planned') === '1') {
-                        blocks.attr('data-planned', '0');
-                        // When a time-slot, starting at 12:00 or containing 12:00 (starting before and ending after),
-                        // is checked, the meal must be checked as well.
+                    //
+                    if (blocks.attr('data-excused') === 'Y' && blocks.attr('data-planned') === '1') {
+                        blocks.attr('data-excused', 'N');
                         if (bStart === 720 || (bStart < 720 && bEnd > 720)) {
-                            _mealOff();
-                        }
-                    } else {
-                        blocks.attr('data-planned', '1');
-                        // When a time-slot, starting at 12:00 or containing 12:00 (starting before and ending after),
-                        // is unchecked, the meal must be unchecked as well
-                        if (bStart === 720 || (bStart < 720 && bEnd > 720)) {
-                            _mealOn();
-                        }
-                    }
-                }
-
-                key = _getBlockFeatures(blocks.attr('data-planned'), blocks.attr('data-real')).color;
-                blocks.find('div.ClickableBlocksStepContent').css('background', blocks.attr('data-' + key));
-                blocks.find('div.ClickableBlocksStepContent').first().html('<i class="' + _getBlockFeatures(blocks.attr('data-planned'), blocks.attr('data-real')).item + '">');
-            } else {
-                var blocks = $('[data-block=' + blockSelector + ']');
-                var key;
-                var bStart = Number(blocks.attr('data-start'));
-                var bEnd = Number(blocks.attr('data-start')) + Number(blocks.attr('data-value'));
-
-                if (_options.mode === 'real') {
-                    if (blocks.attr('data-real') === '1') {
-                        blocks.attr('data-real', '0');
-                        blocks.attr('data-excused', 'Y');
-                        // When a time-slot, starting at 12:00 or containing 12:00 (starting before and ending after),
-                        // is checked, the meal must be checked as well.
-                        if (bStart === 720 || (bStart < 720 && bEnd > 720)) {
-                            if (_options.billexcused === 1) {
+                            if (_options.billunexcused === 1) {
                                 _mealOff(false, true);
                             } else {
                                 _mealOff(false, false);
                             }
                         }
                     } else {
-                        //
-                        if (blocks.attr('data-excused') === 'Y' && blocks.attr('data-planned') === '1') {
-                            blocks.attr('data-excused', 'N');
-                            if (bStart === 720 || (bStart < 720 && bEnd > 720)) {
-                                if (_options.billunexcused === 1) {
-                                    _mealOff(false, true);
-                                } else {
-                                    _mealOff(false, false);
-                                }
-                            }
-                        } else {
-                            blocks.attr('data-real', '1');
-                            blocks.attr('data-excused', 'Y');
-                            // When a time-slot, starting at 12:00 or containing 12:00 (starting before and ending after),
-                            // is unchecked, the meal must be unchecked as well
-                            if (bStart === 720 || (bStart < 720 && bEnd > 720)) {
-                                _mealOn();
-                            }
-                        }
-                    }
-                } else {
-                    if (blocks.attr('data-planned') === '1') {
-                        blocks.attr('data-planned', '0');
-                        // When a time-slot, starting at 12:00 or containing 12:00 (starting before and ending after),
-                        // is checked, the meal must be checked as well.
-                        if (bStart === 720 || (bStart < 720 && bEnd > 720)) {
-                            _mealOff();
-                        }
-                    } else {
-                        blocks.attr('data-planned', '1');
+                        blocks.attr('data-real', '1');
+                        blocks.attr('data-excused', 'Y');
                         // When a time-slot, starting at 12:00 or containing 12:00 (starting before and ending after),
                         // is unchecked, the meal must be unchecked as well
                         if (bStart === 720 || (bStart < 720 && bEnd > 720)) {
@@ -540,10 +469,26 @@
                         }
                     }
                 }
-                key = _getBlockFeatures(blocks.attr('data-planned'), blocks.attr('data-real'), blocks.attr('data-excused')).color;
-                blocks.find('div.ClickableBlocksStepContent').css('background', blocks.attr('data-' + key));
-                blocks.find('div.ClickableBlocksStepContent').first().html('<i class="' + _getBlockFeatures(blocks.attr('data-planned'), blocks.attr('data-real'), blocks.attr('data-excused')).item + '">');
+            } else {
+                if (blocks.attr('data-planned') === '1') {
+                    blocks.attr('data-planned', '0');
+                    // When a time-slot, starting at 12:00 or containing 12:00 (starting before and ending after),
+                    // is checked, the meal must be checked as well.
+                    if (bStart === 720 || (bStart < 720 && bEnd > 720)) {
+                        _mealOff();
+                    }
+                } else {
+                    blocks.attr('data-planned', '1');
+                    // When a time-slot, starting at 12:00 or containing 12:00 (starting before and ending after),
+                    // is unchecked, the meal must be unchecked as well
+                    if (bStart === 720 || (bStart < 720 && bEnd > 720)) {
+                        _mealOn();
+                    }
+                }
             }
+            key = _getBlockFeatures(blocks.attr('data-planned'), blocks.attr('data-real'), blocks.attr('data-excused')).color;
+            blocks.find('div.ClickableBlocksStepContent').css('background', blocks.attr('data-' + key));
+            blocks.find('div.ClickableBlocksStepContent').first().html('<i class="' + _getBlockFeatures(blocks.attr('data-planned'), blocks.attr('data-real'), blocks.attr('data-excused')).item + '">');
 
             if (typeof(_onChange) === 'function') {
                 _onChange();
@@ -584,37 +529,11 @@
                 });
             }
 
-            if (typeof(_onChange) === 'function') {
-                _onChange();
-            }
         }
 
         function _changeBasedOn(basedon) {
             //
             _setBasedOn(basedon);
-            //
-            // set all blocks as excused
-            var e = $('#steps_' + elementID + ' div.BasedOnBarSelector');
-            var clickedElement = $(e);
-            mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-excused', 'Y');
-            // color and icon
-            mainDiv.find('div.ClickableBlocksPlannedBlockBody').each(function(i, obj) {
-                var o = $(obj);
-                var bFeatures = _getBlockFeatures(o.attr('data-planned'), o.attr('data-real'), o.attr('data-excused'));
-                var bcolor = o.attr('data-' + bFeatures.color);
-                o.find('div.ClickableBlocksStepContent').css('background', bcolor);
-
-                // item
-                if (o.hasClass('ClickableBlocksPlannedBlockStart')) {
-                    o.find('div.ClickableBlocksStepContent').html('<i class="' + bFeatures.item + '">');
-                }
-
-            });
-
-            clickedElement.addClass('click').one('animationend webkitAnimationEnd onAnimationEnd', function() {
-                clickedElement.removeClass('click');
-            });
-
             // set meal
             var m = mainDiv.find('i.fa-cutlery').addClass('click').one('animationend webkitAnimationEnd onAnimationEnd', function() {
                 m.removeClass('click');
@@ -732,7 +651,7 @@
         }
 
         function _mealOff(init, billBlock12) {
-            if (!_modeFullReal()) {
+            if (_options.mode !== 'real') {
                 var e = mainDiv.find('i.fa-cutlery').addClass('click').one('animationend webkitAnimationEnd onAnimationEnd', function() {
                     e.removeClass('click');
                 }).attr((_options.mode === 'real') ? 'data-rmeal' : 'data-meal', 0);
@@ -748,11 +667,12 @@
                     e.removeClass('click');
                 })
 
-                if (_options.mode === 'real') {
-                    var old_rmeal = e.attr('data-rmeal')
-                    e.attr('data-rmeal', 0);
-                    if (!init) {
-                        var new_rmeal = e.attr('data-rmeal')
+                var old_rmeal = e.attr('data-rmeal')
+                e.attr('data-rmeal', 0);
+                if (!init) {
+                    var new_rmeal = e.attr('data-rmeal')
+                    var basedon = $('div#steps_' + elementID).attr('data-basedon');
+                    if (basedon === 'REAL') {
                         if (e.attr('data-meal') === "0") {
                             e.attr('data-fmeal', 0);
                         } else {
@@ -766,20 +686,25 @@
                                 e.attr('data-fmeal', 0);
                             }
                         }
-                    }
-                    // case when the meal should be changed after the click on 12 o'clock block
-                    if (arguments.length > 1 && e.attr('data-meal') !== "0") {
-                        if (billBlock12) {
-                            e.attr('data-rmeal', 0);
-                            e.attr('data-fmeal', 1);
-                        } else {
-                            e.attr('data-rmeal', 0);
+                    } else {
+                        if (e.attr('data-meal') === "0") {
                             e.attr('data-fmeal', 0);
+                        } else {
+                            e.attr('data-fmeal', 1);
                         }
                     }
-                } else {
-                    e.attr('data-meal', 0);
                 }
+                // case when the meal should be changed after the click on 12 o'clock block
+                if (arguments.length > 1 && e.attr('data-meal') !== "0") {
+                    if (billBlock12) {
+                        e.attr('data-rmeal', 0);
+                        e.attr('data-fmeal', 1);
+                    } else {
+                        e.attr('data-rmeal', 0);
+                        e.attr('data-fmeal', 0);
+                    }
+                }
+
 
                 var MeelFeatures = _getMeelFeatures(e.attr('data-meal'), e.attr('data-rmeal'), e.attr('data-fmeal'))
                 var color_key = MeelFeatures.color;
@@ -848,103 +773,65 @@
                 return;
             }
 
-            if (!_modeFullReal()) {
-
-                var clickedElement = $(e);
-                var dExcused = '';
-                if (mainDiv.find('.ClickableBlocksPlannedBlockStart').length > 0) {
-                    if (_options.mode === 'real') {
-                        mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-real', '0');
-                    } else {
-                        mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-planned', '0');
+            var clickedElement = $(e);
+            var dExcused = '';
+            if (mainDiv.find('.ClickableBlocksPlannedBlockStart').length > 0) {
+                if (_options.mode === 'real') {
+                    var l_real = mainDiv.find('div.ClickableBlocksPlannedBlockBody[data-real=1]').length
+                    var l_excused = mainDiv.find('div.ClickableBlocksPlannedBlockBody[data-excused="Y"][data-planned=1]').length
+                    mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-real', '0');
+                    if (l_real === 0) {
+                        mainDiv.find('div.ClickableBlocksPlannedBlockBody[data-planned=1]').attr('data-excused', 'N');
+                        // mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-excused', 'N');
+                        dExcused = 'N';
                     }
-
-                    // color
-                    mainDiv.find('div.ClickableBlocksPlannedBlockBody').each(function(i, obj) {
-                        var o = $(obj);
-                        var bFeatures = _getBlockFeatures(o.attr('data-planned'), o.attr('data-real'));
-                        var bcolor = o.attr('data-' + bFeatures.color);
-                        o.find('div.ClickableBlocksStepContent').css('background', bcolor);
-                        // item
-                        if (o.hasClass('ClickableBlocksPlannedBlockStart')) {
-                            o.find('div.ClickableBlocksStepContent').html('<i class="' + bFeatures.item + '">');
-                        }
-
-                    });
-
-                    clickedElement.addClass('click').one('animationend webkitAnimationEnd onAnimationEnd', function() {
-                        clickedElement.removeClass('click');
-                    });
-
-
-                    //When clicking the 'x'-button, the meal is always deselected
-                    _mealOff();
-
-                    if (typeof(_onChange) === 'function') {
-                        _onChange();
+                    if (l_real !== 0 || l_excused === 0) {
+                        mainDiv.find('div.ClickableBlocksPlannedBlockBody[data-planned=1]').attr('data-excused', 'Y');
+                        // mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-excused', 'Y');
+                        dExcused = 'Y';
                     }
+                } else {
+                    mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-planned', '0');
                 }
-            } else {
-                var clickedElement = $(e);
-                var dExcused = '';
-                if (mainDiv.find('.ClickableBlocksPlannedBlockStart').length > 0) {
-                    if (_options.mode === 'real') {
-                        var l_real = mainDiv.find('div.ClickableBlocksPlannedBlockBody[data-real=1]').length
-                        var l_excused = mainDiv.find('div.ClickableBlocksPlannedBlockBody[data-excused="Y"][data-planned=1]').length
-                        mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-real', '0');
-                        if (l_real === 0) {
-                            mainDiv.find('div.ClickableBlocksPlannedBlockBody[data-planned=1]').attr('data-excused', 'N');
-                            // mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-excused', 'N');
-                            dExcused = 'N';
-                        }
-                        if (l_real !== 0 || l_excused === 0) {
-                            mainDiv.find('div.ClickableBlocksPlannedBlockBody[data-planned=1]').attr('data-excused', 'Y');
-                            // mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-excused', 'Y');
-                            dExcused = 'Y';
+
+                // color
+                mainDiv.find('div.ClickableBlocksPlannedBlockBody').each(function(i, obj) {
+                    var o = $(obj);
+                    var bFeatures = _getBlockFeatures(o.attr('data-planned'), o.attr('data-real'), o.attr('data-excused'));
+                    var bcolor = o.attr('data-' + bFeatures.color);
+                    o.find('div.ClickableBlocksStepContent').css('background', bcolor);
+                    // item
+                    if (o.hasClass('ClickableBlocksPlannedBlockStart')) {
+                        o.find('div.ClickableBlocksStepContent').html('<i class="' + bFeatures.item + '">');
+                    }
+
+                });
+
+                clickedElement.addClass('click').one('animationend webkitAnimationEnd onAnimationEnd', function() {
+                    clickedElement.removeClass('click');
+                });
+
+
+                //When clicking the 'x'-button, the meal is always deselected
+                if (_options.mode === 'real') {
+                    var blockWillBeBilled = false;
+                    if (dExcused === 'Y') {
+                        if (_options.billexcused === 1) {
+                            blockWillBeBilled = true;
                         }
                     } else {
-                        mainDiv.find('div.ClickableBlocksPlannedBlockBody').attr('data-planned', '0');
-                    }
-
-                    // color
-                    mainDiv.find('div.ClickableBlocksPlannedBlockBody').each(function(i, obj) {
-                        var o = $(obj);
-                        var bFeatures = _getBlockFeatures(o.attr('data-planned'), o.attr('data-real'), o.attr('data-excused'));
-                        var bcolor = o.attr('data-' + bFeatures.color);
-                        o.find('div.ClickableBlocksStepContent').css('background', bcolor);
-                        // item
-                        if (o.hasClass('ClickableBlocksPlannedBlockStart')) {
-                            o.find('div.ClickableBlocksStepContent').html('<i class="' + bFeatures.item + '">');
+                        if (_options.billunexcused === 1) {
+                            blockWillBeBilled = true;
                         }
-
-                    });
-
-                    clickedElement.addClass('click').one('animationend webkitAnimationEnd onAnimationEnd', function() {
-                        clickedElement.removeClass('click');
-                    });
-
-
-                    //When clicking the 'x'-button, the meal is always deselected
-                    if (_options.mode === 'real') {
-                        var blockWillBeBilled = false;
-                        if (dExcused === 'Y') {
-                            if (_options.billexcused === 1) {
-                                blockWillBeBilled = true;
-                            }
-                        } else {
-                            if (_options.billunexcused === 1) {
-                                blockWillBeBilled = true;
-                            }
-                        }
-                        _mealOff(false, blockWillBeBilled);
-                    } else {
-                        _mealOff();
                     }
+                    _mealOff(false, blockWillBeBilled);
+                } else {
+                    _mealOff();
+                }
 
 
-                    if (typeof(_onChange) === 'function') {
-                        _onChange();
-                    }
+                if (typeof(_onChange) === 'function') {
+                    _onChange();
                 }
             }
         }
@@ -1105,7 +992,6 @@
             }
             _changeBasedOn(newbasedon);
         };
-
 
         this.getOption = function(option) {
             return _options[option];

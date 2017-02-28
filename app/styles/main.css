@@ -1,289 +1,345 @@
 /* apply a natural box layout model to all elements, but allowing components to change */
 
 html {
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
+
 *, *:before, *:after {
-  box-sizing: inherit;
+    box-sizing: inherit;
 }
+
 .ClickableBlocksContent {
-  margin-top: 30px;
-  margin-right: 30px;
-  margin-left: 30px;
+    margin-top: 30px;
+    margin-right: 30px;
+    margin-left: 30px;
 }
+
 .ClickableBlocksSteps {
-  position: relative;
-  height: 2.2em;
+    position: relative;
+    height: 2.2em;
 }
+
 .ClickableBlocksStep, .ClickableBlocksMealSelector {
-  float: left;
-  height: 2.5em;
-  line-height: 2.5em;
-  padding-top: 6px;
+    float: left;
+    height: 2.5em;
+    line-height: 2.5em;
+    padding-top: 6px;
 }
+
 .ClickableBlocksAllBlockSelector {
-  float: left;
-  height: 2.5em;
-  vertical-align: bottom;
-  line-height: 2.5em;
-  padding-top: 0.7em;
+    float: left;
+    height: 2.5em;
+    vertical-align: bottom;
+    line-height: 2.5em;
+    padding-top: 0.7em;
 }
+
 .ClickableBlocksStep.ClickableBlocksEmptyColumn {
-  border-left: 2px solid #656565;
-  height: 2.5em;
+    border-left: 2px solid #656565;
+    height: 2.5em;
 }
+
 .ClickableBlocksStep.ClickableBlocksStepFullHour {
-  border-left: 2px solid #656565;
-  height: 2.5em;
+    border-left: 2px solid #656565;
+    height: 2.5em;
 }
+
 .ClickableBlocksStep.ClickableBlocksStepFullHour.ClickableBlocksStepHesBlockStart {
-  border-left: 2px solid #656565;
+    border-left: 2px solid #656565;
 }
+
 .ClickableBlocksStep.ClickableBlocksStepHalfHour {
-  border-left: 1px solid #ffd6b8;
-  height: 2.5em;
+    border-left: 1px solid #ffd6b8;
+    height: 2.5em;
 }
+
 .ClickableBlocksStep.ClickableBlocksStepQuarter {
-  border-left: 1px solid #ffd6b8;
-  height: 2.5em;
+    border-left: 1px solid #ffd6b8;
+    height: 2.5em;
 }
+
 .ClickableBlocksStep.ClickableBlocksStepEnd {
-  border-right: 2px solid #656565;
-  height: 2.5em;
+    border-right: 2px solid #656565;
+    height: 2.5em;
 }
+
 .ClickableBlocksStep.ClickableBlocksStepEnd.ClickableBlocksStepHesBlockEnd {
-  border-right: 2px solid #656565 !important;
+    border-right: 2px solid #656565 !important;
 }
+
 .ClickableBlocksStep .ClickableBlocksStepContentFullHour {
-  height: 1.8em;
+    height: 1.8em;
 }
+
 .ClickableBlocksStep .ClickableBlocksStepContentHalfHour {
-  height: 1.8em;
+    height: 1.8em;
 }
+
 .ClickableBlocksStep .ClickableBlocksStepContentQuarter {
-  height: 1.8em;
+    height: 1.8em;
 }
+
 .ClickableBlocksStep .ClickableBlocksStepContentEnd {
-  height: 1.8em;
+    height: 1.8em;
 }
+
 .ClickableBlocksTick {
-  position: absolute;
-  margin-left: -.6em;
-  margin-top: -2.5em;
-  text-align: center;
-  color: #656565;
-  font-size: small;
+    position: absolute;
+    margin-left: -.6em;
+    margin-top: -2.5em;
+    text-align: center;
+    color: #656565;
+    font-size: small;
 }
+
 div.ClickableBlocksStep.ClickableBlocksPlannedBlockBody {
-  border-left: none;
-  border-right: none;
-  border: none;
+    border-left: none;
+    border-right: none;
+    border: none;
 }
+
 div.ClickableBlocksPlannedBlockBody .ClickableBlocksStepContent {
-  border-top: 1px solid white;
-  border-bottom: 1px solid white;
-  color: white;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    color: white;
 }
-div.ClickableBlocksPlannedBlockBody .ClickableBlocksStepContent > i.fa {
-  color: white;
-  margin-top: 0.4em;
-  margin-left: 0px;
-  z-index: 99999;
-  margin-left: 0.1em;
-  position: absolute;
+
+div.ClickableBlocksPlannedBlockBody .ClickableBlocksStepContent>i.fa {
+    color: white;
+    margin-top: 0.4em;
+    margin-left: 0px;
+    z-index: 99999;
+    margin-left: 0.1em;
+    position: absolute;
 }
+
 div.ClickableBlocksPlannedBlockStart .ClickableBlocksStepContent {
-  border-left: 1px solid white;
-  border-top: 1px solid white;
-  border-bottom: 1px solid white;
+    border-left: 1px solid white;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
 }
+
 div.ClickableBlocksPlannedBlockEnd .ClickableBlocksStepContent {
-  border-right: 1px solid white;
-  border-top: 1px solid white;
-  border-bottom: 1px solid white;
+    border-right: 1px solid white;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
 }
+
 div.ClickableBlocksPlannedBlockStart div.ClickableBlocksStepContent {
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
 }
+
 div.ClickableBlocksPlannedBlockEnd div.ClickableBlocksStepContent {
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
 }
+
 div.ClickableBlocksAllBlockSelector i.fa-plus-square {
-  padding-right: 0.2em;
-  padding-left: 0.2em;
-  color: #ff8229;
-  font-size: 1.8em;
-  text-shadow: 2px 2px 2px #ccc;
+    padding-right: 0.2em;
+    padding-left: 0.2em;
+    color: #ff8229;
+    font-size: 1.8em;
+    text-shadow: 2px 2px 2px #ccc;
 }
-div.ClickableBlocksAllBlockSelector i.fa-plus-square.budg{
-  color: #07A4EB;
+
+div.ClickableBlocksAllBlockSelector i.fa-plus-square.budg {
+    color: #07A4EB;
 }
+
 div.ClickableBlocksAllBlockSelector i.fa-minus-square {
-  padding-right: 0.2em;
-  padding-right: 0.8em;
-  color: #ffd6b8;
-  font-size: 1.8em;
-  text-shadow: 2px 2px 2px #ccc;
+    padding-right: 0.2em;
+    padding-right: 0.8em;
+    color: #ffd6b8;
+    font-size: 1.8em;
+    text-shadow: 2px 2px 2px #ccc;
 }
+
 i.mealOff {
-  color: #ffd6b8;
+    color: #ffd6b8;
 }
-div.BasedOnBarSelector{
+
+div.BasedOnBarSelector {
     height: 2.5em;
     line-height: 2.5em;
     float: left;
     margin-left: 10px;
 }
-div.BasedOnBarSelector span.BasedOn{
+
+div.BasedOnBarSelector span.BasedOn {
     font-weight: bold;
     vertical-align: middle;
-    padding-left:6px;
+    padding-left: 6px;
     font-size: 1.5em;
 }
-div.BasedOnBarSelector span.BasedOnOption{
+
+div.BasedOnBarSelector span.BasedOnOption {
     vertical-align: middle;
-    padding-left:6px;
+    padding-left: 6px;
     color: grey;
     font-size: 0.8em;
 }
+
 div.BasedOnBarSelector.click {
-  -webkit-animation: pulse-click .4s 1;
-  animation: pulse-click .4s 1;
-}
-i.fa.click {
-  -webkit-animation: pulse-click .4s 1;
-  animation: pulse-click .4s 1;
-}
-@keyframes pulse-click {
-  0% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-  25% {
-    -webkit-transform: scale(.9);
-    transform: scale(.9);
-    color: #FFB27A;
-  }
-  75% {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
-  }
-  100% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
+    -webkit-animation: pulse-click .4s 1;
+    animation: pulse-click .4s 1;
 }
 
-div.ClickableBlocksMealSelector > i.fa.fa-cutlery.fa-2x{
-  width: 40px;
+i.fa.click {
+    -webkit-animation: pulse-click .4s 1;
+    animation: pulse-click .4s 1;
 }
+
+@keyframes pulse-click {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+    25% {
+        -webkit-transform: scale(.9);
+        transform: scale(.9);
+        color: #FFB27A;
+    }
+    75% {
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+    }
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+div.ClickableBlocksMealSelector>i.fa.fa-cutlery.fa-2x {
+    width: 40px;
+}
+
 div.ClickableBlocksMealSelector i.mealOn {
-  padding-left: 0.6em;
-  text-shadow: 2px 2px 2px #ccc;
-  font-size: 1.8em;
+    padding-left: 0.6em;
+    font-size: 1.8em;
 }
+
+div.ClickableBlocksMealSelector {
+    -webkit-filter: drop-shadow( 2px 2px 2px #7a7a7a);
+    filter: drop-shadow( 2px 2px 2px #7a7a7a);
+}
+
 div.ClickableBlocksMealSelector i.mealOff {
-  /*padding-left: 0.8em;
+    /*padding-left: 0.8em;
     font-size: 1.5em; */
-  padding-left: 0.6em;
-  font-size: 1.8em;
+    padding-left: 0.6em;
+    font-size: 1.8em;
 }
+
 
 /* cursors */
 
-div.ClickableBlocksEdit > div.ClickableBlocksPlannedBlockBody .ClickableBlocksStepContent {
-  cursor: pointer;
-  cursor: hand;
-}
-div.ClickableBlocksEdit > div.ClickableBlocksAllBlockSelector i.fa-minus-square {
-  cursor: pointer;
-  cursor: hand;
-}
-div.ClickableBlocksEdit > div.ClickableBlocksAllBlockSelector i.fa-plus-square {
-  cursor: pointer;
-  cursor: hand;
-}
-div.ClickableBlocksEdit > div.ClickableBlocksMealSelector i.mealOn {
-  cursor: pointer;
-  cursor: hand;
-}
-div.ClickableBlocksEdit > div.ClickableBlocksMealSelector i.mealOff {
-  cursor: pointer;
-  cursor: hand;
-}
-div.ClickableBlocksEdit > div.BasedOnBarSelector > span.BasedOnOption {
-  cursor: pointer;
-  cursor: hand;
+div.ClickableBlocksEdit>div.ClickableBlocksPlannedBlockBody .ClickableBlocksStepContent {
+    cursor: pointer;
+    cursor: hand;
 }
 
-div.ClickableBlocksEdit > div.BasedOnBarSelector > span.BasedOnOption:hover {
-  font-size: 1.5em;
-  font-weight: bold;
-}
-div.ClickableBlocksReadonly > div.BasedOnBarSelector > span.BasedOnOption {
-  display: none;
-}
-div.ClickableBlocksEdit > div.BasedOnBarSelector > span.BasedOnOption {
-  display: initial;
+div.ClickableBlocksEdit>div.ClickableBlocksAllBlockSelector i.fa-minus-square {
+    cursor: pointer;
+    cursor: hand;
 }
 
-div.ClickableBlocksEdit > div.ClickableBlocksAllBlockSelector i.fa-minus-square:hover {
-  color: #FFB27A;
+div.ClickableBlocksEdit>div.ClickableBlocksAllBlockSelector i.fa-plus-square {
+    cursor: pointer;
+    cursor: hand;
 }
-div.ClickableBlocksEdit > div.ClickableBlocksAllBlockSelector i.fa-plus-square:hover {
-  color: #D55900;
+
+div.ClickableBlocksEdit>div.ClickableBlocksMealSelector i.mealOn {
+    cursor: pointer;
+    cursor: hand;
 }
-div.ClickableBlocksEdit > div.ClickableBlocksAllBlockSelector i.fa-plus-square.budg:hover {
-  color: #048ac5;
+
+div.ClickableBlocksEdit>div.ClickableBlocksMealSelector i.mealOff {
+    cursor: pointer;
+    cursor: hand;
 }
+
+div.ClickableBlocksEdit>div.BasedOnBarSelector>span.BasedOnOption {
+    cursor: pointer;
+    cursor: hand;
+}
+
+div.ClickableBlocksEdit>div.BasedOnBarSelector>span.BasedOnOption:hover {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+div.ClickableBlocksReadonly>div.BasedOnBarSelector>span.BasedOnOption {
+    display: none;
+}
+
+div.ClickableBlocksEdit>div.BasedOnBarSelector>span.BasedOnOption {
+    display: initial;
+}
+
+div.ClickableBlocksEdit>div.ClickableBlocksAllBlockSelector i.fa-minus-square:hover {
+    color: #FFB27A;
+}
+
+div.ClickableBlocksEdit>div.ClickableBlocksAllBlockSelector i.fa-plus-square:hover {
+    color: #D55900;
+}
+
+div.ClickableBlocksEdit>div.ClickableBlocksAllBlockSelector i.fa-plus-square.budg:hover {
+    color: #048ac5;
+}
+
 .ClickableBlocksNoDisp {
-  display: none;
+    display: none;
 }
+
 div.introjs-tooltipbuttons {
-  text-align: center;
+    text-align: center;
 }
+
 a.introjs-button {
-  font-size: 1em;
-  margin: 10px;
-  padding-left: 20px;
-  introjs-tooltiptext padding-right: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+    font-size: 1em;
+    margin: 10px;
+    padding-left: 20px;
+    introjs-tooltiptext padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
+
 div.introjs-tooltiptext {
-  font-size: 0.9em;
+    font-size: 0.9em;
 }
+
 a.introjs-button {
-  color: black;
-  border: solid black 1px;
+    color: black;
+    border: solid black 1px;
 }
+
 a.introjs-button:hover {
-  color: black;
-  border: solid black 1px;
+    color: black;
+    border: solid black 1px;
 }
 
 i.fa-letter-N:after {
-  font-style: normal;
-  font-family: Arial;
-  font-weight: bold;
-  content: 'N';
-  margin-top: -0.4em;
-  margin-left: 0.1em;
-  position: absolute;
-  color: white;
+    font-style: normal;
+    font-family: Arial;
+    font-weight: bold;
+    content: 'N';
+    margin-top: -0.4em;
+    margin-left: 0.1em;
+    position: absolute;
+    color: white;
 }
 
 i.fa-letter-E:after {
-  font-style: normal;
-  font-family: Arial;
-  font-weight: bold;
-  content: 'E';
-  margin-top: -0.4em;
-  margin-left: 0.1em;
-  position: absolute;
-  color: white;
+    font-style: normal;
+    font-family: Arial;
+    font-weight: bold;
+    content: 'E';
+    margin-top: -0.4em;
+    margin-left: 0.1em;
+    position: absolute;
+    color: white;
 }
