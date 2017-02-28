@@ -221,7 +221,7 @@ div.ClickableBlocksMealSelector i.mealOn {
     font-size: 1.8em;
 }
 
-div.ClickableBlocksMealSelector {
+div.ClickableBlocksMealSelector i.fa {
     /*-webkit-filter: drop-shadow( 2px 2px 2px #7a7a7a);
     filter: drop-shadow( 2px 2px 2px #7a7a7a);*/
     text-shadow: 2px 2px 2px #ccc
