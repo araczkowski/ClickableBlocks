@@ -531,7 +531,7 @@
 
         }
 
-        function _changeBasedOn(basedon) {
+        function _changeBasedOn(basedon, dbfmeal) {
             //
             _setBasedOn(basedon);
             // set meal
@@ -540,6 +540,10 @@
             })
             if (basedon === 'PLAN') {
                 m.attr('data-fmeal', m.attr('data-meal'));
+            } else if (basedon === 'REAL') {
+                m.attr('data-fmeal', m.attr('data-rmeal'));
+            } else if (basedon === 'USER') {
+                m.attr('data-fmeal', dbfmeal);
             }
             if ($(m).hasClass('mealOff')) {
                 _mealOff(true);
@@ -990,11 +994,16 @@
             _setWidth();
         };
 
-        this.setBasedOn = function(newbasedon) {
+        this.setBasedOn = function(newbasedon, dbfmeal) {
             if (newbasedon !== 'PLAN' && newbasedon !== 'REAL' && newbasedon !== 'USER') {
                 return;
             }
-            _changeBasedOn(newbasedon);
+            if (newbasedon !== 'USER') {
+                _changeBasedOn(newbasedon);
+            } else {
+                // the dbfmeal is set only in case of USER mode
+                _changeBasedOn(newbasedon, dbfmeal);
+            }
         };
 
         this.getOption = function(option) {
