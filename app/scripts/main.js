@@ -50,7 +50,8 @@
         var holdDelay = 500;
         // This flag indicates the user is currently holding the mouse down
         var holdActive = false;
-
+        // This is last toggled block via multiselect
+        var multiSelectToogleBlockId = null;
 
         function _init() {
             _mergeOptions();
@@ -343,7 +344,10 @@
                 // multiselect
                 step.on('mouseenter', function(e){
                     if(e.buttons == 1 || e.buttons == 3){
-                        _togglePlan(blockSelector);
+                        if (multiSelectToogleBlockId !== blockSelector){
+                            multiSelectToogleBlockId = blockSelector;
+                            _togglePlan(blockSelector);
+                        }
                     }
                 })
 
