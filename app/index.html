@@ -140,8 +140,13 @@
             $('body').append('<div style="float:left; margin-left:250px" id="' + divId + '_parent" class="editScheduleRegion"></div>');
             // create widget object
             clickB = new ClickB(divId, options);
+            // add blocks
+            clickB.addBlocks(blocksJson);
 
-
+            var divId = 'clickB1';
+            $('body').append('<div style="float:left; margin-left:250px" id="' + divId + '_parent" class="editScheduleRegion"></div>');
+            // create widget object
+            clickB = new ClickB(divId, options);
             // add blocks
             clickB.addBlocks(blocksJson);
           }

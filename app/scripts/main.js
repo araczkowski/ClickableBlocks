@@ -60,7 +60,13 @@
                 throw 'Blocks length should be multiple to step';
             }
             _build();
+            
+            if (!_options.readonly){
+                _multiSelect();
+            }
+        }
 
+        function _multiSelect(){
             // multi select mode
             parentDiv.on('mousedown', function() {
                 // Do not take any immediate action - just set the holdStarter
@@ -69,7 +75,7 @@
                     holdStarter = null;
                     holdActive = true;
                     // begin hold-only operation here, if desired
-                    $(parentDiv).addClass('multiSelectMode');
+                    $('html').addClass('multiSelectMode');
                 }, holdDelay);
             });
 
@@ -79,7 +85,7 @@
                 clearTimeout(holdStarter);
                 holdActive = false;
                 // end hold-only operation here, if desired
-                $('div.multiSelectMode').removeClass('multiSelectMode');
+                $('html.multiSelectMode').removeClass('multiSelectMode');
             });
         }
 
@@ -347,6 +353,10 @@
                         if (multiSelectToogleBlockId !== blockSelector){
                             multiSelectToogleBlockId = blockSelector;
                             _togglePlan(blockSelector);
+                            setTimeout(function() {
+                                multiSelectToogleBlockId = null;
+                            }, 1000);
+                            $('html').addClass('multiSelectMode');
                         }
                     }
                 })
