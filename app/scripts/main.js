@@ -347,14 +347,16 @@
 
                 // multiselect
                 step.on('mouseenter', function(e){
-                    if(e.buttons == 1 || e.buttons == 3){
-                        if (gMultiSelectToogleBlockId !== blockSelector){
-                            gMultiSelectToogleBlockId = blockSelector;
-                            _togglePlan(blockSelector);
-                            setTimeout(function() {
-                                gMultiSelectToogleBlockId = null;
-                            }, 1500);
-                            $('html').addClass('multiSelectMode');
+                    if (!_options.readonly){
+                        if(e.buttons == 1 || e.buttons == 3){
+                            if (gMultiSelectToogleBlockId !== blockSelector){
+                                gMultiSelectToogleBlockId = blockSelector;
+                                _togglePlan(blockSelector);
+                                setTimeout(function() {
+                                    gMultiSelectToogleBlockId = null;
+                                }, 1500);
+                                $('html').addClass('multiSelectMode');
+                            }
                         }
                     }
                 })
