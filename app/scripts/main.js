@@ -81,10 +81,9 @@
             $(document).on('mouseup', function() {
                 // If the mouse is released immediately (i.e., a click), before the
                 //  holdStarter runs, then cancel the holdStarter and do the click
+                $('html').removeClass('multiSelectMode');
                 clearTimeout(holdStarter);
-                holdActive = false;
-                // end hold-only operation here, if desired
-                $('html.multiSelectMode').removeClass('multiSelectMode');
+                holdActive = false;                
             });
         }
 
