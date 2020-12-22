@@ -44,6 +44,12 @@
         var mainDiv;
         var allSteps;
         var _onChange = null;
+        // This timeout, started on mousedown, triggers the beginning of a hold
+        var holdStarter = null;
+        // This is how many milliseconds to wait before recognizing a hold
+        var holdDelay = 500;
+        // This flag indicates the user is currently holding the mouse down
+        var holdActive = false;
 
 
         function _init() {
@@ -53,6 +59,27 @@
                 throw 'Blocks length should be multiple to step';
             }
             _build();
+
+            // multi select mode
+            parentDiv.on('mousedown', function() {
+                // Do not take any immediate action - just set the holdStarter
+                //  to wait for the predetermined delay, and then begin a hold
+                holdStarter = setTimeout(function() {
+                    holdStarter = null;
+                    holdActive = true;
+                    // begin hold-only operation here, if desired
+                    $(parentDiv).addClass('multiSelectMode');
+                }, holdDelay);
+            });
+
+            $(document).on('mouseup', function() {
+                // If the mouse is released immediately (i.e., a click), before the
+                //  holdStarter runs, then cancel the holdStarter and do the click
+                clearTimeout(holdStarter);
+                holdActive = false;
+                // end hold-only operation here, if desired
+                $('div.multiSelectMode').removeClass('multiSelectMode');
+            });
         }
 
 
@@ -243,6 +270,13 @@
                     _toggleMeal(this);
                 });
 
+                // multiselect
+                cutlery.on('mouseenter', function(e){
+                    if(e.buttons == 1 || e.buttons == 3){
+                        _toggleMeal(this);
+                    }
+                })
+
             } else {
                 $('<div/>', {
                     class: 'ClickableBlocksStep',
@@ -271,6 +305,7 @@
                 //TODO should be possible in CSS
                 $('.ClickableBlocksStep.ClickableBlocksEmptyColumn').next('div').not('.ClickableBlocksPlannedBlockStart').css('border-left', '2px solid #656565');
             }
+            
         }
 
 
@@ -304,6 +339,13 @@
                 step.unbind('click').on('click', function() {
                     _togglePlan(blockSelector);
                 });
+
+                // multiselect
+                step.on('mouseenter', function(e){
+                    if(e.buttons == 1 || e.buttons == 3){
+                        _togglePlan(blockSelector);
+                    }
+                })
 
 
                 i++;
