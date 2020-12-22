@@ -60,30 +60,33 @@
             }
             _build();
             
-            if (!_options.readonly){
-                _multiSelect();
-            }
+            _multiSelect();
+            
         }
 
         function _multiSelect(){
             // multi select mode
             parentDiv.on('mousedown', function() {
-                // Do not take any immediate action - just set the holdStarter
-                //  to wait for the predetermined delay, and then begin a hold
-                holdStarter = setTimeout(function() {
-                    holdStarter = null;
-                    holdActive = true;
-                    // begin hold-only operation here, if desired
-                    $('html').addClass('multiSelectMode');
-                }, holdDelay);
+                if (!_options.readonly){
+                    // Do not take any immediate action - just set the holdStarter
+                    //  to wait for the predetermined delay, and then begin a hold
+                    holdStarter = setTimeout(function() {
+                        holdStarter = null;
+                        holdActive = true;
+                        // begin hold-only operation here, if desired
+                        $('html').addClass('multiSelectMode');
+                    }, holdDelay);
+                }
             });
 
             $(document).on('mouseup', function() {
-                // If the mouse is released immediately (i.e., a click), before the
-                //  holdStarter runs, then cancel the holdStarter and do the click
-                $('html').removeClass('multiSelectMode');
-                clearTimeout(holdStarter);
-                holdActive = false;                
+                if (!_options.readonly){
+                    // If the mouse is released immediately (i.e., a click), before the
+                    //  holdStarter runs, then cancel the holdStarter and do the click
+                    $('html').removeClass('multiSelectMode');
+                    clearTimeout(holdStarter);
+                    holdActive = false;                
+                }
             });
         }
 
