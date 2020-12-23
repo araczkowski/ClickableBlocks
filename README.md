@@ -5,7 +5,7 @@ Oracle APEX plugin/widget with clickable blocks interaction.
 Live example at jsFiddle http://jsfiddle.net/araczkowski/bc5jt9ch/embedded/result/
 
 
-![alt tag](https://raw.githubusercontent.com/araczkowski/ClickableBlocks/master/app/images/ClickB.png)
+![alt tag](https://raw.githubusercontent.com/araczkowski/ClickableBlocks/master/app/images/screencast.gif)
 
 
 
