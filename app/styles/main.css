@@ -279,27 +279,27 @@ div.ClickableBlocksEdit>div.BasedOnBarSelector>span.BasedOnOption:hover {
 
 html.multiSelectMode {
     /* background-color: #FFB27A; */
-    cursor: progress;
+    cursor: url(/images/cursor.cur), auto;
 }
 
 html.multiSelectMode div.ClickableBlocksPlannedBlockBody .ClickableBlocksStepContent  {
-    cursor: progress;
+    cursor: url(/images/cursor.cur), auto;
 }
 
 html.multiSelectMode div.BasedOnBarSelector>span.BasedOnOption {
-    cursor: progress;
+    cursor: url(/images/cursor.cur), auto;
 }
 
 html.multiSelectMode div.BasedOnBarSelector>span.BasedOnOption:hover {
-    cursor: progress;
+    cursor: url(/images/cursor.cur), auto;
 }
 
 html.multiSelectMode div.ClickableBlocksMealSelector i.mealOn {
-    cursor: progress;
+    cursor: url(/images/cursor.cur), auto;
 }
 
 html.multiSelectMode div.ClickableBlocksMealSelector i.mealOff {
-    cursor: progress;
+    cursor: url(/images/cursor.cur), auto;
 }
 
 

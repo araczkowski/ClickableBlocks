@@ -355,9 +355,9 @@
                             if (gMultiSelectToogleBlockId !== blockSelector){
                                 gMultiSelectToogleBlockId = blockSelector;
                                 _togglePlan(blockSelector);
-                                setTimeout(function() {
-                                    gMultiSelectToogleBlockId = null;
-                                }, 1500);
+                                // setTimeout(function() {
+                                //     gMultiSelectToogleBlockId = null;
+                                // }, 1500);
                                 $('html').addClass('multiSelectMode');
                             }
                         }
