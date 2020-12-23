@@ -279,27 +279,27 @@ div.ClickableBlocksEdit>div.BasedOnBarSelector>span.BasedOnOption:hover {
 
 html.multiSelectMode {
     /* background-color: #FFB27A; */
-    cursor: url(/images/cursor.cur), auto;
+    cursor: url(#WORKSPACE_IMAGES#multi_select_cursor.gif), url(#WORKSPACE_IMAGES#multi_select_cursor.cur), url(/images/multi_select_cursor.gif), auto;
 }
 
 html.multiSelectMode div.ClickableBlocksPlannedBlockBody .ClickableBlocksStepContent  {
-    cursor: url(/images/cursor.cur), auto;
+    cursor: url(#WORKSPACE_IMAGES#multi_select_cursor.gif), url(#WORKSPACE_IMAGES#multi_select_cursor.cur), url(/images/multi_select_cursor.gif), auto;
 }
 
 html.multiSelectMode div.BasedOnBarSelector>span.BasedOnOption {
-    cursor: url(/images/cursor.cur), auto;
+    cursor: url(#WORKSPACE_IMAGES#multi_select_cursor.gif), url(#WORKSPACE_IMAGES#multi_select_cursor.cur), url(/images/multi_select_cursor.gif), auto;
 }
 
 html.multiSelectMode div.BasedOnBarSelector>span.BasedOnOption:hover {
-    cursor: url(/images/cursor.cur), auto;
+    cursor: url(#WORKSPACE_IMAGES#multi_select_cursor.gif), url(#WORKSPACE_IMAGES#multi_select_cursor.cur), url(/images/multi_select_cursor.gif), auto;
 }
 
 html.multiSelectMode div.ClickableBlocksMealSelector i.mealOn {
-    cursor: url(/images/cursor.cur), auto;
+    cursor: url(#WORKSPACE_IMAGES#multi_select_cursor.gif), url(#WORKSPACE_IMAGES#multi_select_cursor.cur), url(/images/multi_select_cursor.gif), auto;
 }
 
 html.multiSelectMode div.ClickableBlocksMealSelector i.mealOff {
-    cursor: url(/images/cursor.cur), auto;
+    cursor: url(#WORKSPACE_IMAGES#multi_select_cursor.gif), url(#WORKSPACE_IMAGES#multi_select_cursor.cur), url(/images/multi_select_cursor.gif), auto;
 }
 
 
