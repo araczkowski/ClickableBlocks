@@ -25,6 +25,29 @@
     i.AddIcon > svg{
       height: 1em;
     }
+    html.multiSelectMode {
+        cursor: url(/images/multi_select_cursor.gif), auto;
+    }
+
+    html.multiSelectMode div.ClickableBlocksPlannedBlockBody .ClickableBlocksStepContent  {
+        cursor: url(/images/multi_select_cursor.gif), auto;
+    }
+
+    html.multiSelectMode div.BasedOnBarSelector>span.BasedOnOption {
+        cursor: url(/images/multi_select_cursor.gif), auto;
+    }
+
+    html.multiSelectMode div.BasedOnBarSelector>span.BasedOnOption:hover {
+        cursor: url(/images/multi_select_cursor.gif), auto;
+    }
+
+    html.multiSelectMode div.ClickableBlocksMealSelector i.mealOn {
+        cursor: url(/images/multi_select_cursor.gif), auto;
+    }
+
+    html.multiSelectMode div.ClickableBlocksMealSelector i.mealOff {
+        cursor: url(/images/multi_select_cursor.gif), auto;
+    }
   </style>
 </head>
 
@@ -146,6 +169,27 @@
             clickB.addBlocks(blocksJson);
 
             var divId = 'clickB1';
+            $('body').append('<div style="float:left; margin-left:250px" id="' + divId + '_parent" class="editScheduleRegion"></div>');
+            // create widget object
+            clickB = new ClickB(divId, options);
+            // add blocks
+            clickB.addBlocks(blocksJson);
+
+            var divId = 'clickB2';
+            $('body').append('<div style="float:left; margin-left:250px" id="' + divId + '_parent" class="editScheduleRegion"></div>');
+            // create widget object
+            clickB = new ClickB(divId, options);
+            // add blocks
+            clickB.addBlocks(blocksJson);
+
+            var divId = 'clickB3';
+            $('body').append('<div style="float:left; margin-left:250px" id="' + divId + '_parent" class="editScheduleRegion"></div>');
+            // create widget object
+            clickB = new ClickB(divId, options);
+            // add blocks
+            clickB.addBlocks(blocksJson);
+
+            var divId = 'clickB4';
             $('body').append('<div style="float:left; margin-left:250px" id="' + divId + '_parent" class="editScheduleRegion"></div>');
             // create widget object
             clickB = new ClickB(divId, options);

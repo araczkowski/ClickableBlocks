@@ -66,7 +66,7 @@
 
         function _multiSelect(){
             // multi select mode
-            parentDiv.on('mousedown', function() {
+            $(document).on('mousedown', function() {
                 if (!_options.readonly){
                     // Do not take any immediate action - just set the holdStarter
                     //  to wait for the predetermined delay, and then begin a hold

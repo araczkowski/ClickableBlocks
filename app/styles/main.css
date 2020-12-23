@@ -277,31 +277,31 @@ div.ClickableBlocksEdit>div.BasedOnBarSelector>span.BasedOnOption:hover {
     font-weight: bold;
 }
 
+/* on prod on pagetemplate we have 
 html.multiSelectMode {
-    /* background-color: #FFB27A; */
-    cursor: url(#WORKSPACE_IMAGES#multi_select_cursor.gif), url(#WORKSPACE_IMAGES#multi_select_cursor.cur), url(/images/multi_select_cursor.gif), auto;
+    cursor: url(#WORKSPACE_IMAGES#multi_select_cursor.gif), url(#WORKSPACE_IMAGES#multi_select_cursor.cur), auto !important;
 }
 
 html.multiSelectMode div.ClickableBlocksPlannedBlockBody .ClickableBlocksStepContent  {
-    cursor: url(#WORKSPACE_IMAGES#multi_select_cursor.gif), url(#WORKSPACE_IMAGES#multi_select_cursor.cur), url(/images/multi_select_cursor.gif), auto;
+    cursor: url(#WORKSPACE_IMAGES#multi_select_cursor.gif), url(#WORKSPACE_IMAGES#multi_select_cursor.cur), auto !important;
 }
 
 html.multiSelectMode div.BasedOnBarSelector>span.BasedOnOption {
-    cursor: url(#WORKSPACE_IMAGES#multi_select_cursor.gif), url(#WORKSPACE_IMAGES#multi_select_cursor.cur), url(/images/multi_select_cursor.gif), auto;
+    cursor: url(#WORKSPACE_IMAGES#multi_select_cursor.gif), url(#WORKSPACE_IMAGES#multi_select_cursor.cur), auto !important;
 }
 
 html.multiSelectMode div.BasedOnBarSelector>span.BasedOnOption:hover {
-    cursor: url(#WORKSPACE_IMAGES#multi_select_cursor.gif), url(#WORKSPACE_IMAGES#multi_select_cursor.cur), url(/images/multi_select_cursor.gif), auto;
+    cursor: url(#WORKSPACE_IMAGES#multi_select_cursor.gif), url(#WORKSPACE_IMAGES#multi_select_cursor.cur), auto !important;
 }
 
 html.multiSelectMode div.ClickableBlocksMealSelector i.mealOn {
-    cursor: url(#WORKSPACE_IMAGES#multi_select_cursor.gif), url(#WORKSPACE_IMAGES#multi_select_cursor.cur), url(/images/multi_select_cursor.gif), auto;
+    cursor: url(#WORKSPACE_IMAGES#multi_select_cursor.gif), url(#WORKSPACE_IMAGES#multi_select_cursor.cur), auto !important;
 }
 
 html.multiSelectMode div.ClickableBlocksMealSelector i.mealOff {
-    cursor: url(#WORKSPACE_IMAGES#multi_select_cursor.gif), url(#WORKSPACE_IMAGES#multi_select_cursor.cur), url(/images/multi_select_cursor.gif), auto;
+    cursor: url(#WORKSPACE_IMAGES#multi_select_cursor.gif), url(#WORKSPACE_IMAGES#multi_select_cursor.cur), auto !important;
 }
-
+*/
 
 div.ClickableBlocksReadonly>div.BasedOnBarSelector>span.BasedOnOption {
     display: none;
