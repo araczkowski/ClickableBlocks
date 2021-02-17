@@ -50,7 +50,7 @@
         var holdDelay = 500;
         // This flag indicates the user is currently holding the mouse down
         var holdActive = false;
-        
+
 
         function _init() {
             _mergeOptions();
@@ -59,9 +59,9 @@
                 throw 'Blocks length should be multiple to step';
             }
             _build();
-            
+
             _multiSelect();
-            
+
         }
 
         function _multiSelect(){
@@ -85,7 +85,7 @@
                     //  holdStarter runs, then cancel the holdStarter and do the click
                     $('html').removeClass('multiSelectMode');
                     clearTimeout(holdStarter);
-                    holdActive = false;                
+                    holdActive = false;
                 }
             });
         }
@@ -313,7 +313,29 @@
                 //TODO should be possible in CSS
                 $('.ClickableBlocksStep.ClickableBlocksEmptyColumn').next('div').not('.ClickableBlocksPlannedBlockStart').css('border-left', '2px solid #656565');
             }
-            
+
+            //
+            parentDiv.on('mouseleave', function(e){
+                if (!_options.readonly){
+                    if(e.buttons == 1 || e.buttons == 3){
+                       console.log("clear on parentDiv" + parentDiv);
+                       gMultiSelectToogleBlockId = null;
+                    }
+                }
+            })
+
+            $('div.ClickableBlocksStep').on('mouseenter', function(e){
+                if (!_options.readonly){
+                    if(e.buttons == 1 || e.buttons == 3){
+                      var blockSelector = $(this).attr('data-block');
+                      if (!blockSelector){
+                        console.log("clear on empty block" + blockSelector);
+                        // clear selected block when entering empty block
+                        gMultiSelectToogleBlockId = null;
+                      }
+                    }
+                }
+            })
         }
 
 
@@ -353,18 +375,14 @@
                     if (!_options.readonly){
                         if(e.buttons == 1 || e.buttons == 3){
                             if (gMultiSelectToogleBlockId !== blockSelector){
+                                console.log("blockSelector " + blockSelector);
                                 gMultiSelectToogleBlockId = blockSelector;
                                 _togglePlan(blockSelector);
-                                // setTimeout(function() {
-                                //     gMultiSelectToogleBlockId = null;
-                                // }, 1500);
                                 $('html').addClass('multiSelectMode');
                             }
                         }
                     }
                 })
-
-
                 i++;
             });
 
