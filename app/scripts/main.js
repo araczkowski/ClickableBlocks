@@ -318,7 +318,6 @@
             parentDiv.on('mouseleave', function(e){
                 if (!_options.readonly){
                     if(e.buttons == 1 || e.buttons == 3){
-                       console.log("clear on parentDiv" + parentDiv);
                        gMultiSelectToogleBlockId = null;
                     }
                 }
@@ -329,7 +328,6 @@
                     if(e.buttons == 1 || e.buttons == 3){
                       var blockSelector = $(this).attr('data-block');
                       if (!blockSelector){
-                        console.log("clear on empty block" + blockSelector);
                         // clear selected block when entering empty block
                         gMultiSelectToogleBlockId = null;
                       }
@@ -375,7 +373,6 @@
                     if (!_options.readonly){
                         if(e.buttons == 1 || e.buttons == 3){
                             if (gMultiSelectToogleBlockId !== blockSelector){
-                                console.log("blockSelector " + blockSelector);
                                 gMultiSelectToogleBlockId = blockSelector;
                                 _togglePlan(blockSelector);
                                 $('html').addClass('multiSelectMode');
