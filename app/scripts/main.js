@@ -585,11 +585,11 @@
                         _toggleBasedOn(this);
                     });
                     // multi select
-                    boption.on('mouseenter', function(e){
-                        if(e.buttons == 1 || e.buttons == 3){
-                            _toggleBasedOn(this);
-                        }
-                    })
+                    // boption.on('mouseenter', function(e){
+                    //     if(e.buttons == 1 || e.buttons == 3){
+                    //         _toggleBasedOn(this);
+                    //     }
+                    // })
                 } else if (basedon === 'REAL') {
                     e.html('<span class="BasedOn" style="color:rgb(123, 206, 91);">R</span>');
                     var boption = $('<span/>', {
@@ -601,11 +601,11 @@
                         _toggleBasedOn(this);
                     });
                     // multi select
-                    boption.on('mouseenter', function(e){
-                        if(e.buttons == 1 || e.buttons == 3){
-                            _toggleBasedOn(this);
-                        }
-                    })
+                    // boption.on('mouseenter', function(e){
+                    //     if(e.buttons == 1 || e.buttons == 3){
+                    //         _toggleBasedOn(this);
+                    //     }
+                    // })
                 } else if (basedon === 'USER') {
                     e.html('<span class="BasedOn" style="color:#00afe5;">M</span>');
                 }
