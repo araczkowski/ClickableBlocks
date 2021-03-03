@@ -585,7 +585,7 @@
                         _toggleBasedOn(this);
                     });
                     // multi select
-                    cutlery.on('mouseenter', function(e){
+                    boption.on('mouseenter', function(e){
                         if(e.buttons == 1 || e.buttons == 3){
                             _toggleBasedOn(this);
                         }
@@ -601,7 +601,7 @@
                         _toggleBasedOn(this);
                     });
                     // multi select
-                    cutlery.on('mouseenter', function(e){
+                    boption.on('mouseenter', function(e){
                         if(e.buttons == 1 || e.buttons == 3){
                             _toggleBasedOn(this);
                         }
