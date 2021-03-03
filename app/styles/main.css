@@ -170,7 +170,7 @@ div.BasedOnBarSelector {
     height: 2.5em;
     line-height: 2.5em;
     float: left;
-    margin-left: 10px;
+    margin-left: 25px;
 }
 
 div.BasedOnBarSelector span.BasedOn {
@@ -277,7 +277,7 @@ div.ClickableBlocksEdit>div.BasedOnBarSelector>span.BasedOnOption:hover {
     font-weight: bold;
 }
 
-/* on prod on pagetemplate we have 
+/* on prod on pagetemplate we have
 html.multiSelectMode {
     cursor: url(#WORKSPACE_IMAGES#multi_select_cursor.gif), url(#WORKSPACE_IMAGES#multi_select_cursor.cur), auto !important;
 }

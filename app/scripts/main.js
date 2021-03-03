@@ -720,7 +720,7 @@
             var MeelFeatures = _getMealFeatures(e.attr('data-meal'), e.attr('data-rmeal'));
             var color_key = MeelFeatures.color;
             var bcolor = mainDiv.find('div.ClickableBlocksPlannedBlockBody:first').attr('data-' + color_key);
-            e.find("i.AddIcon").remove()
+            e.parent().find("i.AddIcon").remove()
             e.css('color', bcolor).removeClass('mealOff').addClass('mealOn');
 
             if (typeof(_onChange) === 'function') {
@@ -739,7 +739,7 @@
                 var key = _getBlockFeatures(e.attr('data-meal'), e.attr('data-rmeal')).color;
                 var bcolor = mainDiv.find('div.ClickableBlocksPlannedBlockBody:first').attr('data-' + key);
                 e.css('color', bcolor).removeClass('mealOn').addClass('mealOff');
-                e.find("i.AddIcon").remove()
+                e.parent().find("i.AddIcon").remove()
 
             } else {
                 var e = mainDiv.find('i.fa-cutlery').addClass('click').one('animationend webkitAnimationEnd onAnimationEnd', function() {
@@ -793,9 +793,9 @@
                 var additional_icon = MeelFeatures.icon;
                 var bcolor = mainDiv.find('div.ClickableBlocksPlannedBlockBody:first').attr('data-' + color_key);
                 e.css('color', bcolor).removeClass('mealOn').addClass('mealOff');
-                e.find("i.AddIcon").remove()
+                e.parent().find("i.AddIcon").remove()
                 if (additional_icon.length > 0) {
-                    $(additional_icon).appendTo(e);
+                    $(additional_icon).appendTo(e.parent());
                 }
             }
             if (typeof(_onChange) === 'function') {
