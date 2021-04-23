@@ -195,6 +195,18 @@
             unplanAll.on('click', function() {
                 _unplanAll(this);
             });
+            // multiselect
+            planAll.on('mouseenter', function(e){
+                if(e.buttons == 1 || e.buttons == 3){
+                    gMultiSelectToogleBlockId = null;
+                }
+            })
+            unplanAll.on('mouseenter', function(e){
+                if(e.buttons == 1 || e.buttons == 3){
+                    gMultiSelectToogleBlockId = null;
+                }
+            })
+
 
 
 
@@ -282,6 +294,7 @@
                 cutlery.on('mouseenter', function(e){
                     if(e.buttons == 1 || e.buttons == 3){
                         _toggleMeal(this);
+                        gMultiSelectToogleBlockId = null;
                     }
                 })
 
