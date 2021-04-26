@@ -199,11 +199,13 @@
             planAll.on('mouseenter', function(e){
                 if(e.buttons == 1 || e.buttons == 3){
                     gMultiSelectToogleBlockId = null;
+                    gMultiSelectToogleMealId = null;
                 }
             })
             unplanAll.on('mouseenter', function(e){
                 if(e.buttons == 1 || e.buttons == 3){
                     gMultiSelectToogleBlockId = null;
+                    gMultiSelectToogleMealId = null;
                 }
             })
 
@@ -292,11 +294,22 @@
 
                 // multiselect
                 cutlery.on('mouseenter', function(e){
+                    console.log('mouseenter');
                     if(e.buttons == 1 || e.buttons == 3){
-                        _toggleMeal(this);
+                        if (gMultiSelectToogleMealId !== elementID){
+                            gMultiSelectToogleMealId = elementID;
+                            console.log(elementID);
+                            _toggleMeal(this);
+                        }
                         gMultiSelectToogleBlockId = null;
                     }
                 })
+                // cutlery.on('mouseleave', function(e){
+                //     console.log('mouseleave');
+                //     if (!_options.readonly){
+                //         gMultiSelectToogleMealId = null;
+                //     }
+                // })                
 
             } else {
                 $('<div/>', {
@@ -313,9 +326,11 @@
                     class: 'BasedOnBarSelector',
                 }).appendTo(mainDiv);
 
-                // basedonbar.on('click', function() {
-                //   _toggleBasedOn(this);
-                // });
+                //
+                basedonbar.on('mouseenter', function() {
+                    gMultiSelectToogleBlockId = null;
+                    gMultiSelectToogleMealId = null;
+                });
             }
 
             // widget width
@@ -330,10 +345,9 @@
             //
             parentDiv.on('mouseleave', function(e){
                 if (!_options.readonly){
-                    if(e.buttons == 1 || e.buttons == 3){
                        gMultiSelectToogleBlockId = null;
-                    }
-                }
+                       gMultiSelectToogleMealId = null;
+                  }
             })
 
             $('div.ClickableBlocksStep').on('mouseenter', function(e){
@@ -343,6 +357,7 @@
                       if (!blockSelector){
                         // clear selected block when entering empty block
                         gMultiSelectToogleBlockId = null;
+                        gMultiSelectToogleMealId = null;
                       }
                     }
                 }
@@ -391,6 +406,7 @@
                                 $('html').addClass('multiSelectMode');
                             }
                         }
+                        gMultiSelectToogleMealId = null;
                     }
                 })
                 i++;
