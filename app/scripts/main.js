@@ -208,6 +208,12 @@
                     gMultiSelectToogleMealId = null;
                 }
             })
+            mainDiv.on('mouseenter', function(e){
+                if(e.buttons == 1 || e.buttons == 3){
+                    gMultiSelectToogleBlockId = null;
+                    gMultiSelectToogleMealId = null;
+                }
+            })
 
 
 
@@ -294,18 +300,15 @@
 
                 // multiselect
                 cutlery.on('mouseenter', function(e){
-                    console.log('mouseenter');
                     if(e.buttons == 1 || e.buttons == 3){
                         if (gMultiSelectToogleMealId !== elementID){
                             gMultiSelectToogleMealId = elementID;
-                            console.log(elementID);
                             _toggleMeal(this);
                         }
                         gMultiSelectToogleBlockId = null;
                     }
                 })
                 // cutlery.on('mouseleave', function(e){
-                //     console.log('mouseleave');
                 //     if (!_options.readonly){
                 //         gMultiSelectToogleMealId = null;
                 //     }
