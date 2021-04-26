@@ -208,12 +208,12 @@
                     gMultiSelectToogleMealId = null;
                 }
             })
-            mainDiv.on('mouseenter', function(e){
-                if(e.buttons == 1 || e.buttons == 3){
-                    gMultiSelectToogleBlockId = null;
-                    gMultiSelectToogleMealId = null;
-                }
-            })
+            // mainDiv.on('mouseenter', function(e){
+            //     if(e.buttons == 1 || e.buttons == 3){
+            //         gMultiSelectToogleBlockId = null;
+            //         gMultiSelectToogleMealId = null;
+            //     }
+            // })
 
 
 
