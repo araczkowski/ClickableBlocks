@@ -170,7 +170,7 @@ div.BasedOnBarSelector {
     height: 2.5em;
     line-height: 2.5em;
     float: left;
-    margin-left: 15px;
+    padding-left: 15px;
 }
 
 div.BasedOnBarSelector span.BasedOn {

@@ -840,6 +840,11 @@
                 e.parent().find("i.AddIcon").remove()
                 if (additional_icon.length > 0) {
                     $(additional_icon).appendTo(e.parent());
+                    // multiselect
+                    e.parent().find("i.AddIcon").on('mouseenter', function(e){
+                        gMultiSelectToogleBlockId = null;
+                        gMultiSelectToogleMealId = null;
+                })
                 }
             }
             if (typeof(_onChange) === 'function') {
