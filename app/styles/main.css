@@ -26,11 +26,15 @@ html {
     height: 2.2em;
 }
 
-.ClickableBlocksStep, .ClickableBlocksMealSelector {
+.ClickableBlocksStep, .ClickableBlocksMealSelector, .ClickableBlocksMealReset {
     float: left;
     height: 2.5em;
     line-height: 2.5em;
     padding-top: 6px;
+}
+
+.ClickableBlocksMealReset {
+    width: 1px;
 }
 
 .ClickableBlocksAllBlockSelector {

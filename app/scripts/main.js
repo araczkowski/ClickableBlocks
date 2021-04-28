@@ -292,6 +292,17 @@
                     html: tick.add(cutlery)
                 }).appendTo(mainDiv);
 
+                //multiselect
+                var mealReset = $('<div/>', {
+                    class: 'ClickableBlocksMealReset',
+                    html: '<span><span>'
+                })
+                mealReset.appendTo(mainDiv);
+                mealReset.on('mouseenter', function(e){
+                    gMultiSelectToogleMealId = null;
+                    gMultiSelectToogleBlockId = null;
+                })
+
 
 
                 cutlery.on('click', function() {
