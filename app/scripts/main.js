@@ -902,6 +902,8 @@
                 var sunSetBlock = mainDiv.find('div.ClickableBlocksPlannedBlockBody').filter('[data-start="720"],[data-start="735"],[data-start="750"],[data-start="765"]');
                 if (sunSetBlock.length > 0) {
                     _mealOn();
+                } else {
+                    _mealOff();
                 }
 
                 if (typeof(_onChange) === 'function') {
